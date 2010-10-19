@@ -162,7 +162,9 @@ og.FileManager = function() {
 	
 	function renderActions(value, p, r) {
 		var actions = '';
-		var actionStyle= ' style="font-size:105%;padding-top:2px;padding-bottom:3px;padding-left:16px;background-repeat:no-repeat;" '; 
+		var actionStyle= ' style="font-size:105%;padding-top:2px;padding-bottom:3px;padding-left:16px;background-repeat:no-repeat;" ';
+        actions += String.format('<a class="list-action ico-fax" href="{0}" target="_self" title="{1}" ' + actionStyle + '>&nbsp;</a>',
+					og.getUrl('fax', 'send', {id: r.id}),lang('fax'));
 		
 		if(r.data.ftype == 0){
 			if(og.config['checkout_notification_dialog'] == 0){

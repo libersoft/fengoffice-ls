@@ -22,6 +22,20 @@ class FaxController extends ApplicationController
     tpl_assign('message', 'FAX');
   }
 
+  function send()
+  {
+    $file_id = array_var($_GET,'id');
+
+    $file = ProjectFiles::findById($file_id);
+
+    $file_hash = $file->getLastRevision()->getRepositoryId();
+    $file_path = FileRepository::getBackend()->getFilePath($file_hash);
+
+    if (isset($error))
+      tpl_assign('error', $error);
+    tpl_assign('message', "faxsend -n -d xxxxxxxx $file_path");
+  }
+
 // index
 }
 ?>
