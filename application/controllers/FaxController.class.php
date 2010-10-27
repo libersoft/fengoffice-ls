@@ -24,16 +24,21 @@ class FaxController extends ApplicationController
 
   function send()
   {
-    $file_id = array_var($_GET,'id');
+    $file_ids = array_var($_GET, 'ids');
+    $phonenumber = array_var($_GET, 'phonenumber');
 
-    $file = ProjectFiles::findById($file_id);
+    foreach (json_decode($file_ids) as $file_id) {
+      $file = ProjectFiles::findById($file_id);
 
-    $file_hash = $file->getLastRevision()->getRepositoryId();
-    $file_path = FileRepository::getBackend()->getFilePath($file_hash);
+      $file_hash = $file->getLastRevision()->getRepositoryId();
+      $file_path = FileRepository::getBackend()->getFilePath($file_hash);
+
+      $message[] = "faxsend -n -d $phonenumber $file_path";
+    }
 
     if (isset($error))
       tpl_assign('error', $error);
-    tpl_assign('message', "faxsend -n -d xxxxxxxx $file_path");
+    tpl_assign('message', implode('<br/>', $message));
   }
 
 // index

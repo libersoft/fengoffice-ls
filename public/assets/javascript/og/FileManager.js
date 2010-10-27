@@ -163,8 +163,6 @@ og.FileManager = function() {
 	function renderActions(value, p, r) {
 		var actions = '';
 		var actionStyle= ' style="font-size:105%;padding-top:2px;padding-bottom:3px;padding-left:16px;background-repeat:no-repeat;" ';
-        actions += String.format('<a class="list-action ico-fax" href="{0}" target="_self" title="{1}" ' + actionStyle + '>&nbsp;</a>',
-					og.getUrl('fax', 'send', {id: r.id}),lang('fax'));
 		
 		if(r.data.ftype == 0){
 			if(og.config['checkout_notification_dialog'] == 0){
@@ -261,7 +259,7 @@ og.FileManager = function() {
 					allRead = false;
 				}
 			}
-		
+
 			if (sm.getCount() <= 0) {
 				actions.tag.setDisabled(true);
 				actions.properties.setDisabled(true);
@@ -270,6 +268,7 @@ og.FileManager = function() {
 				markactions.markAsRead.setDisabled(true);
 				markactions.markAsUnread.setDisabled(true);
 				actions.archive.setDisabled(true);
+				actions.fax.setDisabled(true);
 			} else {
 				actions.tag.setDisabled(false);
 				actions.properties.setDisabled(sm.getCount() != 1);
@@ -286,6 +285,7 @@ og.FileManager = function() {
 					markactions.markAsRead.setDisabled(false);
 				}
 				actions.archive.setDisabled(false);
+				actions.fax.setDisabled(false);
 			}
 			
 			args = {};
@@ -538,6 +538,30 @@ og.FileManager = function() {
 				markactions.markAsRead,
 				markactions.markAsUnread
 			]
+		}),
+		fax: new Ext.Action({
+			text: 'Fax',
+            tooltip: 'Invia per fax',
+            iconCls: 'ico-fax',
+			disabled: true,
+//			hidden: !og.faxSupported,
+			handler: function (e) {
+				Ext.Msg.prompt('Numero di fax', 'Per favore inserisci il numero di fax:', function (btn, text) {
+					if (btn == 'ok') {
+						var ids = [];
+						Ext.each(sm.getSelections(), function (v) {
+							ids.push(v['id']);
+						});
+
+						var url = og.getUrl('fax', 'send', {
+							ids: Ext.util.JSON.encode(ids),
+							phonenumber: text
+						});
+						og.openLink(url);
+					}
+				}, this);
+			},
+			scope: this
 		})
     };
     
@@ -547,6 +571,7 @@ og.FileManager = function() {
 		tbar.push('-');
 		tbar.push(actions.properties);
 		tbar.push(actions.tag);
+		tbar.push(actions.fax);
 		tbar.push(actions.zip_add);
 		tbar.push(actions.archive);
 		tbar.push(actions.del);		
