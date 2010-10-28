@@ -21,6 +21,10 @@
   define('DEFAULT_LOCALIZATION', 'en_us'); 
   define('DEBUG', true); 
   define('DB_CHARSET', 'utf8'); 
+  define('HYLAFAX_HOST', 'localhost');
+  define('HYLAFAX_PORT', '4559');
+  define('HYLAFAX_LOGIN', '');
+  define('HYLAFAX_PWD', '');
   
   return true;
   
