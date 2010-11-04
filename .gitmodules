@@ -1,0 +1,3 @@
+[submodule "language/it_it"]
+	path = language/it_it
+	url = git@github.com:libersoft/fengoffice-it.git
