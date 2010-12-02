@@ -131,7 +131,17 @@ Ext.onReady(function(){
 				type: "url",
 				data: og.getUrl('reporting','index')
 			}
-		})
+		}),
+      og.panels.test = new og.ContentPanel({
+        title: 'Fax',
+        id: 'fax-panel',
+        iconCls: 'ico-fax',
+        refreshOnWorkspaceChange: true,
+        defaultContent: {
+          type: "url",
+          data: og.getUrl('fax','index')
+        }
+      })
 	];
 	var tab_panel = new Ext.TabPanel({
 		id: 'tabs-panel',
