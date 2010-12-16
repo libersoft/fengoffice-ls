@@ -1,5 +1,6 @@
 cache/*
-config/*
+config/config.php
+config/installed_version.php
 nbproject/
 upload/*
 tmp/
