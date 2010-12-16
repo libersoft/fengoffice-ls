@@ -363,8 +363,7 @@ og.FileManager = function() {
 			hidden: true
 		},{
 			id: 'linkedObjects',
-			// TODO: lang()
-			header: "Collegamenti",
+			header: lang('linked'),
 			renderer: renderLinkedObjects,
 			width: 120,
 			sortable: false
