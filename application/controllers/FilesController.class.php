@@ -1483,6 +1483,30 @@ class FilesController extends ApplicationController {
 				if ($o->isMP3()) {
 					$values['isMP3'] = true;
 				}
+				if ($o->getLinkedObjects())
+				{
+				    $a = array();
+				    foreach ($o->getLinkedObjects() as $l)
+				    {
+					if ($l instanceof Contact)
+					{
+					    $b = array();
+					    $b['linkedId'] = $l->getId();
+					    $b['linkedName'] = $l->getDisplayName();
+					    $b['controller'] = "contact";
+					    $b['action'] = "card";
+					    $a[] = $b;
+					} else if ($l instanceof Company) {
+					    $b = array();
+					    $b['linkedId'] = $l->getId();
+					    $b['linkedName'] = $l->getName();
+					    $b['controller'] = "company";
+					    $b['action'] = "view_client";
+					    $a[] = $b;
+					}
+				    }
+				    $values['linkedObjects'] = $a;
+				}
 				Hook::fire('add_classification_value', $o, $values);
 				$listing["files"][] = $values;
 			}

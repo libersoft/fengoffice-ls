@@ -15,7 +15,8 @@ og.FileManager = function() {
 		'dateUpdated', 'dateUpdated_today',
 		'icon', 'wsIds', 'manager', 'checkedOutById',
 		'checkedOutByName', 'mimeType', 'isModifiable',
-		'modifyUrl', 'songInfo', 'ftype', 'url', 'ix','isRead', 'isMP3'
+		'modifyUrl', 'songInfo', 'ftype', 'url', 'ix','isRead', 'isMP3',
+		'linkedObjects'
 	];
 
 	og.eventManager.fireEvent('hook_document_classification', this.fields);	
@@ -211,6 +212,23 @@ og.FileManager = function() {
 		return actions;
 	}
 
+	function renderLinkedObjects(value, p, r) {
+		if (!value) {
+			return "";
+		}
+
+		var linkedString = "";
+		Ext.each(r.data.linkedObjects, function (c, i) {
+			if (i > 0) {
+				linkedString += ", ";
+			}
+
+			linkedString += String.format('<a href="{1}" onclick="og.openLink(\'{1}\');return false;">{0}</a>', c.linkedName, og.getUrl(c.controller, c.action, {id: c.linkedId}));
+		});
+
+		return linkedString;
+	}
+
 	function getSelectedIds() {
 		var selections = sm.getSelections();
 		if (selections.length <= 0) {
@@ -343,7 +361,14 @@ og.FileManager = function() {
 			dataIndex: 'tags',
 			width: 120,
 			hidden: true
-        },{
+		},{
+			id: 'linkedObjects',
+			// TODO: lang()
+			header: "Collegamenti",
+			renderer: renderLinkedObjects,
+			width: 120,
+			sortable: false
+		},{
 			id: 'updated',
 			header: lang("last updated by"),
 			dataIndex: 'dateUpdated',
