@@ -277,12 +277,12 @@
 			el.applyStyles('width:'+width+'%;');
 
 			rows = (el.getHeight() - prev_height) / 21;
-			dur_h = Math.floor(rows / 2);
-			dur_m = rows % 2 == 0 ? 0 : 30;
+			dur_h = rows < 0 ? Math.ceil(rows / 2) : Math.floor(rows / 2);
+			dur_m = (rows % 2 == 0 ? 0 : 30) * (rows < 0 ? -1 : 1);
 			og.openLink(og.getUrl('event', 'change_duration', {id:ev_id, hours:dur_h, mins:dur_m}), {
 				callback: function(success, data) {
 					ev_data = data.ev_data;
-					updateTip(div_id, ev_data.subject, ev_data.start + " - " + ev_data.end);
+					if (ev_data) updateTip(div_id, ev_data.subject, ev_data.start + " - " + ev_data.end);
 				}
 			});
 		});

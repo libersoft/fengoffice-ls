@@ -85,7 +85,7 @@ og.MailManager = function() {
 		var subject = value && og.clean(value.trim()) || '<i>' + lang("no subject") + '</i>';
 		var conv_str = r.data.conv_total > 1 ? " <span class='db-ico ico-comment' style='margin-left:3px;padding-left: 18px;'><span style='font-size:80%'>(" + (r.data.conv_unread > 0 ? '<b style="font-size:130%">' + r.data.conv_unread + '</b>/' : '') + r.data.conv_total + ")</span></span>" : "";
 		
-		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = true;og.openLink(\'{1}\');r.commit();return false;';
+		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = true;og.openLink(\'{1}\');r.commit();og.showWsPaths();return false;';
 		name = String.format(
 				'{4}<a style="font-size:120%;" class="{3}" href="#" onclick="' + js + '" title="{2}">{0}</a>',
 				subject + conv_str, og.getUrl('mail', strAction, {id: r.data.object_id}), og.clean(r.data.text),classes,strDraft);
@@ -118,7 +118,7 @@ og.MailManager = function() {
 		var sender = (draw_to ? to_cut : og.clean(value.trim())) || '<i>' + lang("no sender") + '</i>';
 		var title = draw_to ? og.clean(r.data.to) : og.clean(r.data.from_email);
 		
-		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = true;og.openLink(\'{1}\');r.commit();return false;';
+		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = true;og.openLink(\'{1}\');r.commit();og.showWsPaths();return false;';
 		name = String.format(
 				'<a style="font-size:120%;" class="{3}" href="#" onclick="' + js + '" title="{2}">{0}</a>',
 				sender, og.getUrl('mail', strAction, {id: r.data.object_id}), title, classes);
@@ -145,7 +145,7 @@ og.MailManager = function() {
 	}
 	
 	function renderIsRead(value, p, r){
-		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = !r.data.isRead;og.openLink(og.getUrl(\'object\', \'' + (value ? 'mark_as_unread' : 'mark_as_read') + '\', {ids:\'MailContents:' + r.data.object_id + '\'}));r.commit();';
+		var js = 'var r = og.MailManager.store.getById(\'' + r.id + '\'); r.data.isRead = !r.data.isRead;og.openLink(og.getUrl(\'object\', \'' + (value ? 'mark_as_unread' : 'mark_as_read') + '\', {ids:\'MailContents:' + r.data.object_id + '\'}));og.showWsPaths();r.commit();';
 		return String.format(
 				'<div title="{0}" class="db-ico {2}" onclick="{1}"></div>',
 				value ? lang('mark as unread') : lang('mark as read'), js, value ? 'ico-read' : 'ico-unread'
@@ -166,7 +166,7 @@ og.MailManager = function() {
 		var receiver = value && og.clean(value.trim()) || '<i>' + lang("no recipient") + '</i>';
 
 		name = String.format(
-				'<a style="font-size:120%;" class="{3}" href="#" onclick="og.openLink(\'{1}\');return false;" title="{2}">{0}</a>',
+				'<a style="font-size:120%;" class="{3}" href="#" onclick="og.openLink(\'{1}\');og.showWsPaths();return false;" title="{2}">{0}</a>',
 				receiver, og.getUrl('mail', strAction, {id: r.data.object_id}), og.clean(value), classes);
 		return name;
 	}
@@ -200,6 +200,10 @@ og.MailManager = function() {
 		actions += String.format(
 			'<a class="list-action ico-forward" href="#" onclick="og.openLink(og.getUrl(\'mail\', \'forward_mail\', {id:{0}}))" title="{1}" ' + actionStyle + '>&nbsp;</a>',
 			r.data.object_id, lang('forward mail'));
+		
+		actions += String.format(
+			'<a class="list-action ico-delete" href="#" onclick="og.openLink(og.getUrl(\'mail\', \'delete\', {id:{0}}))" title="{1}" ' + actionStyle + '>&nbsp;</a>',
+			r.data.object_id, lang('delete'));
 		
 		if (actions != '')
 			actions = '<span>' + actions + '</span>';
@@ -361,6 +365,7 @@ og.MailManager = function() {
 			dataIndex: 'to',
 			width: 200,
 			hidden: true,
+			sortable: false,
 			renderer: renderTo
         },{
 			id: 'subject',
@@ -479,6 +484,7 @@ og.MailManager = function() {
 					sel[i].commit();
 				}
 				if (ids) og.openLink(og.getUrl('object', 'mark_as_read', {ids:ids}));
+				sm.clearSelections();
 			},
 			scope: this
 		}),
@@ -498,6 +504,7 @@ og.MailManager = function() {
 					sel[i].commit();
 				}
 				if (ids) og.openLink(og.getUrl('object', 'mark_as_unread', {ids:ids}));
+				sm.clearSelections();
 			},
 			scope: this
 		}),
@@ -516,6 +523,7 @@ og.MailManager = function() {
 					this.store.remove(sel[i]);
 				}
 				if (ids) og.openLink(og.getUrl('mail', 'mark_as_spam', {ids:ids}));
+				sm.clearSelections();
 			},
 			scope: this
 		}),
@@ -535,6 +543,7 @@ og.MailManager = function() {
 					this.store.remove(sel[i]);
 				}
 				if (ids) og.openLink(og.getUrl('mail', 'mark_as_ham', {ids:ids}));
+				sm.clearSelections();
 			},
 			scope: this
 		})
@@ -718,7 +727,7 @@ og.MailManager = function() {
 						ids += "MailContents:" + sel[i].id;
 						this.store.remove(sel[i]);
 					}
-					if (ids) og.openLink(og.getUrl('object', 'trash', {ids:ids}));
+					if (ids) og.openLink(og.getUrl('object', 'trash', {ids:ids}),{callback:function(){Ext.getCmp('mails-manager').load()}});
 				}
 			},
 			scope: this
@@ -1115,6 +1124,7 @@ og.MailManager = function() {
 			}
 		}
 	});
+	og.eventManager.addListener('reload mails panel', this.load, this);
 	
 	function toggleButtons(inb, sent, dra) {
 		Ext.getCmp('inbox_btn').toggle(inb);
@@ -1290,6 +1300,7 @@ Ext.extend(og.MailManager, Ext.grid.GridPanel, {
 				og.openLink(og.getUrl('object', 'move', {ids:ids, ws:ws, keep: (mantain ? '1' : '0'), atts:(classifyatts ? '1' : '0')}));
 			}
 		}
+		sm.clearSelections();
 	},
 	
 	trashObjects: function() {

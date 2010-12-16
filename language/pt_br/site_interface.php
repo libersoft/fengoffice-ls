@@ -566,4 +566,10 @@
 	'guest user' => 'Convidado',
 	'admin user' => 'Administrador',
 	'user type' => 'Tipo de Usuário',
+	'password confirmation' => 'Confirmação de senha',
+	'mail account password confirmation' => 'Você pode usar este campo para verificar novamente a sua senha',
+	'wrong password confirmation' => 'Atenção: As senhas não coincidem. Por favor verificá-las.',
+	'meeting_time' => 'Tempo',
+	'object subtypes' => 'Subtipos objeto',
+	'add object subtype' => 'Adicionar objeto subtipo',
 ); ?>

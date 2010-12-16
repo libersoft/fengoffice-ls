@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -22,12 +22,6 @@ html
 	To prevent this misbehavior, we show the scrollbar always */
 	_overflow-y: scroll
 }
-
-blockquote
-{
-	padding-left: 10px;
-	border-left: 1px solid #987ADD;
-}	
 
 img:-moz-broken
 {

@@ -1,18 +1,9 @@
-<?php
-/* 
-Translated into Russian for Feng Office
-Last update:  see readme_rus.txt
-
-http://code.google.com/p/opengooru/
-   
-*/
-
- return array(
+<?php return array(
 	'username' => 'Имя пользователя',
 	'password' => 'Пароль',
 	'password again' => 'Повтор пароля',
 	'old password' => 'Старый пароль',
-	'new password' => 'Новый пароль', 
+	'new password' => 'Новый пароль',
 	'remember me' => 'Запомнить меня на 14 дней',
 	'email address' => 'E-mail адрес',
 	'display name' => 'Отображаемое имя',
@@ -26,12 +17,12 @@ http://code.google.com/p/opengooru/
 	'edit' => 'Изменить',
 	'delete' => 'Удалить',
 	'empty trash can' => 'Очистить корзину',
-  'save' => 'Сохранить',
-  'add' => 'Добавить',
+	'save' => 'Сохранить',
+	'add' => 'Добавить',
 	'update' => 'Обновить',
 	'submit' => 'Подтвердить',
-	'reset' => 'Сбросить',
-  'change' => 'Изменить',
+	'reset' => 'Сброс',
+	'change' => 'Изменить',
 	'name' => 'Имя',
 	'title' => 'Название',
 	'description' => 'Описание',
@@ -72,7 +63,6 @@ http://code.google.com/p/opengooru/
 	'dates' => 'Даты',
 	'permission' => 'Разрешение',
 	'permissions' => 'Разрешения',
-	'reset' => 'Сброс',	
 	'owner' => 'Владелец',
 	'instant messengers' => 'IM/ICQ',
 	'value' => 'Значение',
@@ -118,10 +108,8 @@ http://code.google.com/p/opengooru/
 	'events' => 'События',
 	'Event' => 'Событие',
 	'Events' => 'События',
-	
 	'project calendar' => '{0} календарь',
 	'user calendar' => 'календарь {0}',
-	
 	'month 1' => 'Январь',
 	'month 2' => 'Февраль',
 	'month 3' => 'Март',
@@ -134,7 +122,6 @@ http://code.google.com/p/opengooru/
 	'month 10' => 'Октябрь',
 	'month 11' => 'Ноябрь',
 	'month 12' => 'Декабрь',
-	
 	'monday' => 'Понедельник',
 	'tuesday' => 'Вторник',
 	'wednesday' => 'Среда',
@@ -142,7 +129,6 @@ http://code.google.com/p/opengooru/
 	'friday' => 'Пятница',
 	'saturday' => 'Суббота',
 	'sunday' => 'Воскресенье',
-	
 	'monday short' => 'Пн',
 	'tuesday short' => 'Вт',
 	'wednesday short' => 'Ср',
@@ -150,13 +136,11 @@ http://code.google.com/p/opengooru/
 	'friday short' => 'Пт',
 	'saturday short' => 'Сб',
 	'sunday short' => 'Вс',
-	
-  	'1st' => '1ый',
-  	'2nd' => '2ой',
-  	'3rd' => '3ий',
-  	'4th' => '4ый',
-  	'5th' => '5ый',	
-	
+	'1st' => '1ый',
+	'2nd' => '2ой',
+	'3rd' => '3ий',
+	'4th' => '4ый',
+	'5th' => '5ый',
 	'copy of' => 'Копия {0}',
 	'task templates' => 'Шаблоны задач',
 	'add task template' => 'Добавить шаблон задачи',
@@ -171,11 +155,11 @@ http://code.google.com/p/opengooru/
 	'create contact from user' => 'Создать контакт с информацией пользователя',
 	'confirm create contact from user' => 'Вы уверены, что хотите создать контакт с данными пользователя?',
 	'create contact from user desc' => 'Если выбрано "Да", пользователь будет записан в системе, как контакт',
- 	'use previous personal workspace' =>'Установить как личный проект пользователя?',
- 	'use previous personal workspace desc' =>'Если да то проект будет выбран как личный проект пользователя',
- 	'select personal workspace' => 'Выбрать проект',
-  'create personal workspace' => 'Создать новый проект',
-  'use an existing workspace' => 'Использовать существующий проект',
+	'use previous personal workspace' => 'Установить как личный проект пользователя?',
+	'use previous personal workspace desc' => 'Если да то проект будет выбран как личный проект пользователя',
+	'select personal workspace' => 'Выбрать проект',
+	'create personal workspace' => 'Создать новый проект',
+	'use an existing workspace' => 'Использовать существующий проект',
 	'go to contact' => 'Контакты',
 	'show assigned to' => 'Показать, кому присвоено',
 	'timeslot on object' => 'Период времени {0}',
@@ -184,67 +168,59 @@ http://code.google.com/p/opengooru/
 	'task report' => 'Информация о задаче',
 	'priority' => 'Приоритет',
 	'anybody' => 'Любой',
-	
 	'read and write' => 'Чтение и запись',
 	'read only' => 'Только чтение',
 	'none no bars' => 'Нет',
 	'apply to all subworkspaces' => 'Применить права ко всем подпроектам',
 	'weblinks' => 'Веб-ссылки',
-  'add work' => 'Добавить работу',
-	
+	'add work' => 'Добавить работу',
 	'date format' => 'm/d/Y',
 	'date format description' => '(мм/дд/гггг)',
 	'confirm move to trash' => 'Вы действительно хотите переместить выделенный объект в корзину?',
-	
 	'remove' => 'Удалить',
 	'mime type' => 'MIME тип',
-  	
-  	'default' => 'По умолчанию',
-  	'language' => 'Язык',
-  	'before' => 'до',
-  	'pages' => 'страниц',
-  
+	'default' => 'По умолчанию',
+	'language' => 'Язык',
+	'before' => 'до',
+	'pages' => 'страниц',
 	'repeat by' => 'Повторить по',
 	'repeating task' => 'Повторяющаяся задача',
-  	'this task repeats' => 'Эта задача повторяется',
-  	'forever' => 'всегда',
+	'this task repeats' => 'Эта задача повторяется',
+	'forever' => 'всегда',
 	'n times' => '{0} раз',
 	'until x' => 'до {0}',
 	'n days' => '{0} день/дней(я)',
 	'n months' => '{0} месяцев(а)',
 	'n years' => '{0} лет',
-  	'every' => 'каждый',
+	'every' => 'каждый',
 	'generate repetitition' => 'Создать повторяющуюся задачу',
 	'end of task' => 'Конец задачи',
 	'start of task' => 'Начало задачи',
-  	'new task repetition generated' => 'Новая повторяющаяся задача создана',
-
+	'new task repetition generated' => 'Новая повторяющаяся задача создана',
 	'reminders will not apply to repeating events' => 'Предупреждение: на повторяющиеся события, напоминаний не будет.',
-  
 	'move all to right' => 'Переместить все вправо',
 	'move to right' => 'Переместить вправо',
 	'move to left' => 'Переместить влево',
 	'move all to left' => 'Переместить все влево',
 	'move up' => 'Переместить вверх',
 	'move down' => 'Переместить вниз',
-  
-	'this file is included in document' => "Этот файл включен в документ: {0}",
-	'minutes ago' => "{0} минут назад",
-  	'about hours ago' => "Около {0} часов назад",
-  	'yesterday at' => "Вчера в {0}",
-	'day at' => "{0} в {1}",
-
-  	'added by capitalized' => 'Добавлено',
-  	'in capitalized' => 'В', 
-  	'unique id capitalized' => 'Уникальный ID', 
-  	'system notification email' => 'Это системное извещение, НЕ отвечайте на это письмо', 
-  
-  	'modifications tab' => 'Модификации', 
-  	'views tab' => 'Вид', 
-
-  	'latest activity' => 'Последняя активность', 
-  	'view all activity' => 'Посмотреть всю активность...', 
-  	'advanced' => 'Расширенные',
-	
-	); 
-?>
+	'this file is included in document' => 'Этот файл включен в документ: {0}',
+	'minutes ago' => '{0} минут назад',
+	'about hours ago' => 'Около {0} часов назад',
+	'yesterday at' => 'Вчера в {0}',
+	'day at' => '{0} в {1}',
+	'added by capitalized' => 'Добавлено',
+	'in capitalized' => 'В',
+	'unique id capitalized' => 'Уникальный ID',
+	'system notification email' => 'Это системное извещение, НЕ отвечайте на это письмо',
+	'modifications tab' => 'Модификации',
+	'views tab' => 'Вид',
+	'latest activity' => 'Последняя активность',
+	'view all activity' => 'Посмотреть всю активность...',
+	'advanced' => 'Расширенные',
+	'email or username' => 'Эл. почта или имя пользователя',
+	'workspace and tags' => 'Проект и Теги',
+	'direct url' => 'Ссылка на страницу',
+	'the' => 'этот',
+	'assigned to description' => 'Для выбора владельца учетной записи электронной почты',
+); ?>

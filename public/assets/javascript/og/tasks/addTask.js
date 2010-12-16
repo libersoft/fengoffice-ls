@@ -550,7 +550,7 @@ ogTasks.drawAssignedToCombo = function(success, data) {
 					var checkboxDiv = document.getElementById('ogTasksPanelATNotifyDiv');
 					if (record.data.value != '-1:-1' && record.data.value.split(':')[1] != '0'){
 						checkboxDiv.style.display = 'block';
-						var currentUser = ogTasks.currentUser;						
+						var currentUser = ogTasks.currentUser;
 						if (ogTasks.userPreferences.defaultNotifyValue == 1)
 							checkbox.checked = (record.data.value != (currentUser.companyId + ':' + currentUser.id));
 						else

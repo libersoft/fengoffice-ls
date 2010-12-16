@@ -412,6 +412,7 @@ class FilesController extends ApplicationController {
 			} catch(Exception $e) {
 				DB::rollback();
 				flash_error($e->getMessage());
+				Logger::log("Error when uploading file:".$e->getTraceAsString());
 				ajx_current("empty");
 
 				// If we uploaded the file remove it from repository
@@ -538,6 +539,7 @@ class FilesController extends ApplicationController {
 		$file_dt = array();
 		$file_content = file_get_contents(html_entity_decode($url));
 		$extension = get_file_extension($url);
+		if (strpos($extension, "c=files") !== FALSE) $extension = "jpg";
 		$name = $filename . "-img-$img_num.$extension";
 		$description = lang("this file is included in document", $filename);
 		
@@ -1845,7 +1847,7 @@ class FilesController extends ApplicationController {
 						"type" => $file->getTypeString(),
 						"size" => $file->getFilesize(),
 						"created_by_id" => $file->getCreatedById(),
-						"created_by_name" => Users::findById($file->getCreatedById())->getDisplayName(),
+						"created_by_name" => $file->getCreatedByDisplayName(),
 						"created_on" => $file->getCreatedOn() instanceof DateTimeValue ? $file->getCreatedOn()->getTimestamp() : 0,
 						"is_checked_out" => $file->isCheckedOut(),
 						"checked_out_by_name" => $file->getCheckedOutByDisplayName(),

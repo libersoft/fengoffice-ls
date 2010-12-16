@@ -55,6 +55,10 @@ return array(
 	'success enable all context help' => 'Context help re-opened successfully.',
 	'success enable context help' => 'Context help enabled successfully.',
 	'success disable context help' => 'Context help disabled successfully.',
+	'how to purchase' => 'How to purchase',
+	'how to purchase desc' => 'Information about our different plans and benefits', 
+	'add ticket' => 'Add a new support ticket',
+	'add ticket desc' => "To get personalized help about Feng Office",	
 	
 ); // array
 

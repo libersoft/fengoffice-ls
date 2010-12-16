@@ -184,4 +184,11 @@
 	'subscribed notification milestone desc' => 'Você foi inscrito no Marco \'{0}\' por {1}.',
 	'subscribed notification email' => 'Inscrito no e-mail \'{0}\'',
 	'subscribed notification email desc' => 'Você foi inscrito no e-mail \'{0}\' por {1}.',
+	'sent mails sync' => 'Enviada definições de sincronização de mensagens (para IMAP somente)',
+	'connnection security' => 'Segurança da ligação',
+	'select folder for outbox' => 'Selecione a pasta caixa de saída',
+	'sync complete' => 'Sinchronização concluída',
+	'invalid sync settings' => 'Definições de sincronização inválida. Não é possível estabelecer uma conexão com o servidor',
+	'cant find user' => 'Não é possível encontrar o usuário solicitado',
+	'cant find account' => 'Não é possível localizar a conta de e-mail solicitado',
 ); ?>

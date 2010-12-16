@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Pastafrola upgrade script will upgrade FengOffice 1.6 to FengOffice 1.7.2
+ * Pastafrola upgrade script will upgrade FengOffice 1.6 to FengOffice 1.7.3.1
  *
  * @package ScriptUpgrader.scripts
  * @version 1.1
@@ -40,7 +40,7 @@ class PastafrolaUpgradeScript extends ScriptUpgraderScript {
 	function __construct(Output $output) {
 		parent::__construct($output);
 		$this->setVersionFrom('1.6.2');
-		$this->setVersionTo('1.7.2');
+		$this->setVersionTo('1.7.3.1');
 	} // __construct
 
 	function getCheckIsWritable() {
@@ -143,6 +143,15 @@ class PastafrolaUpgradeScript extends ScriptUpgraderScript {
 					ON DUPLICATE KEY UPDATE id=id;
 					ALTER TABLE `" . TABLE_PREFIX . "application_logs` MODIFY COLUMN `action` enum('upload','open','close','delete','edit','add','trash','untrash','subscribe','unsubscribe','tag','untag','comment','link','unlink','login','logout','archive','unarchive','move','copy','read','download','checkin','checkout') collate utf8_unicode_ci default NULL;
 					ALTER TABLE `" . TABLE_PREFIX . "mail_contents` ADD COLUMN `sync` BOOL NOT NULL DEFAULT '0';
+				";
+			}
+			
+			if (version_compare($installed_version, '1.7.2') <= 0) {
+				$upgrade_script .= "
+					INSERT INTO `" . TABLE_PREFIX . "config_options` (`category_name`, `name`, `value`, `config_handler_class`, `is_system`, `option_order`, `dev_comment`) VALUES
+						('passwords', 'block_login_after_x_tries', '0', 'BoolConfigHandler', '0', '20', NULL),
+						('mailing', 'check_spam_in_subject', '0', 'BoolConfigHandler', 0, 0, '')
+					ON DUPLICATE KEY UPDATE id=id;
 				";
 			}
 			

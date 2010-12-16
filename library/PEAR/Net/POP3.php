@@ -33,7 +33,7 @@
 // | Co-Author: Damian Fernandez Sosa <damlists@cnba.uba.ar>               |
 // +-----------------------------------------------------------------------+
 //
-// $Id: POP3.php,v 1.1 2010/01/22 18:07:06 acio Exp $
+// $Id: POP3.php,v 1.1.6.1 2010/11/30 15:42:49 diego Exp $
 
 require_once('Net/Socket.php');
 
@@ -150,7 +150,7 @@ class Net_POP3 {
     {
         $this->_timestamp =  ''; // Used for APOP
         $this->_maildrop  =  array();
-        $this->_timeout   =  3;
+        $this->_timeout   =  15;
         $this->_state     =  NET_POP3_STATE_DISCONNECTED;
         $this->_socket    =  new Net_Socket();
         /*

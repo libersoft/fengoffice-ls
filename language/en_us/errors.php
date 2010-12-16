@@ -12,7 +12,8 @@
   
     // General
     'invalid email address' => 'Email address format is not valid',
-   
+	'error invalid recipients' => 'Invalid email addresses found in field "{0}": {1}',
+
     // Company validation errors
     'company name required' => 'Company / organization name is required',
     'company homepage invalid' => 'Homepage value is not a valid URL',
@@ -187,6 +188,7 @@
   	'no tag specified' => 'No tag specified',
   
     'no mailAccount error' => 'Action unavailable. You do not have an email account added.',
+	'content too long not loaded' => 'Previous email content is too long and was not loaded, but will be sent with this email.'
   ); // array
 
 ?>

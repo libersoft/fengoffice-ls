@@ -1,5 +1,11 @@
 <?php
-if (is_array($logs) && count($logs)> 0) {
+
+if (is_array($logs) && count($logs)> 0) {	
+	$is_user = $logs[0]->getRelObjectManager() == 'Users' ? true : false;
+	if(!isset ($no_permissions)) $no_permissions = '';
+	if ($is_user)$no_permissions = (logged_user()->getId()!=$user_id && !logged_user()->isAdministrator()) ? true : false;			
+	if (!$is_user || ($is_user && !$no_permissions)){	
+
 ?>
 
 <div class="commentsTitle"><?php echo lang('latest activity'); ?> </div>
@@ -10,7 +16,7 @@ if (is_array($logs) && count($logs)> 0) {
 $isAlt = true;
 if (is_array($logs)) {
 	foreach ($logs as $log) {		
-		if ($log->getRelObjectManager() == 'Users' && ( logged_user()->getId()!=$user_id && !logged_user()->isAdministrator())) break;		
+		if ($log->getRelObjectManager() == 'Users' && $no_permissions) break;		
 		$isAlt = !$isAlt;
 		echo '<tr' . ($isAlt? ' class="dashAltRow"' : '') . '><td  style="padding:5px;padding-right:15px;">';
 		if ($log->getCreatedOn()->getYear() != DateTimeValueLib::now()->getYear())
@@ -34,7 +40,7 @@ if (is_array($logs)) {
 </table>
 
 <a style="display:block" class="internalLink" href='<?php echo $object->getViewHistoryUrl() ?>' ><?php echo lang('view all activity'); ?></a>
-<?php			 		
+<?php  	}
 }
 ?>
 

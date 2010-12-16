@@ -25,10 +25,18 @@ foreach ($events as $event) {
 	} catch (Error $e) {
 		echo $e->getMessage();
 	}
+	
 	if ($event->getRecursive()) {
-		$nextdate = DateTimeValueLib::now()->add("m", $event->getDelay());
-		$event->setDate($nextdate);
-		$event->save();
+		try {
+			DB::beginWork();
+			$nextdate = DateTimeValueLib::now()->add("m", $event->getDelay());
+			$event->setDate($nextdate);
+			$event->save();
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			echo $e->getMessage();
+		}
 	}
 }
 

@@ -79,7 +79,7 @@ class AccountController extends ApplicationController {
 		if((trim($redirect_to)) == '' || !is_valid_url($redirect_to)) {
 			$redirect_to = $user->getCardUrl();
 		} // if
-		tpl_assign('redirect_to', $redirect_to);
+		tpl_assign('redirect_to', null);
 
 		$user_data = array_var($_POST, 'user');
 		if(!is_array($user_data)) {
@@ -199,7 +199,7 @@ class AccountController extends ApplicationController {
 		if((trim($redirect_to)) == '' || !is_valid_url($redirect_to)) {
 			$redirect_to = $user->getCardUrl();
 		} // if
-		tpl_assign('redirect_to', $redirect_to);
+		tpl_assign('redirect_to', null);
 
 		$password_data = array_var($_POST, 'password');
 		tpl_assign('user', $user);

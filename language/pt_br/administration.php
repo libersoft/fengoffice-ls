@@ -281,4 +281,13 @@
 	'user ws config option desc activity widget elements' => 'Número de itens exibidos no widget de atividade.',
 	'user ws config option name task_display_limit' => 'O número máximo de tarefas para mostrar',
 	'user ws config option desc task_display_limit' => 'Por motivos de desempenho, este número não deve ser muito grande. Use 0 para nenhum limite.',
+	'user ws config option desc classify_mail_with_conversation' => 'Se ativado, mensagens recebidas são classificadas em espaços de trabalho de conversa (se e-mail,  pertencem a uma conversa).',
+	'user ws config option name classify_mail_with_conversation' => 'Classificar mensagens com a sua conversa',
+	'user ws config option name mail_account_err_check_interval' => 'Erro em Contas de Email verificando intervalos',
+	'user ws config option desc mail_account_err_check_interval' => 'Tempo entre cada verificação nas contas de email (0 para desativar)',
+	'sync' => 'Sinc',
+	'mails on imap acc already sync' => 'Não há e-mails para serem sincronizado nesta conta',
+	'cant sync account' => 'Esta conta não pode ser sincronizada. Verifique as configurações do IMAP',
+	'config option name sent_mails_sync' => 'Habilitar sincronização IMAP quando enviar e-mails do Feng Office',
+	'succes save object subtypes' => 'Objeto subtipos salvos com sucesso',
 ); ?>

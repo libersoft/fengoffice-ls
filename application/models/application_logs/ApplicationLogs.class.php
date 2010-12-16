@@ -301,7 +301,7 @@ class ApplicationLogs extends BaseApplicationLogs {
 			$private_filter = $include_private ? 1 : 0;
 			$silent_filter = $include_silent ? 1 : 0;		
 			$userCond = " AND `taken_by_id` = " . $object->getId();
-			if(!is_null($project_ids)) {
+			if(isset ($project_ids) && $project_ids != null) {
 				$conditions = array('`is_private` <= ? AND `is_silent` <= ? AND '.self::getWorkspaceString($project_ids) . $userCond, $private_filter, $silent_filter);
 			} else {
 				$conditions = array('`is_private` <= ? AND `is_silent` <= ?' . $userCond, $private_filter, $silent_filter);

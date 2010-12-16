@@ -1134,9 +1134,9 @@ class EventController extends ApplicationController {
 			return ;
 	    }
 	    
-	    $hours = array_var($_GET, 'hours', -1);
-	    $mins = array_var($_GET, 'mins', -1);
-	    if ($hours == -1 || $mins == -1) {
+	    $hours = array_var($_GET, 'hours', -99);
+	    $mins = array_var($_GET, 'mins', -99);
+	    if ($hours == -99 || $mins == -99) {
 	    	ajx_current("empty");
 	    	return;
 	    }

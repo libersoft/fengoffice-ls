@@ -125,6 +125,13 @@ class MailController extends ApplicationController {
 				}
 			}
 
+			$cache_fname = "";
+			if (strlen($re_body) > 200 * 1024) {
+				$cache_fname = gen_id();
+				file_put_contents(ROOT . "/tmp/$cache_fname", $re_body);
+				$re_body = lang("content too long not loaded");
+			}
+
 			$mail_data = array(
 				'to' => $to,
 				'cc' => $cc,
@@ -136,6 +143,7 @@ class MailController extends ApplicationController {
 				'in_reply_to_id' => $original_mail->getMessageId(),
 				'original_id' => $original_mail->getId(),
 				'last_mail_in_conversation' => MailContents::getLastMailIdInConversation($original_mail->getConversationId(), true),
+				'pre_body_fname' => $cache_fname,
 			); // array
 		} // if
 		$mail_accounts = MailAccounts::getMailAccountsByUser(logged_user());
@@ -235,7 +243,7 @@ class MailController extends ApplicationController {
 			$isNew = true;
 			$mail = new MailContent();
 		}
-				
+		
 		tpl_assign('mail_to', urldecode(array_var($_GET, 'to')));
 		tpl_assign('link_to_objects', array_var($_GET, 'link_to_objects'));
 
@@ -278,6 +286,15 @@ class MailController extends ApplicationController {
 
 			$subject = array_var($mail_data, 'subject');
 			$body = array_var($mail_data, 'body');
+			if (($pre_body_fname = array_var($mail_data, 'pre_body_fname')) != "") {
+				$body = str_replace(lang('content too long not loaded'), '', $body, $count=1);
+				$tmp_filename = ROOT . "/tmp/$pre_body_fname";
+				alert($tmp_filename);
+				if (is_file($tmp_filename)) {
+					$body .= file_get_contents($tmp_filename);
+					if (!$isDraft) @unlink($tmp_filename);
+				}
+			}
 			if (array_var($mail_data, 'format') == 'html') {
 				$css = "font-family:Arial,Verdana,sans-serif;font-size:12px;color:#222;";
 				Hook::fire('email_base_css', null, $css);
@@ -299,6 +316,25 @@ class MailController extends ApplicationController {
 			
 			if (!$isDraft && trim($to.$cc.$bcc) == '') {
 				flash_error(lang('recipient must be specified'));
+				ajx_current("empty");
+				return;
+			}
+			
+			$invalid_to = MailUtilities::validate_email_addresses($to);
+			if (is_array($invalid_to)) {
+				flash_error(lang('error invalid recipients', lang('mail to'), implode(", ", $invalid_to)));
+				ajx_current("empty");
+				return;
+			}
+			$invalid_cc = MailUtilities::validate_email_addresses($cc);
+			if (is_array($invalid_cc)) {
+				flash_error(lang('error invalid recipients', lang('mail CC'), implode(", ", $invalid_cc)));
+				ajx_current("empty");
+				return;
+			}
+			$invalid_bcc = MailUtilities::validate_email_addresses($bcc);
+			if (is_array($invalid_bcc)) {
+				flash_error(lang('error invalid recipients', lang('mail BCC'), implode(", ", $invalid_bcc)));
 				ajx_current("empty");
 				return;
 			}
@@ -446,7 +482,7 @@ class MailController extends ApplicationController {
 				if (count($attachments) > 0) {
 					$i = 0;
 					$str = "";
-					foreach ($attachments as $att) {
+				/*	foreach ($attachments as $att) {
 						$str .= "--000000000000000000000000000$i\n";
 						$str .= "Name: ".$att['name'] .";\n";
 						$str .= "Type: ".$att['type'] .";\n";
@@ -455,10 +491,29 @@ class MailController extends ApplicationController {
 						$str .= "--000000000000000000000000000$i--\n";
 						$i++;
 					}
+				*/
+					
+					$str = "#att_ver 2\n";
+					foreach ($attachments as $att) {
+						$rep_id = $utils->saveContent($att['data']);
+						$str .= $att['name'] . "," . $att['type'] . "," . $rep_id . "\n";
+					}
+
 					// save attachments, when mail is sent this file is deleted and full content is saved
 					$repository_id = $utils->saveContent($str);
 					if (!$isNew) {
 						if (FileRepository::isInRepository($mail->getContentFileId())) {
+							// delete old attachments
+							$content = FileRepository::getFileContent($mail->getContentFileId());
+							if (str_starts_with($content, "#att_ver")) {
+								$lines = explode("\n", $content);
+								foreach ($lines as $line) {
+									if (!str_starts_with($line, "#") && trim($line) !== "") {
+										$data = explode(",", $line);
+										if (isset($data[2]) && FileRepository::isInRepository($data[2])) FileRepository::deleteFile($data[2]);
+									}
+								}
+							}
 							FileRepository::deleteFile($mail->getContentFileId());
 						}
 					}
@@ -513,7 +568,7 @@ class MailController extends ApplicationController {
 				// autoclassify sent email
 				// if replying a classified email classify on same workspace
 				$classified = false;
-				if ($in_reply_to_id) {
+				if (array_var($mail_data, 'original_id')) {
 					$in_reply_to = MailContents::findById(array_var($mail_data, 'original_id'));
 					if ($in_reply_to instanceof MailContent) {
 						$workspaces = $in_reply_to->getWorkspaces();
@@ -599,33 +654,55 @@ class MailController extends ApplicationController {
 		} // if
 	} // add_mail
 
-	private function readAttachmentsFromFileSystem(MailContent $mail) {
+	private function readAttachmentsFromFileSystem(MailContent $mail, &$att_version) {
+		$att_version = 2;
 		if ($mail->getHasAttachments() && FileRepository::isInRepository($mail->getContentFileId())) {
 					
 			$attachments = array();
 			$content = FileRepository::getFileContent($mail->getContentFileId());
-			$i=0; $offset = 0;
-			while ($offset < strlen($content)) {
-				$delim = "--000000000000000000000000000$i";
-				if (strpos($content, $delim, $offset) !== FALSE) {
-					$offset = strpos($content, $delim) + strlen($delim);
-					$endline = strpos($content, ";", $offset);
-					$name = substr($content, $offset + 1, $endline - $offset - 1);
-					$pos = strpos($name, ":");
-					$name = trim(substr($name, $pos+1, strlen($name) - $pos - 1));
-					
-					$offset = $endline + 1;
-					$endline = strpos($content, ";", $offset);
-					$type = substr($content, $offset + 1, $endline - $offset - 1);
-					$pos = strpos($type, ":");
-					$type = trim(substr($type, $pos+1, strlen($type) - $pos - 1));
-
-					$offset = $endline + 1;
-					$endline = strpos($content, "$delim--");
-					$attachments[] = array('name' => $name, 'type' => $type, 'data' => base64_decode(trim(substr($content, $offset, $endline - $offset - 1))));
-					$offset = strpos($content, "$delim--") + strlen("$delim--")+1;
-				} else break;
-				$i++;
+			if (str_starts_with($content, "--")) {
+				$att_version = 1;
+			} else if (str_starts_with($content, "#att_ver")) {
+				$att_version = trim(str_replace("#att_ver", "", substr($content, 0, strpos($content, "\n"))));
+			}
+			if ($att_version < 2) {
+				$i=0; $offset = 0;
+				while ($offset < strlen($content)) {
+					$delim = "--000000000000000000000000000$i";
+					if (strpos($content, $delim, $offset) !== FALSE) {
+						$offset = strpos($content, $delim) + strlen($delim);
+						$endline = strpos($content, ";", $offset);
+						$name = substr($content, $offset + 1, $endline - $offset - 1);
+						$pos = strpos($name, ":");
+						$name = trim(substr($name, $pos+1, strlen($name) - $pos - 1));
+						
+						$offset = $endline + 1;
+						$endline = strpos($content, ";", $offset);
+						$type = substr($content, $offset + 1, $endline - $offset - 1);
+						$pos = strpos($type, ":");
+						$type = trim(substr($type, $pos+1, strlen($type) - $pos - 1));
+	
+						$offset = $endline + 1;
+						$endline = strpos($content, "$delim--");
+						$attachments[] = array('name' => $name, 'type' => $type, 'data' => base64_decode(trim(substr($content, $offset, $endline - $offset - 1))));
+						$offset = strpos($content, "$delim--") + strlen("$delim--")+1;
+					} else break;
+					$i++;
+				}
+			} else {
+				$lines = explode("\n", $content);
+				foreach ($lines as $line) {
+					if (!str_starts_with($line, "#") && trim($line) !== "") {
+						$data = explode(",", $line);
+						if (FileRepository::getBackend() instanceof FileRepository_Backend_FileSystem ) {
+							$path = FileRepository::getBackend()->getFilePath($data[2]);
+						} else {
+							$path = ROOT."/tmp/".gen_id();
+							file_put_contents($path, FileRepository::getFileContent($data[2]));
+						}
+						$attachments[] = array('name' => $data[0], 'type' => $data[1], 'path' => $path, 'repo_id' => $data[2]);
+					}
+				}
 			}
 		} else $attachments = null;
 		
@@ -645,9 +722,15 @@ class MailController extends ApplicationController {
 			$userAccounts = array($account);
 		}
 		
+		$old_memory_limit = ini_get('memory_limit');
+		if (php_config_value_to_bytes($old_memory_limit) < 256*1024*1024) {
+			ini_set('memory_limit', '256M');
+		}
+		
 		foreach ($userAccounts as $account) {
 			
-			$accountUser = MailAccountUsers::getByAccountAndUser($account, logged_user());
+			$accountUser = null;
+			if (logged_user() instanceof User) $accountUser = MailAccountUsers::getByAccountAndUser($account, logged_user());
 			
 			if (!$account || !$accountUser) {
 				flash_error(lang('no access permissions'));
@@ -658,79 +741,131 @@ class MailController extends ApplicationController {
 			
 			try {
 				$mails = MailContents::findAll(array(
-					"conditions" => array("`is_deleted`=0 AND `state` >= 200 AND `account_id` = ? AND `created_by_id` = ?", $account->getId(), logged_user()->getId()),
+					"conditions" => array("`is_deleted`=0 AND `state` >= 200 AND `account_id` = ? AND `created_by_id` = ?", $account->getId(), $accountUser->getUserId()),
 					"order" => "`state` ASC"
 				));
 				$count = 0;
 				foreach ($mails as $mail) {
 					
-					$old_memory_limit = ini_get('memory_limit');
-					if (php_config_value_to_bytes($old_memory_limit) < 256*1024*1024) {
-						ini_set('memory_limit', '256M');
-					}
-					
-					$errorMailId = $mail->getId();
-					$to = $mail->getTo();
-					$from = array($account->getEmailAddress() => $account->getFromName());
-					$subject = $mail->getSubject();
-					$body = $mail->getBodyHtml() != '' ? $mail->getBodyHtml() : $mail->getBodyPlain();
-					$cc = $mail->getCc();
-					$bcc = $mail->getBcc();
-					$type = $mail->getBodyHtml() != '' ? 'text/html' : 'text/plain';
-					$msg_id = $mail->getMessageId();
-					$in_reply_to_id = $mail->getInReplyToId();
-	
-					$attachments = self::readAttachmentsFromFileSystem($mail);
-					
-					if ($mail->getBodyHtml() != '') {
-						$images = get_image_paths($body);
-					} else {
-						$images = null;
+					try {
+						DB::beginWork();
+						$state = -1;
+						$saved = "false";
+						$stete = $mail->getState();
+						$mail->setState($state + 2);
+						$mail->save();
+						$saved = "true";
+						DB::commit();
+					} catch (Exception $e) {
+						DB::rollback();
+						Logger::log("Could not advance email state, email skipped: ".$e->getMessage()."\nmail_id=".$mail->getId()."\nstate=$state\nsaved=$saved");
+						continue;
 					}
 					
 					try {
+					
+						$errorMailId = $mail->getId();
+						$to = $mail->getTo();
+						$from = array($account->getEmailAddress() => $account->getFromName());
+						$subject = $mail->getSubject();
+						$body = $mail->getBodyHtml() != '' ? $mail->getBodyHtml() : $mail->getBodyPlain();
+						$cc = $mail->getCc();
+						$bcc = $mail->getBcc();
+						$type = $mail->getBodyHtml() != '' ? 'text/html' : 'text/plain';
+						$msg_id = $mail->getMessageId();
+						$in_reply_to_id = $mail->getInReplyToId();
+		
+						$attachments = self::readAttachmentsFromFileSystem($mail, $att_version);
+						
+						if ($mail->getBodyHtml() != '') {
+							$images = get_image_paths($body);
+						} else {
+							$images = null;
+						}
+
 						$mail->setSentDate(DateTimeValueLib::now());
 						$mail->setReceivedDate(DateTimeValueLib::now());
-						$sentOK = $utils->sendMail($account->getSmtpServer(), $to, $from, $subject, $body, $cc, $bcc, $attachments, $account->getSmtpPort(), $account->smtpUsername(), $account->smtpPassword(), $type, $account->getOutgoingTrasnportType(), $msg_id, $in_reply_to_id, $images, $complete_mail);
-						//if user selected the option to keep a copy of sent mails on the server						
-						if (config_option("sent_mails_sync") && $account->getSyncServer() != null && $account->getSyncSsl()!=null && $account->getSyncSslPort()!=null && $account->getSyncFolder()!=null && $account->getSyncAddr()!=null && $account->getSyncPass()!=null){							
-							$check_sync_box = MailUtilities::checkSyncMailbox($server, $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass());
-							if($check_sync_box)MailUtilities::sendToServerThroughIMAP($account->getSyncServer(), $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass(), $complete_mail);
-						}						
+						
+						if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " antes de enviar: ".$mail->getId() . "\n", FILE_APPEND);
+						
+						$sentOK = $utils->sendMail($account->getSmtpServer(), $to, $from, $subject, $body, $cc, $bcc, $attachments, $account->getSmtpPort(), $account->smtpUsername(), $account->smtpPassword(), $type, $account->getOutgoingTrasnportType(), $msg_id, $in_reply_to_id, $images, $complete_mail, $att_version);
 					} catch (Exception $e) {
 						// actions are taken below depending on the sentOK variable
+						Logger::log("Could not send email: ".$e->getMessage()."\nmail_id=".$mail->getId());
 						$sentOK = false;
+					}	
+					
+					try {
+						if ($sentOK) {
+							DB::beginWork();
+							$mail->setState(3);
+							$mail->save();
+							DB::commit();
+						} else {
+							Logger::log("Swift returned sentOK = false after sending email\nmail_id=".$mail->getId());
+						}
+					} catch (Exception $e) {
+						Logger::log("Exception marking email as sent: ".$e->getMessage()."\nmail_id=".$mail->getId());
+						if ($sentOK) DB::rollback();
+					}
+						
+					if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " despues de enviar: ".$mail->getId() . "\n", FILE_APPEND);
+					
+					try {	
+						//if user selected the option to keep a copy of sent mails on the server						
+						if ($sentOK && config_option("sent_mails_sync") && $account->getSyncServer() != null && $account->getSyncSsl()!=null && $account->getSyncSslPort()!=null && $account->getSyncFolder()!=null && $account->getSyncAddr()!=null && $account->getSyncPass()!=null){							
+							$check_sync_box = MailUtilities::checkSyncMailbox($server, $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass());
+							if ($check_sync_box) MailUtilities::sendToServerThroughIMAP($account->getSyncServer(), $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass(), $complete_mail);
+						}
+					} catch (Exception $e) {
+						Logger::log("Could not save sent mail in server through imap: ".$e->getMessage()."\nmail_id=".$mail->getId());
 					}
 					
-					ini_set('memory_limit', $old_memory_limit);
-
+					if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " antes de try: ".$mail->getId() . "\n", FILE_APPEND);
+					
+					try {
+						if ($sentOK) {
+							if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " sentOK=true: ".$mail->getId() . "\n", FILE_APPEND);
+							if (FileRepository::isInRepository($mail->getContentFileId())) {
+								if ($att_version >= 2) {
+									// delete attachments from repository
+									foreach ($attachments as $att) {
+										if (FileRepository::isInRepository($att['repo_id'])) FileRepository::deleteFile($att['repo_id']);
+									}
+									if (is_file($att['path'])) @unlink($att['path']); // if file was copied to tmp -> delete it
+									if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " deleted attachments: ".$mail->getId() . "\n", FILE_APPEND);
+								}
+								FileRepository::deleteFile($mail->getContentFileId());
+								if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " deleted att list: ".$mail->getId() . "\n", FILE_APPEND);
+							}
+						}
+					} catch (Exception $e) {
+						Logger::log("Exception deleting tmp repository files (attachment list): ".$e->getMessage()."\nmail_id=".$mail->getId());
+					}
+					
 					try {
 						DB::beginWork();
 						if ($sentOK) {
-							if (FileRepository::isInRepository($mail->getContentFileId())) {
-								FileRepository::deleteFile($mail->getContentFileId());
-							}
-							
-							//$content = $utils->getContent($account->getSmtpServer(), $account->getSmtpPort(), $account->getOutgoingTrasnportType(), $account->smtpUsername(), $account->smtpPassword(), $body, $attachments);
 							$content = $complete_mail;
 							$repository_id = $utils->saveContent($content);
+							if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " content saved: ".$mail->getId() . "\n", FILE_APPEND);
 							
 							$mail->setContentFileId($repository_id);
 							$mail->setSize(strlen($content));
-							$mail->setState(3);
-							if (config_option("sent_mails_sync") && $check_sync_box)
+							if (config_option("sent_mails_sync") && isset($check_sync_box) && $check_sync_box)
 								$mail->setSync(true);
 							$mail->save();
+							
+							if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " email saved: ".$mail->getId() . "\n", FILE_APPEND);
+							
 							$properties = array("id" => $mail->getId());
 							evt_add("mail sent", $properties);
 							$count++;
-						} else {
-							$mail->setState($mail->getState() + 2);
-							$mail->save();
 						}
 						DB::commit();
 					} catch (Exception $e) {
 						DB::rollback();
+						Logger::log("Exception deleting tmp repository files (attachment list): ".$e->getMessage()."\nmail_id=".$mail->getId());
 					}
 				}
 				if ($count > 0) {
@@ -741,15 +876,8 @@ class MailController extends ApplicationController {
 				if ($errorMailId > 0){
 					$email = MailContents::findById($errorMailId);
 					if ($email instanceof MailContent){
-						try {
-							DB::beginWork();
-							$email->setState($mail->getState() + 2);
-							$email->save();
-							DB::commit();
-						} catch (Exception $e) {
-							DB::rollback();
-						}
-						
+						Logger::log("failed to send mail: ".$e->getMessage()."\n".$email->getEditUrl());
+						Logger::log($e->getTraceAsString());
 						$errorEmailUrl = $email->getEditUrl();
 					}
 				}
@@ -758,6 +886,7 @@ class MailController extends ApplicationController {
 				ajx_current("empty");
 			}
 		}
+		ini_set('memory_limit', $old_memory_limit);
 		ajx_current("empty");
 	}
 	
@@ -918,14 +1047,22 @@ class MailController extends ApplicationController {
 			if (php_config_value_to_bytes($old_memory_limit) < 256*1024*1024) {
 				ini_set('memory_limit', '256M');
 			}
-			$attachments = self::readAttachmentsFromFileSystem($email);
+			$attachments = self::readAttachmentsFromFileSystem($email, $att_ver);
 			if ($attachments && is_array($attachments)) {
 				foreach($attachments as &$attach) {
-					$attach["FileName"] = $attach['name'];
-					$attach['size'] = format_filesize(strlen($attach["data"]));
-					unset($attach['name']);
-					unset($attach['data']);
+					if ($att_ver < 2) {
+						$attach["FileName"] = $attach['name'];
+						$attach['size'] = format_filesize(strlen($attach["data"]));
+						unset($attach['name']);
+						unset($attach['data']);
+					} else {
+						$attach["FileName"] = $attach['name'];
+						$attach['size'] = format_filesize(filesize($attach["path"]));
+						unset($attach['name']);
+					}
 				}
+			} else {
+				
 			}
 			ini_set('memory_limit', $old_memory_limit);
 		} else {
@@ -988,7 +1125,7 @@ class MailController extends ApplicationController {
 						
 						if (isset($part['Headers']['content-id:']) && $part['Headers']['content-id:'] == "<$part_name>") {
 							$filename = isset($part['FileName']) ? $part['FileName'] : $part_name;
-							$filename = $enc_conv->convert(mb_detect_encoding($filename), "ISO-8859-1", $filename, false);
+							$filename = $enc_conv->convert(detect_encoding($filename), "ISO-8859-1", $filename, false);
 							$file_content = $part['Body'];
 							$handle = fopen(ROOT."$tmp_folder/$filename", "wb");
 							fwrite($handle, $file_content);
@@ -1071,9 +1208,11 @@ class MailController extends ApplicationController {
 		$attId = array_var($_GET, 'attachment_id');
 
 		if ($email->getState() >= 200) {
-			$attachments = self::readAttachmentsFromFileSystem($email);
+			$attachments = self::readAttachmentsFromFileSystem($email, $att_ver);
 			$attachment = $attachments[$attId];
-			foreach($attachment as $k=>$v) Logger::log("$k=>$v");
+			if ($att_ver >= 2) {
+				$attachment['data'] = is_file($attachment['path']) ? file_get_contents($attachment['path']) : '';
+			}
 			$data_field = "data";
 			$name_field = "name";
 		} else {
@@ -1085,6 +1224,7 @@ class MailController extends ApplicationController {
 
 		$content = $attachment[$data_field];
 		$filename = str_starts_with($attachment[$name_field], "=?") ? iconv_mime_decode($attachment[$name_field], 0, "UTF-8") : utf8_safe($attachment[$name_field]);
+		if (trim($filename) == "" && strlen($attachment[$name_field]) > 0) $filename = utf8_encode($attachment[$name_field]);
 		$typeString = "application/octet-stream";
 		$filesize = strlen($content);
 		$inline = false;
@@ -1178,7 +1318,7 @@ class MailController extends ApplicationController {
 				// remove workspaces
 				$email->removeFromWorkspaces($ws_ids);
 				
-				// unclassify attachments, remove all allowd ws, then if file has no ws -> delete it 
+				// unclassify attachments, remove all allowed ws, then if file has no ws -> delete it 
 				if ($email->getHasAttachments()) {
 					MailUtilities::parseMail($email->getContent(),$decoded,$parsedEmail,$warnings);
 					if (isset($parsedEmail['Attachments'])) {
@@ -1282,12 +1422,13 @@ class MailController extends ApplicationController {
 						}
 					}
 					DB::commit();
-					flash_success(lang('success classify email'));	
+					flash_success(lang('success classify email'));
 					if ($create_task) {
 						ajx_replace(true);
 						$this->redirectTo('task', 'add_task', array('from_email' => $email->getId(), 'replace' =>  1));
 					} else {
 						ajx_current("back");
+						evt_add("reload mails panel", array());
 					}
 				} else {
 					flash_error(lang("error classifying attachment cant open file"));
@@ -1316,6 +1457,7 @@ class MailController extends ApplicationController {
 			if (isset($classification_data["att_".$c]) && $classification_data["att_".$c]) {
 				$att = $parsedEmail["Attachments"][$c];
 				$fName = str_starts_with($att["FileName"], "=?") ? iconv_mime_decode($att["FileName"], 0, "UTF-8") : utf8_safe($att["FileName"]);
+				if (trim($fName) == "" && strlen($att["FileName"]) > 0) $fName = utf8_encode($att["FileName"]);
 				try {
 					$file = ProjectFiles::findOne(array('conditions' => "`filename` = ".DB::escape($fName)." AND `mail_id` = ".$email->getId()));
 					DB::beginWork();
@@ -1379,9 +1521,9 @@ class MailController extends ApplicationController {
 					flash_error($e->getMessage());
 					ajx_current("empty");
 				}
-				unlink($tempFileName);
+				if (isset($tempFileName) && is_file($tempFileName)) unlink($tempFileName);
 			}
-		}		
+		}
 	}
 	
 	function showContents(){
@@ -1710,7 +1852,7 @@ class MailController extends ApplicationController {
 		          'del_from_server' => $mailAccount->getDelFromServer(),
 		          'outgoing_transport_type' => $mailAccount->getOutgoingTrasnportType(),
 				  'workspace' => $mailAccount->getColumnValue('workspace',0),			
-			); // array			
+			); // array
 			if(config_option('sent_mails_sync')){								
 				$sync_details = array('sync_server' => $mailAccount->getSyncServer(),
 				  'sync_addr' => $mailAccount->getSyncAddr(),
@@ -1754,13 +1896,13 @@ class MailController extends ApplicationController {
 		tpl_assign('mailAccount_data', $mailAccount_data);
 
 		if(array_var($_POST, 'submitted')) {
-			try {				
+			try {
 				$user_changed = false;
 				$selected_user = array_var($_POST, 'users_select_box');					
 				if (!$is_admin){
 					$mail_account_user = Users::findById($mailAccount->getUserId());
 				}
-				else{		
+				else{
 					$mail_account_user = Users::findById($selected_user);
 					$old_user_id = $mailAccount->getUserId();					
 					if ($old_user_id != $mail_account_user->getId())
@@ -2134,13 +2276,17 @@ class MailController extends ApplicationController {
 			//Attachs
 			$attachs = array();
 			if ($original_mail->getHasAttachments()) {
-				$attachments = self::readAttachmentsFromFileSystem($original_mail);
+				$attachments = self::readAttachmentsFromFileSystem($original_mail, $att_version);
 				foreach($attachments as $att) {
 					$fName = $att["name"];
 					$fileType = $att["type"];
 					$fid = gen_id();
 					$attachs[] = "FwdMailAttach:$fName:$fileType:$fid";
-					file_put_contents(ROOT . "/tmp/" . logged_user()->getId() . "_" .$original_mail->getAccountId() . "_FwdMailAttach_$fid", $att['data']);
+					if ($att_version >= 2) {
+						@copy($att['path'], ROOT . "/tmp/" . logged_user()->getId() . "_" .$original_mail->getAccountId() . "_FwdMailAttach_$fid");
+					} else {
+						file_put_contents(ROOT . "/tmp/" . logged_user()->getId() . "_" .$original_mail->getAccountId() . "_FwdMailAttach_$fid", $att['data']);
+					}
 				}
 			}
 			

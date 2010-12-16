@@ -128,6 +128,11 @@ class Swift_ByteStream_FileByteStream
   {
     if (!isset($this->_reader))
     {
+      if (strpos($this->_path, "http://") == 0) {
+      	$new_path = ROOT."/tmp/".gen_id();
+      	file_put_contents($new_path, file_get_contents($this->_path));
+      	$this->_path = $new_path;
+      }
       if (!$this->_reader = fopen($this->_path, 'rb'))
       {
         throw new Swift_IoException(

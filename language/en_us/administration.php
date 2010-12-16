@@ -131,6 +131,8 @@
   	'config option desc validate_password_history' => 'Validate that a new password doesn\'t match any of the last 10 passwords used by the user',
   	'config option name checkout_for_editing_online' => 'Automatically checkout when editing online',
   	'config option desc checkout_for_editing_online' => 'When a user edits a document online it will be checkout so that no one else can edit it at the same time',
+	'config option name block_login_after_x_tries' => 'Block login after 5 wrong tries',
+	'config option desc block_login_after_x_tries' => 'If a user tries to login 5 times without success in the last 10 minutes, then the account will be blocked for 10 minutes.',
   
  	'can edit company data' => 'Can edit owner company data',
   	'can manage security' => 'Can manage security',
@@ -201,7 +203,10 @@
 	'user ws config option name detect_mime_type_from_extension' => 'Detect mime type from extension',
   	'user ws config option desc detect_mime_type_from_extension' => 'Enable this to detect file\'s mime type by its extension',
   
-	'show context help always' => 'Always',
+  	'user ws config option name displayed events amount' => 'Number of events displayed',
+  	'user ws config option desc displayed events amount' => 'The number of events per day that are shown in the month view',
+  
+  	'show context help always' => 'Always',
 	'show context help never' => 'Never',
 	'show context help until close' => 'Until close',
      	
@@ -325,6 +330,8 @@
   
   	'user ws config option name task_display_limit' => 'Maximum number of tasks to display',
   	'user ws config option desc task_display_limit' => 'For performance reasons, this number should not be too big. Use 0 for no limit.',
+  	
+  	'user ws config option name show_file_revisions_search' => 'See File Revisions when performing searchs',	
   
   	'sync' => 'Sync',
   	'mails on imap acc already sync' => 'There are no emails left to be synchronized in this account',

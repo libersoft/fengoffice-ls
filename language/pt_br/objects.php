@@ -126,4 +126,6 @@
 	'activity read' => '{1} lido {0} {2}',
 	'activity download' => '{1} baixado {0} {2}',
 	'x users' => '{0} usuários{1}',
+	'activity checkout' => '{1} saída {0} {2}',
+	'activity checkin' => '{1} entrada {0} {2}',
 ); ?>

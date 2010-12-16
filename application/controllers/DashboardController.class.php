@@ -110,7 +110,7 @@ class DashboardController extends ApplicationController {
 		tpl_assign('activity_log', $activity_log);
 		
 		$usu = logged_user();
-		$conditions = array("conditions" => array("`state` >= 200 AND `created_by_id` =".$usu->getId()));
+		$conditions = array("conditions" => array("`state` >= 200 AND `trashed_by_id`=0 AND `created_by_id` =".$usu->getId()));
 		$outbox_mails = MailContents::findAll($conditions);
 		if ($outbox_mails!= null){
 			if (count($outbox_mails)==1){		
