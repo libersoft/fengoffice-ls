@@ -257,7 +257,7 @@
 	'error check out file' => 'Error al bloquear el archivo para uso exclusivo',
 	'error check mail' => 'En la cuenta \'{0}\' se encontraron errores: {1}',
 	'error classifying attachment cant open file' => 'Error al clasificar el attachment. No se pudo abrir el archivo',
-	'error contact added but not assigned' => 'El contacto \'{0}\' fue agregado, pero pero no se le asignó correctamente el espacio de trabajo \'{1}\' ya que hubo problemas con los permisos',
+	'error contact added but not assigned' => 'El contacto \'{0}\' fue agregado, pero no se le asignó correctamente el espacio de trabajo \'{1}\' ya que hubo problemas con los permisos',
 	'no access permissions' => 'No tiene permisos para acceder a la página solicitada',
 	'invalid request' => 'Petición inválida!',
 	'confirm cancel work timeslot' => 'Está seguro que desea cancelar el tiempo de trabajo?',

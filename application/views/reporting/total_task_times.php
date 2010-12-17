@@ -95,6 +95,7 @@
 	}
 	
 	function get_cols($columns){ //get the columns selected by the user to be shown
+		if (!is_array($columns)) $columns = array();
 		$cols = array();		
 		foreach($columns as $k=>$i){					
 			if ($i != 0){

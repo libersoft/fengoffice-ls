@@ -95,7 +95,7 @@ og.render_autocomplete_field = function(config) {
 			while (k < elements.length) {
 				var onover = 'Ext.getCmp(\'auto_complete_input_'+comp_id+'\').setSelectedItem('+k+');';
 				var html = '<div class="x-combo-list-item " onmouseover="'+onover+'" id="auto_complete_list_item_'+comp_id+'_'+k+'" ';
-				html += 'onclick="Ext.getCmp(\'auto_complete_input_'+comp_id+'\').selectListElement('+k+');">'+og.clean(elements[k])+'</div>';
+				html += 'onmousedown="acinput=Ext.getCmp(\'auto_complete_input_'+comp_id+'\');acinput.selectListElement('+k+');acinput.focus(false,true);">'+og.clean(elements[k])+'</div>';
 				 
 				list_inner_cont.dom.innerHTML += html;
 				k++;

@@ -1,6 +1,6 @@
 
-    About Feng Office 1.7.1
-    =======================
+    About Feng Office 1.7.3.1
+    =========================
 
     Feng Office is a free and open source Web Office, project management
     and collaboration tool, licensed under the Affero GPL 3 license.
@@ -90,6 +90,42 @@
 
 	Changelog
 	=========
+	
+	Since 1.7.3
+	------------
+	bugfix: Email address autocomplete click fix.
+	bugfix: Fixed calendar when rendering some evnets (week & day views).
+	bugfix: Error when sending notifications through cron.
+	bugfix: Improved email parsing for some email encodings.
+	bugfix: Improved email list refresh after taking some actions.
+	bugfix: Overview - view as list does not order emails properly.
+	bugfix: Emails are not ordered properly by 'to' field.
+	bugfix: Email permissions when sending.
+	bugfix: Email background sending process improved. 
+	
+	
+	Since 1.7.2
+	------------
+	feature: User config option to show/hide file revisions in search results.
+	feature: Config option to send emails with "spam" in subject to the junk folder.
+	
+	system: CKEditor upgraded to version 3.4.
+	
+	bugfix: Allow browser's context menu when right clicking email editor.
+	bugfix: Cannot send email when in_reply_to_id header is invalid.
+	bugfix: Cannot send email when invalid addresses are input.
+	bugfix: Deleting emails does not refresh the mail list.
+	bugfix: Cannot delete mails from server.
+	bugfix: Problems with some attachment filenames.
+	bugfix: Tools - mailer fixed.
+	
+	
+	Since 1.7.1
+	------------
+	bugfix: Cannot attach files from computer when composing an email.
+	bugfix: Error when sending mail (with sync sent mails enabled).
+	bugfix: Tab with no content was appearing after 1.7.1.
+	
 	
 	Since 1.7
 	------------

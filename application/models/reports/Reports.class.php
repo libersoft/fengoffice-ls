@@ -228,7 +228,21 @@ class Reports extends BaseReports {
 								if ($col_type == DATA_TYPE_INTEGER || $col_type == DATA_TYPE_FLOAT) {
 									$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' '.mysql_real_escape_string($value);
 								}else{
-									$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\'';
+									if ($condField->getCondition()=='=' || $condField->getCondition()=='<=' || $condField->getCondition()=='>='){
+										$equal = 'datediff(\''.mysql_real_escape_string($value).'\', `'.$condField->getFieldName().'`)=0';										
+										switch($condField->getCondition()){
+											case '=':
+												$allConditions .= $equal;
+												break;
+											case '<=':
+											case '>=':
+												$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\''.' OR '.$equal.' ';
+												break;																
+										}										
+									}
+									else{
+										$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\'';
+									}									
 								}
 							}else{
 								$allConditions .= '`'.$condField->getFieldName().'` like "%'.mysql_real_escape_string($value).'"';

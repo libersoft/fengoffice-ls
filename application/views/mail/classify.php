@@ -42,6 +42,7 @@ function showProjectTagsDiv()
    $c = 0;
    foreach($parsedEmail["Attachments"] as $att) { 
    	    $fName = str_starts_with($att["FileName"], "=?") ? iconv_mime_decode($att["FileName"], 0, "UTF-8") : utf8_safe($att["FileName"]);
+   	    if (trim($fName) == "" && strlen($att["FileName"]) > 0) $fName = utf8_encode($att["FileName"]);
    		echo checkbox_field('classification[att_'.$c.']', true, array('id' => $genid.'classifyFormAddAttachment'.$c, 'tabindex' => '40'));?>
     <label for="<?php echo $genid.'classifyFormAddAttachment'.$c ?>" class="yes_no"><?php echo $fName ?></label>
     <?php $c++;

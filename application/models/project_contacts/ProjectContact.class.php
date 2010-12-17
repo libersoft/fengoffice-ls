@@ -74,7 +74,7 @@
      * @return booelean
      */
     function canAdd(User $user, Project $project) {
-       return can_add($user,$project,get_class(ProjectContacts::instance()));
+       return can_add($user,$project,get_class(Contacts::instance()));
     } // canAdd
     
     /**

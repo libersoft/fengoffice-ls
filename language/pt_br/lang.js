@@ -689,5 +689,15 @@ addLangs({
 	'work week view': 'Semana de trabalho',
 	'mark spam': 'Marcar como SPAM',
 	'mark ham': 'Marcar como não SPAM',
-	'select all tasks': 'Selecionar todas as tarefas'
+	'select all tasks': 'Selecionar todas as tarefas',
+	'to vcard all': 'Tudo Para VCard',
+	'overdue': 'Vencido',
+	'active': 'Ativo',
+	'my active': 'Meu ativo',
+	'my subscribed': 'Meu subscrito',
+	'empty milestones': 'Marcos vazios',
+	'add object subtype': 'Adicionar objeto subtipo',
+	'delete object subtype': 'Excluir objeto subtipo',
+	'delete object subtype warning': 'Se você excluir este subtipo serão removidos todos os objetos que o tem definido. Tem certeza que quer deletar este subtipo?',
+	'object subtype deleted': 'Subtipo excluído. {0}'
 });

@@ -28,7 +28,7 @@ class EncodingConverter
 		$this->_last_err = null;
 		set_error_handler(array(&$this, '_handleError'));
 		
-		if ($ignore_non_compatible) $out_enc .= "//IGNORE";
+		if ($ignore_non_compatible) $out_enc .= "//IGNORE//TRANSLIT";
 		
 		$retval = iconv($in_enc, $out_enc, $str);
 		
@@ -42,6 +42,21 @@ class EncodingConverter
 		}
 		
 		return $retval;
+	}
+	
+	function isUtf8RegExp($text){
+		
+		return preg_match('%^([\\x00-\\x7f]|
+			[\\xc2-\\xdf][\\x80-\\xbf]|
+			\\xe0[\\xa0-\\xbf][\\x80-\\xbf]|
+			[\\xe1-\\xec][\\x80-\\xbf]{2}|
+			\\xed[\\x80-\\x9f][\\x80-\\xbf]|
+			\\xef[\\x80-\\xbf][\\x80-\\xbd]|
+			\\xee[\\x80-\\xbf]{2}|
+			\xf0[\\x90-\\xbf][\\x80-\\xbf]{2}|
+			[\\xf1-\\xf3][\\x80-\\xbf]{3}|
+			\\xf4[\\x80-\\x8f][\\x80-\\xbf]{2})*$%xs', $text);
+		
 	}
 
 	function hasError() {

@@ -418,7 +418,9 @@ require_javascript('og/EventPopUp.js');
 															$canPaint = !(isset($occup[$event_duration->getHour()][0][$posHoriz]) && $occup[$event_duration->getHour()][0][$posHoriz]
 															|| isset($occup[$event_duration->getHour()][1][$posHoriz]) && $occup[$event_duration->getHour()][1][$posHoriz]);
 														} else {
-															$canPaint = !(isset($occup[$event_duration->getHour()][1][$posHoriz]) && $occup[$event_duration->getHour()][1][$posHoriz] && $event_duration->getDay() == $event_start->getDay());
+															$htmp = $event_duration->getHour() - ($event_duration->getMinute() > 0 ? 0 : 1);
+															$postmp = $event_duration->getMinute() == 30 ? 0 : 1;
+															$canPaint = !(isset($occup[$htmp][$postmp][$posHoriz]) && $occup[$htmp][$postmp][$posHoriz] && $event_duration->getDay() == $event_start->getDay()); 
 														}
 													}
 													if (!$canPaint) $posHoriz++;

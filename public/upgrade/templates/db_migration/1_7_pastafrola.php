@@ -15,7 +15,9 @@ INSERT INTO `<?php echo $table_prefix ?>config_options` (`category_name`, `name`
 	('system', 'notification_from_address', '', 'StringConfigHandler', 1, 0, 'Address to use as from field in email notifications. If empty, users address is used'),
 	('system', 'min_chars_for_match', '3', 'IntegerConfigHandler', 1, 0, 'If search criteria len is less than this, then use always LIKE'),
 	('general', 'use_owner_company_logo_at_header', '0', 'BoolConfigHandler', '0', '0', NULL),
-	('mailing', 'sent_mails_sync', '1', 'BoolConfigHandler', '0', '0', 'imap email accounts synchronization possibility')
+	('mailing', 'sent_mails_sync', '1', 'BoolConfigHandler', '0', '0', 'imap email accounts synchronization possibility'),
+	('mailing', 'check_spam_in_subject', '0', 'BoolConfigHandler', 0, 0, ''),
+	('passwords', 'block_login_after_x_tries', '0', 'BoolConfigHandler', '0', '20', NULL)
 ON DUPLICATE KEY UPDATE id=id;
 
 DELETE FROM `<?php echo $table_prefix ?>config_options` WHERE `category_name`='general' AND `name`='detect_mime_type_from_extension';

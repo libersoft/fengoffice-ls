@@ -1336,7 +1336,7 @@ function autocomplete_textarea_field($name, $value, $options, $max_options, $att
 			render_to: "'.$render_to.'",
 			name: "'.$name.'",
 			id: "'.$id.'",
-			value: "'.clean($value).'",
+			value: "'.$value.'",
 			store: '.$jsArray.',
 			limit: '.$max_options.'
 		});

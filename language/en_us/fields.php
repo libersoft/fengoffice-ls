@@ -84,6 +84,7 @@ return array(
 	'field MailContents received_date' => 'Received date',
     'field MailContents subject' => 'Subject',
     'field MailContents content' => 'Content',
+	'field MailContents body' => 'Body',
     'field MailContents body_plain' => 'Body plain',
     'field MailContents body_html' => 'Body HTML',
     'field MailContents has_attachments' => 'Has attachments', 
@@ -142,6 +143,7 @@ return array(
 	'field ProjectFiles updated_by_id' => 'Updated by',
 	'field ProjectFiles archived_on' => 'Archived on',
 	'field ProjectFiles archived_by_id' => 'Archived by',
+	'field ProjectFileRevisions filecontent' => 'File content',
 
 	// Milestone fields
     'field ProjectMilestones name' => 'Name',

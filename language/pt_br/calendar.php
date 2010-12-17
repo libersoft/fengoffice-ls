@@ -145,4 +145,9 @@
 	'reject invitation' => 'Rejeitar convite',
 	'invitation accepted' => 'Convite aceito',
 	'invitation rejected' => 'Convite rejeitado',
+	'also confirmed attendance' => 'Também confirmaram presença',
+	'awaiting confirmation' => 'Aguardando a confirmação',
+	'rejected invitation' => 'Não vai participar',
+	'who' => 'Quem',
+	'what' => 'O que',
 ); ?>

@@ -30,4 +30,5 @@
 	'report pdf vertical' => 'Vertical',
 	'report pdf landscape' => 'Ladscape',
 	'report font size' => 'Tamanho da Fonte',
+	'columns' => 'Colunas',
 ); ?>

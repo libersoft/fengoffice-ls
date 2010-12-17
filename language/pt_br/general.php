@@ -219,4 +219,8 @@
 	'latest activity' => 'Última atividade',
 	'view all activity' => 'Ver todas as atividades',
 	'advanced' => 'Avançado',
+	'the' => 'o',
+	'email or username' => 'Email ou nome de usuário',
+	'assigned to description' => 'Para selecionar o proprietário da conta de email',
+	'direct url' => 'URL direto',
 ); ?>

@@ -510,8 +510,8 @@ class AdministrationController extends ApplicationController {
 				if(count($errors)) {
 					throw new FormSubmissionErrors($errors);
 				} // if
-
-				$success = Notifier::sendEmail($recepient, logged_user()->getEmail(), lang('test mail message subject'), $message);
+				$to = array($recepient);
+				$success = Notifier::sendEmail($to, logged_user()->getEmail(), lang('test mail message subject'), $message);
 				if($success) {
 					flash_success(lang('success test mail settings'));
 				} else {

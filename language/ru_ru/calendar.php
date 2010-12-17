@@ -1,18 +1,6 @@
-<?php 
-/* 
-Translated into Russian for Feng Office
-Last update:  see readme_rus.txt
-
-http://code.google.com/p/opengooru/
-   
-*/
-
-return array(
-  // Query Errors
+<?php return array(
 	'CAL_QUERY_GETEVENT_ERROR' => 'Ошибка базы данных: не удалось найти событие по ID',
 	'CAL_QUERY_SETEVENT_ERROR' => 'Ошибка базы данных: не удалось записать данные события',
-	
-  // Submenu items
 	'CAL_SUBM_LOGOUT' => 'Выйти',
 	'CAL_SUBM_LOGIN' => 'Войти',
 	'CAL_SUBM_ADMINPAGE' => 'Страница администратора',
@@ -20,15 +8,11 @@ return array(
 	'CAL_SUBM_BACK_CALENDAR' => 'Назад к календарю',
 	'CAL_SUBM_VIEW_TODAY' => 'Смотреть сегодняшние события',
 	'CAL_SUBM_ADD' => 'Добавить событие сегодня',
-	
-  // Navigation menu items
 	'CAL_MENU_BACK_CALENDAR' => 'Назад к календарю',
 	'CAL_MENU_NEWEVENT' => 'Новое событие',
 	'CAL_MENU_BACK_EVENTS' => 'Назад к событиям',
 	'CAL_MENU_GO' => 'Вперед',
 	'CAL_MENU_TODAY' => 'Сегодня',
-	
-  // User permission errors
 	'CAL_NO_READ_PERMISSION' => 'У вас нет полномочий просматривать это событие.',
 	'CAL_NO_WRITE_PERMISSION' => 'У вас нет полномочий добавлять или редактировать события.',
 	'CAL_NO_EDITOTHERS_PERMISSION' => 'У вас нет полномочий редактировать события других пользователей.',
@@ -37,8 +21,6 @@ return array(
 	'CAL_NO_MODIFY' => 'невозможно изменить',
 	'CAL_NO_ANYTHING' => 'У вас нет полномочий  делать что-либо на этой странице',
 	'CAL_NO_WRITE' => 'У вас нет полномочий для создания событий',
-
-  // Days	
 	'CAL_MONDAY' => 'Понедельник',
 	'CAL_TUESDAY' => 'Вторник',
 	'CAL_WEDNESDAY' => 'Среда',
@@ -53,8 +35,6 @@ return array(
 	'CAL_SHORT_FRIDAY' => 'Пт',
 	'CAL_SHORT_SATURDAY' => 'Сб',
 	'CAL_SHORT_SUNDAY' => 'Вс',
-
-  // Months	
 	'CAL_JANUARY' => 'Январь',
 	'CAL_FEBRUARY' => 'Февраль',
 	'CAL_MARCH' => 'Март',
@@ -67,8 +47,6 @@ return array(
 	'CAL_OCTOBER' => 'Октябрь',
 	'CAL_NOVEMBER' => 'Ноябрь',
 	'CAL_DECEMBER' => 'Декабрь',
-	
-  // Submenu/Editing event section text
 	'CAL_MORE_TIME_OPTIONS' => 'Дополнительные настройки времени',
 	'CAL_REPEAT' => 'Повторять',
 	'CAL_EVERY' => 'Каждый',
@@ -97,8 +75,6 @@ return array(
 	'CAL_ADDING_TO' => 'Добавлено к',
 	'CAL_ANON_ALIAS' => 'Псевдоним',
 	'CAL_EVENT_TYPE' => 'Тип события',
-
-  // Multi-section related text	
 	'CAL_DESCRIPTION' => 'Описание',
 	'CAL_DURATION' => 'Период',
 	'CAL_DATE' => 'Дата',
@@ -114,9 +90,7 @@ return array(
 	'CAL_HOURS' => 'Часы',
 	'CAL_HOUR' => 'Час',
 	'CAL_ANONYMOUS' => 'Анонимно',
-	
 	'CAL_SELECT_TIME' => 'Выбрать время начала',
-	
 	'event invitations' => 'Приглашения на участие',
 	'event invitations desc' => 'Пригласить выбранных людей участвовать в этом событии',
 	'send new event notification' => 'Послать уведомление по почте',
@@ -134,26 +108,23 @@ return array(
 	'calendar of' => 'Календарь для {0}',
 	'all users' => 'Все пользователи',
 	'error delete event' => 'Ошибка удаления события',
-  	'event invitation response' => 'Ответить на приглашение',
-  	'user will attend to event' => '{0} примут участие в этом мероприятии',
-  	'user will not attend to event' => '{0} не примут участие в этом мероприятии',  	
-  'accept or reject invitation help, click on one of the links below' => 'Чтобы принять или отклонить приглашение, нажмите ниже на одну из ссылок',
-  	'accept invitation' => 'Принять приглашение',
+	'event invitation response' => 'Ответить на приглашение',
+	'user will attend to event' => '{0} примут участие в этом мероприятии',
+	'user will not attend to event' => '{0} не примут участие в этом мероприятии',
+	'accept or reject invitation help, click on one of the links below' => 'Чтобы принять или отклонить приглашение, нажмите ниже на одну из ссылок',
+	'accept invitation' => 'Принять приглашение',
 	'reject invitation' => 'Отклонить приглашение',
-  	'invitation accepted' => 'Приглашение принято',
+	'invitation accepted' => 'Приглашение принято',
 	'invitation rejected' => 'Приглашение отклонено',
-	
 	'days' => 'день/дней(я)',
 	'weeks' => 'недели',
 	'months' => 'месяцы',
 	'years' => 'годы',
-
 	'invitations' => 'Приглашения',
 	'pending response' => 'В ожидании ответа',
 	'participate' => 'Будут присутствовать',
 	'no invitations to this event' => 'Нет приглашений, отправленных в это событие',
 	'duration must be at least 15 minutes' => 'Продолжительность должна быть не менее 15 минут',
-
 	'event dnx' => 'Запрашиваемое событие не найдено',
 	'no subject' => 'Нет темы',
 	'success import events' => 'Импортировано событий: {0}',
@@ -168,11 +139,15 @@ return array(
 	'calendar name desc' => 'Имя календаря для экспортирования',
 	'calendar will be exported in icalendar format' => 'Календарь будет экспортирован в формате iCalendar.',
 	'view date title' => 'l, d/m/y',
-	
-  	'copy this url in your calendar client software' => 'Скопируйте этот URL в вашем календаре, для того чтобы импортировать мероприятия из этого календаря',
+	'copy this url in your calendar client software' => 'Скопируйте этот URL в вашем календаре, для того чтобы импортировать мероприятия из этого календаря',
 	'import events from third party software' => 'Импорт мероприятий из сторонних программных',
 	'subws' => 'доп.проект',
 	'check to include sub ws' => 'Включить в доп.проект',
-  	'week short' => 'Неделя',
-  	'week number x' => 'Неделя {0}',	
+	'week short' => 'Неделя',
+	'week number x' => 'Неделя {0}',
+	'who' => 'Кто',
+	'what' => 'Что',
+	'also confirmed attendance' => 'Также подтвердил участие',
+	'awaiting confirmation' => 'Ожидает подтверждения',
+	'rejected invitation' => 'Не будет участвовать',
 ); ?>

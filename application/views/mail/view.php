@@ -13,7 +13,7 @@ if (isset($email)){
 			add_page_action(lang('restore from trash'), "javascript:if(confirm(lang('confirm restore objects'))) og.openLink('" . $email->getUntrashUrl() ."');", 'ico-restore', null, null, true);
 			add_page_action(lang('delete permanently'), "javascript:if(confirm(lang('confirm delete permanently'))) og.openLink('" . $email->getDeletePermanentlyUrl() ."');", 'ico-delete', null, null, true);
 		} else {
-			add_page_action(lang('move to trash'), "javascript:if(confirm(lang('confirm move to trash'))) og.openLink('" . $email->getTrashUrl() ."');", 'ico-trash', null, null, true);
+			add_page_action(lang('move to trash'), "javascript:if(confirm(lang('confirm move to trash'))) {og.openLink('" . $email->getTrashUrl() . "'); og.closeView();}", 'ico-trash', null, null, true);
 		}
 	}
 	if ($email->canEdit(logged_user()) && !$email->isTrashed()){
@@ -112,6 +112,7 @@ if (isset($email)){
 		foreach($attachments as $att) {
 			$size = $att['size'];//format_filesize(strlen($att["Data"]));
 			$fName = str_starts_with($att["FileName"], "=?") ? iconv_mime_decode($att["FileName"], 0, "UTF-8") : utf8_safe($att["FileName"]);
+			if (trim($fName) == "" && strlen($att["FileName"]) > 0) $fName = utf8_encode($att["FileName"]);
 			$description .= '<tr><td style="padding-right: 10px">';
 			$ext = get_file_extension($fName);
 			$fileType = FileTypes::getByExtension($ext);
@@ -172,8 +173,8 @@ if (isset($email)){
 					$conversation_block .= '<div class="db-ico ico-user"></div>';
 				}
 				
-				$info_text = $info->getBodyPlain();
-				if (strlen_utf($info_text) > 90) $info_text = substr_utf($info_text, 0, 90) . "...";
+				$info_text = $info->getTextBody();
+				if (strlen_utf($info_text) > 90) $info_text = substr_utf($info_text, 0, 90) . "...";		
 				
 				$view_url = get_url('mail', 'view', array('id' => $info->getId(), 'replace' => 1));
 				$conversation_block .= '<td>';

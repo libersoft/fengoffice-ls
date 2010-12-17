@@ -297,7 +297,7 @@ class ReportingController extends ApplicationController {
 		}
 		
 		$columns = array_var($report_data, 'columns');
-		if (!is_array($columns)) $columns = array_var($_POST, 'columns');
+		if (!is_array($columns)) $columns = array_var($_POST, 'columns', array());
 									
 		asort($columns); //sort the array by column order
 		foreach($columns as $column => $order){

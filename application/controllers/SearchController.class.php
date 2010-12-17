@@ -25,11 +25,16 @@ class SearchController extends ApplicationController {
 		$search_for = array_var($_GET, 'search_for');
 		
 		$objectManagers = array("ProjectWebpages", "ProjectMessages", "MailContents", "ProjectFiles",
-			 "ProjectFileRevisions", "ProjectMilestones", "ProjectTasks", "ProjectEvents");
+				 "ProjectMilestones", "ProjectTasks", "ProjectEvents");
 		$objectTypes = array(lang('webpages'), lang('messages'), lang('emails'), 
-			lang('files'), lang('file contents'), lang('milestones'), lang('tasks'), lang('events'));
+				lang('files'), lang('milestones'), lang('tasks'), lang('events'));
 		$iconTypes = array('webpage', 'message', 'email', 
-			'file', 'file', 'milestone', 'task', 'event');                        
+				'file', 'milestone', 'task', 'event');
+		if (user_config_option('show_file_revisions_search')){			
+			array_splice($objectManagers, 4, 0, 'ProjectFileRevisions');
+			array_splice($objectTypes, 4, 0, lang('file contents'));
+			array_splice($iconTypes, 4, 0, 'file');			
+		}                        
 		
 		$search_results = array();
 		
@@ -75,7 +80,7 @@ class SearchController extends ApplicationController {
 		ajx_replace(true);
 	} // search
 	
-	function searchContacts($search_term, $search_results = null, $row_count = 5, $page){
+	function searchContacts($search_term, $search_results = null, $row_count = 5, $page = 1){
 		if (!is_array($search_results))
 			$search_results = array();
 		
@@ -85,7 +90,7 @@ class SearchController extends ApplicationController {
 			$projects = null;
 		}
 			
-		$results = SearchableObjects::searchByType($search_term, $projects, 'Contacts', true, $row_count, $page);
+		$results = SearchableObjects::searchByType($search_term, $projects, 'Contacts', true, $row_count, $page = 1);
 		if (count($results[0]) > 0){
 			$sr = array();
 			$sr['result'] = $results[0];
@@ -96,7 +101,7 @@ class SearchController extends ApplicationController {
 			$search_results[] = $sr;
 		}
 		
-		$results = SearchableObjects::searchByType($search_term, $projects, 'Companies', true, $row_count, $page);
+		$results = SearchableObjects::searchByType($search_term, $projects, 'Companies', true, $row_count, $page = 1);
 		if (count($results[0]) > 0){
 			$sr = array();
 			$sr['result'] = $results[0];
@@ -110,7 +115,7 @@ class SearchController extends ApplicationController {
 		return $search_results;
 	}
 	
-	function searchWorkspaces($search_term, $search_results = null, $row_count = 5, $page){
+	function searchWorkspaces($search_term, $search_results = null, $row_count = 5, $page = 1){
 		if (!is_array($search_results))
 			$search_results = array();
 		
@@ -128,7 +133,7 @@ class SearchController extends ApplicationController {
 		return $search_results;
 	}
 	
-	function searchUsers($search_term, $search_results = null, $row_count = 5, $page){
+	function searchUsers($search_term, $search_results = null, $row_count = 5, $page = 1){
 		if (!is_array($search_results))
 			$search_results = array();
 		

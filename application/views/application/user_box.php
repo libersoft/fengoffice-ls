@@ -9,8 +9,8 @@
 		}
 		echo '<a';
 		if (isset($crumb['target'])) echo ' target="' . $crumb['target'] .'"';
-		echo ' href="' . $crumb['url'] . '">';
-		echo $crumb['text'];
+		echo ' href="' . array_var($crumb, 'url', '') . '">';
+		echo array_var($crumb, 'text', '');
 		echo '</a>';
 	} ?> 
 </div>

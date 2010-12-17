@@ -39,6 +39,7 @@ sig.actualHtmlSignature = '';
 <input type="hidden" name="mail[in_reply_to_id]" value="<?php echo array_var($mail_data, 'in_reply_to_id') ?>" />
 <input type="hidden" name="mail[original_id]" value="<?php echo array_var($mail_data, 'original_id') ?>" />
 <input type="hidden" name="mail[last_mail_in_conversation]" value="<?php echo array_var($mail_data, 'last_mail_in_conversation') ?>" />
+<input type="hidden" name="mail[pre_body_fname]" value="<?php echo array_var($mail_data, 'pre_body_fname') ?>" />
 <?php 
 
 	tpl_display(get_template_path('form_errors'));
@@ -196,7 +197,7 @@ sig.actualHtmlSignature = '';
 	<div id="add_mail_account" style="display:none;">
 	    <label for="mailAccount"><?php echo lang('mail from')?>: 
 	    <span class="desc"><?php echo lang('mail account desc') ?></span></label>
-	    <?php echo render_select_mail_account('mail[account_id]',  $mail_accounts, isset($mail_data['account_id']) ? $mail_data['account_id'] : (isset($default_account) ? $default_account : $mail_accounts[0]->getId()),
+	    <?php echo render_select_mail_account('mail[account_id]',  $mail_accounts, isset($mail_data['account_id']) ? $mail_data['account_id'] : (isset($default_account) ? $default_account : (count($mail_accounts) > 0 ? $mail_accounts[0]->getId() : 0)),
 	    array('id' => $genid . 'mailAccount', 'tabindex'=>'44', 'onchange' => "og.changeSignature('$genid', this.value);")) ?>
 	</div>
   
@@ -306,6 +307,10 @@ sig.actualHtmlSignature = '';
 	if (strlen($loc) > 2) $loc = substr($loc, 0, 2);
 ?>
 <script>
+var focus_editor = false;
+<?php if ($mail_to != "") { ?>
+	focus_editor = true;
+<?php } ?>
 var h = document.getElementById("<?php echo $genid ?>ck_editor").offsetHeight;
 try {
 var editor = CKEDITOR.replace('<?php echo $genid ?>ckeditor', {
@@ -355,6 +360,7 @@ var editor = CKEDITOR.replace('<?php echo $genid ?>ckeditor', {
 			var mb = Ext.getDom('<?php echo $genid ?>mailBody');
 			mb.oldMailBody = og.getMailBodyFromUI('<?php echo $genid ?>');
 			ev.editor.resetDirty();
+			if (focus_editor) ev.editor.focus();
 		},
 		selectionChange: function(ev) {
 			var p = og.getParentContentPanel(Ext.get('<?php echo $genid ?>ckeditor'));
@@ -365,6 +371,7 @@ var editor = CKEDITOR.replace('<?php echo $genid ?>ckeditor', {
 			Ext.getCmp(p.id).setPreventClose(ev.editor.checkDirty());
 		}
 	},
+	removePlugins: 'scayt,contextmenu',
 	entities_additional : '#39,#336,#337,#368,#369'
 });
 } catch (e) {
@@ -412,5 +419,5 @@ if (og.preferences['draft_autosave_timeout'] > 0) {
 		og.autoSaveDraft('<?php echo $genid ?>');
 	}, og.preferences['draft_autosave_timeout'] * 1000);
 }
-Ext.get('auto_complete_input_<?php echo $genid ?>mailTo').focus();
+if (!editor || !focus_editor) Ext.get('auto_complete_input_<?php echo $genid ?>mailTo').focus();
 </script>

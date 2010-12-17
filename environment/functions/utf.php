@@ -36,7 +36,7 @@ if (!function_exists('iconv')) {
 }
 
 function strpos_utf($haystack, $needle, $offset = 0) {
-	if (function_exists('utf8_strlen'))
+	if (function_exists('utf8_strpos'))
 		return utf8_strpos($haystack, $needle, $offset, 'UTF-8');
 	else return strpos($haystack, $needle, $offset);
 }

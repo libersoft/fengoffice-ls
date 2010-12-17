@@ -1,5 +1,6 @@
 <?php return array(
 	'invalid email address' => 'La dirección de correo ingresada es inválida',
+	'error invalid recipients' => 'Se encontraron direcciones de correo inválidas en el campo "{0}": {1}',
 	'company name required' => 'El campo correspondiente al nombre de la Empresa / organización  es obligatorio y no fue ingresado',
 	'company homepage invalid' => 'El nombre del sitio web ingresado no es una URL válida',
 	'username value required' => 'Nombre de usuario no ingresado, intente nuevamente',
@@ -116,4 +117,5 @@
 	'zip not supported' => 'El servidor no soporta ZIP.',
 	'no tag specified' => 'No se especificó una etiqueta',
 	'no mailAccount error' => 'La acción no está disponible. Debe agregar su cuenta de correo.',
+	'content too long not loaded' => 'El contenido anterior del correo es muy extenso y no se ha cargado en el editor, igualmente será enviado al enviar este correo.'
 ); ?>

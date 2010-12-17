@@ -225,4 +225,6 @@
 	'field Projects archived_by_id' => 'Arquivado por',
 	'field MailContents received_date' => 'Data de recebimento',
 	'field Users type' => 'Tipo',
+	'field MailContents sync' => 'Sincronizado',
+	'field ProjectTasks object_subtype' => 'Subtipo de objetos',
 ); ?>

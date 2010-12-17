@@ -25,7 +25,7 @@ $month = isset($_GET['month']) ? $_GET['month'] : (isset($_SESSION['month']) ? $
 $day = isset($_GET['day']) ? $_GET['day'] : (isset($_SESSION['day']) ? $_SESSION['day'] : date('j'));
 
 if (!is_numeric($month)) $month = date('n');
-if (!is_numeric($year)) $month = date('Y');
+if (!is_numeric($year)) $year = date('Y');
 
 $_SESSION['year'] = $year;
 $_SESSION['month'] = $month;
@@ -33,6 +33,9 @@ $_SESSION['day'] = $day;
 
 $user_filter = $userPreferences['user_filter'];
 $status_filter = $userPreferences['status_filter'];
+
+$max_events_to_show = user_config_option('displayed events amount');
+if (!$max_events_to_show) $max_events_to_show = 3;
 
 $user = Users::findById(array('id' => $user_filter));
 if ($user == null) $user = logged_user(); 
@@ -335,7 +338,7 @@ foreach($companies as $company)
 											$id_suffix = "_$w";
 										
 											// make the event subjects links or not according to the variable $whole_day in gatekeeper.php
-											if(!$private && $count <= 3){
+											if(!$private && $count <= $max_events_to_show){
 												$tip_text = str_replace("\r", '', clean($event->getDescription()));
 												$tip_text = str_replace("\n", '<br>', $tip_text);													
 												if (strlen_utf($tip_text) > 200) $tip_text = substr_utf($tip_text, 0, strpos($tip_text, ' ', 200)) . ' ...';
@@ -415,7 +418,7 @@ foreach($companies as $company)
 											$now = mktime(0, 0, 0, $dtv->getMonth(), $dtv->getDay(), $dtv->getYear());
 											if ($now == mktime(0, 0, 0, $due_date->getMonth(), $due_date->getDay(), $due_date->getYear())) {	
 												$count++;
-												if ($count <= 3){
+												if ($count <= $max_events_to_show){
 													$color = 'FFC0B3'; 
 													$subject = "&nbsp;" . clean($milestone->getName())." - <i>Milestone</i>";
 													$cal_text = clean($milestone->getName());
@@ -470,7 +473,7 @@ foreach($companies as $company)
 													$tip_pre = 'st_';
 												}
 												$count++;
-												if ($count <= 3){
+												if ($count <= $max_events_to_show){
 													$color = 'B1BFAC'; 
 													$subject = clean($task->getTitle()).'- <i>Task</i>';
 													$cal_text = clean($task->getTitle());
@@ -505,7 +508,7 @@ foreach($companies as $company)
 											$now = mktime(0, 0, 0, $dtv->getMonth(), $dtv->getDay(), $dtv->getYear());
 											if ($now == mktime(0, 0, 0, $bday->getMonth(), $bday->getDay(), $dtv->getYear())) {	
 												$count++;
-												if ($count <= 3){
+												if ($count <= $max_events_to_show){
 													$color = 'B1BFAC';
 													$subject = clean($contact->getDisplayName()).' - <i>'.lang('birthday').'</i>';
 								?>
@@ -526,10 +529,10 @@ foreach($companies as $company)
 											}
 										}
 									} // end foreach event writing loop
-									if ($count > 3) {
+									if ($count > $max_events_to_show) {
 								?>
 									
-										<div style="witdh:100%;text-align:center;font-size:9px" ><a href="<?php echo $p?>" class="internalLink"  onclick="og.disableEventPropagation(event);return true;"><?php echo ($count-3) . ' ' . lang('more');?> </a></div>
+										<div style="witdh:100%;text-align:center;font-size:9px" ><a href="<?php echo $p?>" class="internalLink"  onclick="og.disableEventPropagation(event);return true;"><?php echo ($count-$max_events_to_show) . ' ' . lang('more');?> </a></div>
 								<?php
 									}
 								}

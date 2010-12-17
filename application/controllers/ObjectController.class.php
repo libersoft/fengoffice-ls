@@ -903,7 +903,7 @@ class ObjectController extends ApplicationController {
 		if ($trashed && $trashed !== 'all') $order = 'trashedOn';
 		else if ($archived) $order = 'archivedOn';
 		switch ($order){
-			case 'createdOn':
+			case 'dateCreated':
 				$order_crit_companies = '`created_on`';
 				$order_crit_contacts = '`created_on`';
 				$order_crit_file_revisions = '`created_on`';
@@ -912,7 +912,7 @@ class ObjectController extends ApplicationController {
 				$order_crit_milestones = '`created_on`';
 				$order_crit_webpages = '`created_on`';
 				$order_crit_files = '`created_on`';
-				$order_crit_emails = '`created_on`';
+				$order_crit_emails = '`received_date`';
 				$order_crit_comments = '`created_on`';
 				$order_crit_messages = '`created_on`';
 				$order_crit_workspaces = '`created_on`';
@@ -968,7 +968,7 @@ class ObjectController extends ApplicationController {
 				$order_crit_milestones = '`updated_on`';
 				$order_crit_webpages = '`updated_on`';
 				$order_crit_files = '`updated_on`';
-				$order_crit_emails = '`sent_date`';
+				$order_crit_emails = '`received_date`';
 				$order_crit_comments = '`updated_on`';
 				$order_crit_messages = '`updated_on`';
 				$order_crit_workspaces = '`updated_on`';
@@ -2111,6 +2111,9 @@ class ObjectController extends ApplicationController {
 			flash_error(lang("error trash objects", $err));
 		} else {
 			flash_success(lang("success trash objects", $count));
+			if (array_var($_GET, 'manager') == "MailContents" || array_var($_GET, 'current') == 'mails-panel') {
+				//ajx_add("mails-containerpanel", "reload");
+			}
 		}
 	}
 	

@@ -14,8 +14,8 @@ class MailUtilities {
 		}
 
 		$old_memory_limit = ini_get('memory_limit');
-		if (php_config_value_to_bytes($old_memory_limit) < 96*1024*1024) {
-			ini_set('memory_limit', '96M');
+		if (php_config_value_to_bytes($old_memory_limit) < 192*1024*1024) {
+			ini_set('memory_limit', '192M');
 		}
 
 		$err = 0;
@@ -161,7 +161,7 @@ class MailUtilities {
 		return $res;
 	}
 	
-	private function SaveMail(&$content, MailAccount $account, $uidl, $state = 0, $imap_folder_name = '') {
+	function SaveMail(&$content, MailAccount $account, $uidl, $state = 0, $imap_folder_name = '') {
 		if (strpos($content, '+OK ') > 0) $content = substr($content, strpos($content, '+OK '));
 		self::parseMail($content, $decoded, $parsedMail, $warnings);
 		$encoding = array_var($parsedMail,'Encoding', 'UTF-8');
@@ -194,6 +194,21 @@ class MailUtilities {
 			$from = array_var($parsedMail["From"][0], 'address', '');
 		}
 		
+		if (defined('EMAIL_MESSAGEID_CONTROL') && EMAIL_MESSAGEID_CONTROL) {
+			if (trim($message_id) != "") {
+				$id_condition = " AND `message_id`='".trim($message_id)."'";
+			} else {
+				$id_condition = " AND `subject`='". trim(array_var($parsedMail, 'Subject')) ."' AND `from`='$from'";
+				if (array_var($parsedMail, 'Date')) {
+					$sent_date_dt = new DateTimeValue(strtotime(array_var($parsedMail, 'Date')));
+					$sent_date_str = $sent_date_dt->toMySQL();
+					$id_condition .= " AND `sent_date`='".$sent_date_str."'";
+				}
+			}
+			$same = MailContents::findOne(array('conditions' => "`account_id`=".$account->getId() . $id_condition, 'include_trashed' => true));
+			if ($same instanceof MailContent) return;
+		}
+				
 		if ($state == 0) {
 			if ($from == $account->getEmailAddress()) {
 				if (strpos($to_addresses, $from) !== FALSE) $state = 5; //Show in inbox and sent folders
@@ -208,7 +223,11 @@ class MailUtilities {
 		if ($max_spam_level < 0) $max_spam_level = 0;
 		$mail_spam_level = strlen(trim( array_var($decoded[0]['Headers'], 'x-spam-level:', '') ));
 		// if max_spam_level >= 10 then nothing goes to junk folder
-		if ($max_spam_level < 10 && ($mail_spam_level > $max_spam_level || $from_spam_junk_folder)) {
+		$spam_in_subject = false;
+		if (config_option('check_spam_in_subject')) {
+			$spam_in_subject = strpos_utf(strtoupper(array_var($parsedMail, 'Subject')), "**SPAM**") !== false;
+		}
+		if (($max_spam_level < 10 && ($mail_spam_level > $max_spam_level || $from_spam_junk_folder)) || $spam_in_subject) {
 			$state = 4; // send to Junk folder
 		}
 
@@ -224,25 +243,36 @@ class MailUtilities {
 		}
 		$mail->setCc($cc);
 		
-		$from_name = trim(array_var(array_var(array_var($parsedMail, 'From'), 0), 'name'));
-		if ($from_name == '') $from_name = $from;
-		if (array_key_exists('Encoding', $parsedMail)){
+		$from_name = trim(array_var(array_var(array_var($parsedMail, 'From'), 0), 'name'));		
+		$from_encoding = detect_encoding($from_name);	
+			
+		if ($from_name == ''){
+			$from_name = $from;
+		} else if (strtoupper($encoding) =='KOI8-R' || strtoupper($encoding) =='CP866' || $from_encoding != 'UTF-8' || !$enc_conv->isUtf8RegExp($from_name)){ //KOI8-R and CP866 are Russian encodings which PHP does not detect
 			$utf8_from = $enc_conv->convert($encoding, 'UTF-8', $from_name);
+
 			if ($enc_conv->hasError()) {
 				$utf8_from = utf8_encode($from_name);
 			}
 			$utf8_from = utf8_safe($utf8_from);
 			$mail->setFromName($utf8_from);
+		} else {
+			$mail->setFromName($from_name);
+		}
+		
+		$subject_aux = $parsedMail['Subject'];
+		$subject_encoding = detect_encoding($subject_aux);
+		
+		if (strtoupper($encoding) =='KOI8-R' || strtoupper($encoding) =='CP866' || $subject_encoding != 'UTF-8' || !$enc_conv->isUtf8RegExp($subject_aux)){ //KOI8-R and CP866 are Russian encodings which PHP does not detect
+			$utf8_subject = $enc_conv->convert($encoding, 'UTF-8', $subject_aux);
 			
-			$utf8_subject = $enc_conv->convert($encoding, 'UTF-8', $parsedMail['Subject']);
 			if ($enc_conv->hasError()) {
-				$utf8_subject = utf8_encode($parsedMail['Subject']);
+				$utf8_subject = utf8_encode($subject_aux);
 			}
 			$utf8_subject = utf8_safe($utf8_subject);
 			$mail->setSubject($utf8_subject);
 		} else {
-			$mail->setFromName($from_name);
-			$utf8_subject = utf8_safe($parsedMail['Subject']);
+			$utf8_subject = utf8_safe($subject_aux);
 			$mail->setSubject($utf8_subject);
 		}
 		$mail->setTo($to_addresses);
@@ -339,16 +369,31 @@ class MailUtilities {
 		try {
 			if ($in_reply_to_id != "") {
 				if ($message_id != "") {
-					$conv_mail = MailContents::findOne(array("conditions" => "`in_reply_to_id` = '$message_id'"));
+					$conv_mail = MailContents::findOne(array("conditions" => "`account_id`=".$account->getId()." AND `in_reply_to_id` = '$message_id'"));
 					if (!$conv_mail) {
-						$conv_mail = MailContents::findOne(array("conditions" => "`message_id` = '$in_reply_to_id'"));
+						$conv_mail = MailContents::findOne(array("conditions" => "`account_id`=".$account->getId()." AND `message_id` = '$in_reply_to_id'"));
+					} else {
+						// Search for other discontinued conversation part to link it
+						$other_conv_emails = MailContents::findAll(array("conditions" => "`account_id`=".$account->getId()." AND `message_id` = '$in_reply_to_id' AND `conversation_id`<>".$conv_mail->getConversationId()));
 					}
 				} else {
-					$conv_mail = MailContents::findOne(array("conditions" => "`message_id` = '$in_reply_to_id'"));
+					$conv_mail = MailContents::findOne(array("conditions" => "`account_id`=".$account->getId()." AND `message_id` = '$in_reply_to_id'"));
 				}
 				
-				if ($conv_mail instanceof MailContent && strpos(strtolower($mail->getSubject()), strtolower($conv_mail->getSubject())) !== false) {
+				if ($conv_mail instanceof MailContent) {// Remove "Re: ", "Fwd: ", etc to compare the subjects
+					$conv_original_subject = strtolower($conv_mail->getSubject());
+					if (($pos = strrpos($conv_original_subject, ":")) !== false) {
+						$conv_original_subject = trim(substr($conv_original_subject, $pos+1));
+					}
+				}
+				if ($conv_mail instanceof MailContent && strpos(strtolower($mail->getSubject()), strtolower($conv_original_subject)) !== false) {
 					$mail->setConversationId($conv_mail->getConversationId());
+					if (isset($other_conv_emails) && is_array($other_conv_emails)) {
+						foreach ($other_conv_emails as $ocm) {
+							$ocm->setConversationId($conv_mail->getConversationId());
+							$ocm->save();
+						}
+					}
 				} else {
 					$conv_id = MailContents::getNextConversationId($account->getId());
 					$mail->setConversationId($conv_id);
@@ -364,7 +409,10 @@ class MailUtilities {
 			if (user_config_option('classify_mail_with_conversation', null, $account->getUserId()) && isset($conv_mail) && $conv_mail instanceof MailContent) {
 				$wss = $conv_mail->getWorkspaces();
 				foreach($wss as $ws) {
-					$mail->addToWorkspace($ws);
+					$acc_user = Users::findById($account->getUserId());
+					if ($acc_user instanceof User && $acc_user->hasProjectPermission($ws, ProjectUsers::CAN_READ_MAILS)) {
+						$mail->addToWorkspace($ws);
+					}
 				}
 			}
 			// CLASSIFY MAILS IF THE ACCOUNT HAS A WORKSPACE
@@ -455,7 +503,12 @@ class MailUtilities {
 				} catch (Exception $e) {
 					$mail_file = ROOT."/tmp/unsaved_mail_".$uid.".eml";
 					$res = file_put_contents($mail_file, $content);
-					if ($res === false) Logger::log("Could not save mail, and original could not be saved as $mail_file, exception:\n".$e->getMessage());
+					if ($res === false) {
+						$mail_file = ROOT."/tmp/unsaved_mail_".gen_id().".eml";
+						$res = file_put_contents($mail_file, $content);
+						if ($res === false) Logger::log("Could not save mail, and original could not be saved as $mail_file, exception:\n".$e->getMessage());
+						else Logger::log("Could not save mail, original mail saved as $mail_file, exception:\n".$e->getMessage());
+					}
 					else Logger::log("Could not save mail, original mail saved as $mail_file, exception:\n".$e->getMessage());
 				}
 				unset($content);
@@ -547,6 +600,11 @@ class MailUtilities {
 
 	
 	function prepareEmailAddresses($addr_str) {
+		// exclude \n \t characters
+		$addr_str = str_replace(array("\n","\r","\t"), "", $addr_str);
+		// replace ; with , to separate email addresses
+		$addr_str = str_replace(";", ",", $addr_str);
+		
 		$result = array();
 		$addresses = explode(",", $addr_str);
 		foreach ($addresses as $addr) {
@@ -556,15 +614,19 @@ class MailUtilities {
 			if ($pos !== FALSE && strpos($addr, ">", $pos) !== FALSE) {
 				$name = trim(substr($addr, 0, $pos));
 				$val = trim(substr($addr, $pos + 1, -1));
-				$result[] = array($val, $name);
+				if (preg_match(EMAIL_FORMAT, $val)) {
+					$result[] = array($val, $name);
+				}
 			} else {
-				$result[] = array($addr);
+				if (preg_match(EMAIL_FORMAT, $addr)) {
+					$result[] = array($addr);
+				}
 			}
 		}
 		return $result;
 	}
 
-	function sendMail($smtp_server, $to, $from, $subject, $body, $cc, $bcc, $attachments=null, $smtp_port=25, $smtp_username = null, $smtp_password ='', $type='text/plain', $transport=0, $message_id=null, $in_reply_to=null, $inline_images = null, &$complete_mail) {
+	function sendMail($smtp_server, $to, $from, $subject, $body, $cc, $bcc, $attachments=null, $smtp_port=25, $smtp_username = null, $smtp_password ='', $type='text/plain', $transport=0, $message_id=null, $in_reply_to=null, $inline_images = null, &$complete_mail, $att_version) {
 		//Load in the files we'll need
 		Env::useLibrary('swift');
 		try {		
@@ -588,7 +650,7 @@ class MailUtilities {
 				}
 				$from = array($sender_address => $sender_name); 
 			}
-						
+
 			//Create a message
 			$message = Swift_Message::newInstance($subject)
 			  ->setFrom($from)
@@ -599,18 +661,21 @@ class MailUtilities {
 			$cc = self::prepareEmailAddresses($cc);
 			$bcc = self::prepareEmailAddresses($bcc);
 			foreach ($to as $address) {
-				$message->addTo(array_var($address, 0), array_var($address, 1));
+				$message->addTo(array_var($address, 0), array_var($address, 1, ""));
 			}
 			foreach ($cc as $address) {
-				$message->addCc(array_var($address, 0), array_var($address, 1));
+				$message->addCc(array_var($address, 0), array_var($address, 1, ""));
 			}
 			foreach ($bcc as $address) {
-				$message->addBcc(array_var($address, 0), array_var($address, 1));
+				$message->addBcc(array_var($address, 0), array_var($address, 1, ""));
 			}
 	
 			if ($in_reply_to) {
 				if (str_starts_with($in_reply_to, "<")) $in_reply_to = substr($in_reply_to, 1, -1);
-				$message->getHeaders()->addIdHeader("In-Reply-To", $in_reply_to);
+				$validator = new SwiftHeaderValidator();
+				if ($validator->validate_id_header_value($in_reply_to)) {
+					$message->getHeaders()->addIdHeader("In-Reply-To", $in_reply_to);
+				}
 			}
 			if ($message_id) {
 				if (str_starts_with($message_id, "<")) $message_id = substr($message_id, 1, -1);
@@ -620,8 +685,16 @@ class MailUtilities {
 			// add attachments
 	 		if (is_array($attachments)) {
 	         	foreach ($attachments as $att) {
-	         		$swift_att = Swift_Attachment::newInstance($att["data"], $att["name"], $att["type"]);
-	         		if (substr($att['name'], -4) == '.eml') $swift_att->setEncoder(Swift_Encoding::get7BitEncoding());
+	         		if ($att_version < 2) {
+	         			$swift_att = Swift_Attachment::newInstance($att["data"], $att["name"], $att["type"]);
+	         		} else {
+		         		$swift_att = Swift_Attachment::fromPath($att['path'], $att['type']);
+		         		$swift_att->setFilename($att["name"]);
+	         		}
+	         		if (substr($att['name'], -4) == '.eml') {
+	         			$swift_att->setEncoder(Swift_Encoding::get7BitEncoding());
+	         			$swift_att->setContentType('message/rfc822');
+	         		}
 	         		$message->attach($swift_att);
 	 			}
 	 		}
@@ -657,6 +730,7 @@ class MailUtilities {
 			try {
 				// if io error occurred (images not found tmp folder), try removing images from content to get the content
 				$reduced_body = preg_replace("/<img[^>]*src=[\"']([^\"']*)[\"']/", "", $original_body);
+				$message->setBody($reduced_body);
 				$complete_mail = $message->toString();
 				$message->setBody($original_body);
 			} catch (Exception $ex) {
@@ -783,7 +857,12 @@ class MailUtilities {
 										} catch (Exception $e) {
 											$mail_file = ROOT."/tmp/unsaved_mail_".$summary[0]['UID'].".eml";
 											$res = file_put_contents($mail_file, $content);
-											if ($res === false) Logger::log("Could not save mail, and original could not be saved as $mail_file, exception:\n".$e->getMessage());
+											if ($res === false) {
+												$mail_file = ROOT."/tmp/unsaved_mail_".gen_id().".eml";
+												$res = file_put_contents($mail_file, $content);
+												if ($res === false) Logger::log("Could not save mail, and original could not be saved as $mail_file, exception:\n".$e->getMessage());
+												else Logger::log("Could not save mail, original mail saved as $mail_file, exception:\n".$e->getMessage());
+											}
 											else Logger::log("Could not save mail, original mail saved as $mail_file, exception:\n".$e->getMessage());
 										}
 									} // if content
@@ -876,8 +955,8 @@ class MailUtilities {
 									$summary = $imap->getSummary($i);
 									if (is_array($summary)) {
 										$m_date = DateTimeValueLib::makeFromString($summary[0]['INTERNALDATE']);
-										if ($m_date instanceof DateTimeValue && $max_date->getTimestamp() > $m_date->getTimestamp()) {
-											if (MailContents::mailRecordExists($account->getId(), $summary[0]['UID'], $box->getFolderName(), true)) {
+										if ($m_date instanceof DateTimeValue && $max_date->getTimestamp() > $m_date->getTimestamp()) {																														
+											if (MailContents::mailRecordExists($account->getId(), $summary[0]['UID'], $box->getFolderName(), null)) {
 												$imap->deleteMessages($i);
 												$count++;
 											}
@@ -896,15 +975,19 @@ class MailUtilities {
 				//require_once "Net/POP3.php";
 				$pop3 = new Net_POP3();
 				// Connect to mail server
-				$pop3->connect($account->getServer());
+				if ($account->getIncomingSsl()) {
+					$pop3->connect("ssl://" . $account->getServer(), $account->getIncomingSslPort());
+				} else {
+					$pop3->connect($account->getServer());
+				}
 				if (PEAR::isError($ret=$pop3->login($account->getEmail(), self::ENCRYPT_DECRYPT($account->getPassword()), 'USER'))) {
 					throw new Exception($ret->getMessage());
 				}
 				$emails = $pop3->getListing();
 				foreach ($emails as $email) {
-					if (MailContents::mailRecordExists($account->getId(), $email['uidl'], null, true)) {
+					if (MailContents::mailRecordExists($account->getId(), $email['uidl'], null, null)) {
 						$headers = $pop3->getParsedHeaders($email['msg_id']);
-						$date = DateTimeValueLib::makeFromString($headers['Date']);
+						$date = DateTimeValueLib::makeFromString(array_var($headers, 'Date'));
 						if ($date instanceof DateTimeValue && $max_date->getTimestamp() > $date->getTimestamp()) {
 							$pop3->deleteMsg($email['msg_id']);
 							$count++;
@@ -1055,6 +1138,39 @@ class MailUtilities {
 		if (!$id_right) $id_right = gen_id();
 	 	return "<" . $id_left . "@" . $id_right . ">";
  	}
-	
+
+	/**
+	 * Validates the correctness of the email addresses in a string
+	 * @param $addr_str String containing email addresses
+	 * @return Returns an array containing the invalid email addresses or NULL if every address in the string is valid
+	 */
+	static function validate_email_addresses($addr_str) {
+		$invalid_addresses = null;
+		
+		$addr_str = str_replace(array("\n","\r","\t"), "", $addr_str);
+		$addr_str = str_replace(";", ",", $addr_str);
+		$addresses = explode(",", $addr_str);
+		foreach ($addresses as $addr) {
+			$addr = trim($addr);
+			if ($addr == '') continue;
+			$pos = strpos($addr, "<");
+			if ($pos !== FALSE && strpos($addr, ">", $pos) !== FALSE) {
+				$name = trim(substr($addr, 0, $pos));
+				$val = trim(substr($addr, $pos + 1, -1));
+				if (!preg_match(EMAIL_FORMAT, $val)) {
+					if (is_null($invalid_addresses)) $invalid_addresses = array();
+					$invalid_addresses[] = $val;
+				}
+			} else {
+				if (!preg_match(EMAIL_FORMAT, $addr)) {
+					if (is_null($invalid_addresses)) $invalid_addresses = array();
+					$invalid_addresses[] = $addr;
+				}
+			}
+		}
+		
+		return $invalid_addresses;
+	}
+
 }
 ?>

@@ -261,11 +261,9 @@ class Notifier {
 		$context = $reminder->getContext();
 		$type = $object->getObjectTypeName();
 		$date = $object->getColumnValue($context);
-		$isEvent = false;
 		$several_event_subscribers = false;
 		Env::useHelper("format");
-		if ($object instanceof ProjectEvent)
-			$isEvent = true;		
+		$isEvent = ($object instanceof ProjectEvent) ? true : false;			
 			
 		if ($reminder->getUserId() == 0) {
 			$people = $object->getSubscribers();
@@ -294,8 +292,10 @@ class Notifier {
 			}
 		}
 		
-		if(!$several_event_subscribers)
+		if(!$several_event_subscribers) {
+			if (!isset($string_date)) $string_date = format_datetime($date);
 			self::objectNotification($object, $people, null, "$context reminder", "$context $type reminder desc", array($object->getObjectName(), $string_date));
+		}
 	} // taskDue
 	
 	/**
@@ -310,7 +310,7 @@ class Notifier {
 		if(!is_array($people) || !count($people) || !$sender instanceof User) {
 			return; // nothing here...
 		} // if
-
+				
 		$uid = $object->getUniqueObjectId();
 		$name = $object->getObjectName();
 		$type = $object->getObjectTypeName();
@@ -395,9 +395,9 @@ class Notifier {
 		
 		if (isset ($invs)){
 			foreach ($invs as $inv){
+				if ($inv->getUserId() == ($from_user->getId())) continue;
 				$decision = $inv->getInvitationState();
 				$user_name = Users::findById($inv->getUserId())->getDisplayName();
-				if ($inv->getUserId() == ($from_user->getId())) continue;
 				if ($decision == 1){
 					$assist[] = ($user_name);
 				}else if ($decision == 2){
@@ -514,7 +514,7 @@ class Notifier {
 			$date = Localization::instance()->formatDescriptiveDate($task->getDueDate(), $task->getAssignedTo()->getTimezone());
 			tpl_assign('date', $date);
 		}
-				
+
 		self::queueEmail(
 			array(self::prepareEmailAddress($task->getAssignedTo()->getEmail(), $task->getAssignedTo()->getDisplayName())),
 			self::prepareEmailAddress($task->getUpdatedBy()->getEmail(), $task->getUpdatedByDisplayName()),
@@ -687,7 +687,25 @@ class Notifier {
 				Hook::fire('notifier_email_body', $body, $body);
 				Hook::fire('notifier_email_subject', $subject, $subject);
 				
-				if ($fromSMTP) $from = array(config_option("smtp_username") => $email->getFrom());
+				if ($fromSMTP && config_option("smtp_address")) {
+					$pos = strrpos($email->getFrom(), "<");
+					if ($pos !== false) {
+						$sender_name = trim(substr($email->getFrom(), 0, $pos));
+					} else {
+						$sender_name = "";
+					}
+					$from = array(config_option("smtp_address") => $sender_name);
+				} else {
+					$pos = strrpos($email->getFrom(), "<");
+					if ($pos !== false) {
+						$sender_name = trim(substr($email->getFrom(), 0, $pos));
+						$sender_address = str_replace(array("<",">"),array("",""), trim(substr($email->getFrom(), $pos, strlen($email->getFrom())-1)));
+					} else {
+						$sender_name = "";
+						$sender_address = $email->getFrom();
+					}
+					$from = array($sender_address => $sender_name);
+				}
 				$message = Swift_Message::newInstance($subject)
 				  ->setFrom($from)
 				  ->setBody($body)
@@ -703,9 +721,9 @@ class Notifier {
 				$email->delete();
 				$count++;
 			} catch (Exception $e) {
+				Logger::log('There has been a problem when sending the Queued emails. Problem:'.$e->getTraceAsString());
 			}
 		}
-		$mailer->close();
 		return $count;
 	}
 

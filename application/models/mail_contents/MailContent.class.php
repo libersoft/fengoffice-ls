@@ -654,7 +654,7 @@ class MailContent extends BaseMailContent {
 	 */
 	function getTextBody() {
 		if ($this->getBodyHtml()) {
-			return html_to_text($this->getBodyHtml());
+			return html_to_text(html_entity_decode($this->getBodyHtml(),null, "UTF-8"));
 		} else {
 			return $this->getBodyPlain();
 		}

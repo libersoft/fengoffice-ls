@@ -1439,10 +1439,12 @@ og.moveToWsOrMantainWs = function(manager, ws) {
 	var moveAction = function() {
 		if (og.ExtendedDialog.dialog) og.ExtendedDialog.dialog.destroy();
 		man.moveObjectsToWsOrMantainWs(0, ws);
+//		man.getSelectionModel().clearSelections();
 	};
 	var mantainAction = function() {
 		if (og.ExtendedDialog.dialog) og.ExtendedDialog.dialog.destroy();
 		man.moveObjectsToWsOrMantainWs(1, ws);
+//		man.getSelectionModel().clearSelections();
 	};
 	
 	if (og.preferences['drag_drop_prompt'] == 'move') {

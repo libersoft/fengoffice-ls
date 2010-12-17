@@ -125,15 +125,18 @@ if($has_search_results) {
 							break;
 					} else
 						break;
-				} else {
-					echo get_class($object);
+				} else {					
 					if (Localization::instance()->lang_exists('field ' . $object->getObjectManagerName() . ' ' . $context['column_name']))
 						echo lang('field ' . $object->getObjectManagerName() . ' ' . $context['column_name']);
 					else
 						echo clean($context['column_name']);
 				}
 				?>: </b>
-			<span class='desc'><?php echo $context['context'] ?></span></td>
+			<span class='desc'><?php 
+			if ($object instanceof ProjectFileRevision) 
+				echo undo_htmlspecialchars($context['context']);
+			else
+				echo $context['context'] ?></span></td>
 		</tr>
 		<?php } // if
 		} // foreach context ?>
