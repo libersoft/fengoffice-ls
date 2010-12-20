@@ -213,10 +213,6 @@ og.FileManager = function() {
 	}
 
 	function renderLinkedObjects(value, p, r) {
-		if (!value) {
-			return "";
-		}
-
 		var linkedString = "";
 		Ext.each(r.data.linkedObjects, function (c, i) {
 			if (i > 0) {

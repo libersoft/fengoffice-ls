@@ -1481,33 +1481,29 @@ class FilesController extends ApplicationController {
 					"ftype" => $o->getType(),
 					"url" => $o->getUrl(),
 					"isRead"=> $o->getIsRead(logged_user()->getId()),
+					"linkedObjects" => array(),
 				);
 				if ($o->isMP3()) {
 					$values['isMP3'] = true;
 				}
-				if ($o->getLinkedObjects())
-				{
-				    $a = array();
-				    foreach ($o->getLinkedObjects() as $l)
-				    {
-					if ($l instanceof Contact)
-					{
-					    $b = array();
-					    $b['linkedId'] = $l->getId();
-					    $b['linkedName'] = $l->getDisplayName();
-					    $b['controller'] = "contact";
-					    $b['action'] = "card";
-					    $a[] = $b;
-					} else if ($l instanceof Company) {
-					    $b = array();
-					    $b['linkedId'] = $l->getId();
-					    $b['linkedName'] = $l->getName();
-					    $b['controller'] = "company";
-					    $b['action'] = "view_client";
-					    $a[] = $b;
+				if ($o->getLinkedObjects()) {
+					foreach ($o->getLinkedObjects() as $l) {
+						if ($l instanceof Contact) {
+							$b = array();
+							$b['linkedId'] = $l->getId();
+							$b['linkedName'] = $l->getDisplayName();
+							$b['controller'] = "contact";
+							$b['action'] = "card";
+							$values['linkedObjects'][] = $b;
+						} else if ($l instanceof Company) {
+							$b = array();
+							$b['linkedId'] = $l->getId();
+							$b['linkedName'] = $l->getName();
+							$b['controller'] = "company";
+							$b['action'] = "view_client";
+							$values['linkedObjects'][] = $b;
+						}
 					}
-				    }
-				    $values['linkedObjects'] = $a;
 				}
 				Hook::fire('add_classification_value', $o, $values);
 				$listing["files"][] = $values;
