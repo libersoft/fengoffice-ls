@@ -15,8 +15,31 @@ require_javascript("og/modules/addFileForm.js");
 				for(i=0; i<objs.length; i++) {
 					obj_ids += (obj_ids == '' ? '' : ',') + objs[i].data.object_id;
 				}
-				og.openLink(og.getUrl('files', 'zip_add', {id:zip_id, objects:obj_ids})); 
+				og.openLink(og.getUrl('files', 'zip_add', {id:zip_id, objects:obj_ids}));
 			}, this, {});
+	}
+
+	og.pickObjectToFax = function (file_id) {
+		og.ObjectPicker.show(function (objs) {
+			if (objs.length < 1) return;
+			objects = '';
+			for(i=0; i<objs.length; i++) {
+				if (objects != '') objects += ',';
+				objects += objs[i].data.manager + ':' + objs[i].data.object_id;
+			}
+			og.openLink(og.getUrl('fax', 'contact', {id:file_id, objects:objects}), {
+				callback: function (success, response) {
+					if (!success && response.error && response.error.code == 'nofax') {
+						og.openLink(og.getUrl(response.error.extra.controller, response.error.extra.action, {id: response.error.extra.id}));
+					}
+				}
+			});
+		}, this, {
+			types: {
+				'Contacts': true,
+				'Companies': true
+			}
+		});
 	}
 </script>
 
@@ -81,6 +104,9 @@ if (isset($file) && $file instanceof ProjectFile) {
 			add_page_action(lang('download') . ' (' . format_filesize($file->getFilesize()) . ')', $url, 'ico-download', '_self', null, true);
 		}
 	}
+
+	// FAX
+	add_page_action('Invia per fax', "javascript:og.pickObjectToFax({$file->getId()})", 'ico-fax', null, null, true);
 	
 	if ($file->getType() == ProjectFiles::TYPE_WEBLINK){
 		add_page_action(lang('open weblink'), clean($file->getUrl()), 'ico-open-link', '_blank', null, true);
