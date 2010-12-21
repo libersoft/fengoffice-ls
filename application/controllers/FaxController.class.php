@@ -25,10 +25,11 @@ class FaxController extends ApplicationController {
 		if (!empty($file_ids) && is_numeric($phonenumber)) {
 
 			foreach (json_decode($file_ids) as $file_id) {
-				$file = ProjectFiles::findById($file_id);
 
-				$file_hash = $file->getLastRevision()->getRepositoryId();
-				$file_path = FileRepository::getBackend()->getFilePath($file_hash);
+				$file_content = ProjectFiles::findById($file_id)->getFileContent();
+				$file_path = ROOT . "/tmp/$file_id";
+
+				file_put_contents($file_path, $file_content);
 
 				$files[] = $file_path;
 			}
@@ -61,9 +62,9 @@ class FaxController extends ApplicationController {
 		$file_id = array_var($_GET, 'id');
 		$objects = array_var($_GET, 'objects');
 
-		$file = ProjectFiles::findById($file_id);
-		$file_hash = $file->getLastRevision()->getRepositoryId();
-		$file_path = FileRepository::getBackend()->getFilePath($file_hash);
+		$file_content = ProjectFiles::findById($file_id)->getFileContent();
+		$file_path = ROOT . "/tmp/$file_id";
+		file_put_contents($file_path, $file_content);
 
 		$object = split(":", $objects);
 		$phonenumber = $object[0]::findById($object[1])->getEmail();
