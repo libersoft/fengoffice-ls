@@ -48,7 +48,8 @@ class FaxController extends ApplicationController {
 	}
 
 	function sendfax($phonenumber, $files) {
-		$command = "sendfax -o ".HYLAFAX_LOGIN." -n -d $phonenumber -h ".HYLAFAX_HOST." $files";
+		$command = "sendfax ".HYLAFAX_PARAMS." -o ".HYLAFAX_LOGIN.
+                           " -h ".HYLAFAX_HOST." -d $phonenumber $files";
 		exec($command, $command_output, $command_returnvalue);
 
 		if ($command_returnvalue == 0) {
