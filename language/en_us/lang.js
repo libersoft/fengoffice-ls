@@ -801,5 +801,6 @@ addLangs({
     'add object subtype': 'Add object subtype',
     'delete object subtype': 'Delete object subtype',
     'delete object subtype warning': 'If you delete this subtype it will be removed from all objects that have it set. Are you sure you want to delete this subtype?',
-    'object subtype deleted': 'Subtype deleted. {0}'
+    'object subtype deleted': 'Subtype deleted. {0}',
+    'linked': 'Linked'
 });
