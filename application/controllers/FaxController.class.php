@@ -53,8 +53,10 @@ class FaxController extends ApplicationController {
 
 		if ($command_returnvalue == 0) {
 			flash_success('faxsend: success!');
+			return true;
 		} else {
 			flash_error('faxsend: failure!');
+			return false;
 		}
 	}
 
@@ -62,9 +64,9 @@ class FaxController extends ApplicationController {
 		$file_id = array_var($_GET, 'id');
 		$objects = array_var($_GET, 'objects');
 
-		$file_content = ProjectFiles::findById($file_id)->getFileContent();
+		$file = ProjectFiles::findById($file_id);
 		$file_path = ROOT . "/tmp/$file_id";
-		file_put_contents($file_path, $file_content);
+		file_put_contents($file_path, $file->getFileContent());
 
 		$object = split(":", $objects);
 		$phonenumber = $object[0]::findById($object[1])->getEmail();
@@ -84,7 +86,8 @@ class FaxController extends ApplicationController {
 		}
 
 		if ($phonenumber) {
-			$this->sendfax($phonenumber, $file_path);
+			$this->sendfax($phonenumber, $file_path) &&
+					ApplicationLogs::createLog($file, $file->getWorkspaces(), ApplicationLogs::ACTION_FAX, false, null, true, $objects);
 		} else {
 			ajx_extra_data(array(
 				'error' => array(

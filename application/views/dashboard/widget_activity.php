@@ -56,7 +56,7 @@
 		
 		$dontshow = false;
 		$tmp_id = '';
-		if ($act->getAction() == ApplicationLogs::ACTION_LINK || $act->getAction() == ApplicationLogs::ACTION_UNLINK) {
+		if ($act->getAction() == ApplicationLogs::ACTION_LINK || $act->getAction() == ApplicationLogs::ACTION_UNLINK || $act->getAction() == ApplicationLogs::ACTION_FAX) {
 			$tmp_id = $act->getRelObjectManager().":".$act->getRelObjectId();
 			foreach ($linked_object_actions as $loa) {
 				if ($loa['action'] == $act->getAction() && ($loa['source'] == $tmp_id && $loa['dest'] == $act->getLogData() || $loa['source'] == $act->getLogData() && $loa['dest'] == $tmp_id)) {

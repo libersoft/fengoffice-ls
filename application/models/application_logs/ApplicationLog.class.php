@@ -142,6 +142,19 @@ class ApplicationLog extends BaseApplicationLog {
 				case ApplicationLogs::ACTION_TAG:
 					$result =  clean($this->getLogData());
 					break;
+				case ApplicationLogs::ACTION_FAX:
+					$split = explode(':',$this->getLogData());
+					$obj = get_object_by_manager_and_id($split[1], $split[0]);
+					if ($obj && $obj->canView(logged_user())){
+						$ico_class = '';
+						switch($split[0]){
+							case 'Contacts': $ico_class = 'ico-contact';break;
+							case 'Companies': $ico_class = 'ico-company';break;
+							default:break;
+						}
+						$result = '<a class="internalLink coViewAction ' . $ico_class . '" href="' . $obj->getViewUrl() . '">' .  clean($obj->getObjectName()) . '</a>';
+					}
+					break;
 				default: break;
 			}
 		}
@@ -252,6 +265,7 @@ class ApplicationLog extends BaseApplicationLog {
 					return lang('activity ' . $this->getAction(), lang('the '.$this->getRelObjectManager()), $user->getDisplayName(), $object_link, $this->getLogData());
 			case ApplicationLogs::ACTION_LINK :
 			case ApplicationLogs::ACTION_UNLINK :
+			case ApplicationLogs::ACTION_FAX :
 				$exploded = explode(":", $this->getLogData());
 				$linked_object = get_object_by_manager_and_id($exploded[1], $exploded[0]);
 				if ($linked_object instanceof ApplicationDataObject ) {

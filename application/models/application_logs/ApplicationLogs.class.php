@@ -32,6 +32,7 @@ class ApplicationLogs extends BaseApplicationLogs {
 	const ACTION_DOWNLOAD    = 'download';
 	const ACTION_CHECKOUT    = 'checkout';
 	const ACTION_CHECKIN     = 'checkin';
+	const ACTION_FAX         = 'fax';
 	
 	public static function getWorkspaceString($ids = '?') {
 		if (is_array($ids)) $ids = implode(",", $ids);
@@ -272,7 +273,8 @@ class ApplicationLogs extends BaseApplicationLogs {
 			self::ACTION_READ,
 			self::ACTION_DOWNLOAD,
 			self::ACTION_CHECKOUT,
-			self::ACTION_CHECKIN
+			self::ACTION_CHECKIN,
+			self::ACTION_FAX
 			); // array
 		} // if
 

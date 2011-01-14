@@ -142,6 +142,7 @@
 	'activity download' => "{1} downloaded {0} {2}",
     'activity checkout' => "{1} checked out {0} {2}",
     'activity checkin' => "{1} checked in {0} {2}",
+	'activity fax' => "{1} faxed {0} {2} to {3} {4}",
   
   	'x users' => "{0} users{1}",
   ); // array
