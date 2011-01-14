@@ -25,6 +25,8 @@
   define('HYLAFAX_PORT', '4559');
   define('HYLAFAX_LOGIN', '');
   define('HYLAFAX_PWD', '');
+  define('HYLAFAX_PARAMS', '-n -D');
+  define('HYLAFAX_NUMBER_PREFIX', '');
   
   return true;
   
