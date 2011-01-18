@@ -1173,7 +1173,7 @@ class ObjectController extends ApplicationController {
 			$fn = '';
 			$fn2 = '';
 			if ($filterName!=''){
-				$fn = " AND firstname LIKE '%". $filterName ."%'";
+				$fn = " AND (firstname LIKE '%". $filterName ."%' OR lastname LIKE '%". $filterName ."%')";
 				$fn2 = " AND name LIKE '%". $filterName ."%'";
 			}
 				
