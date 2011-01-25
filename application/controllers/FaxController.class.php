@@ -47,18 +47,18 @@ class FaxController extends ApplicationController {
 		}
 	}
 
-	function sendfax($phonenumber, $files) {
-		$command = "sendfax ".HYLAFAX_PARAMS." -o ".HYLAFAX_LOGIN.
-                           " -h ".HYLAFAX_HOST." -d ".HYLAFAX_NUMBER_PREFIX."$phonenumber $files";
+	function sendfax($phonenumbers, $file_path) {
+		$command = "sendfax " . HYLAFAX_PARAMS . " -o " . HYLAFAX_LOGIN . " -h " . HYLAFAX_HOST;
+
+		foreach ($phonenumbers as $phonenumber) {
+			$command .= " -d " . HYLAFAX_NUMBER_PREFIX . $phonenumber;
+		}
+
+		$command .= ' ' . $file_path;
+
 		exec($command, $command_output, $command_returnvalue);
 
-		if ($command_returnvalue == 0) {
-			flash_success('faxsend: success!');
-			return true;
-		} else {
-			flash_error('faxsend: failure!');
-			return false;
-		}
+		return $command_returnvalue == 0;
 	}
 
 	function contact() {
@@ -69,38 +69,71 @@ class FaxController extends ApplicationController {
 		$file_path = ROOT . "/tmp/$file_id";
 		file_put_contents($file_path, $file->getFileContent());
 
-		$object = split(":", $objects);
-		$phonenumber = $object[0]::findById($object[1])->getEmail();
-		switch ($manager = $object[0]) {
-			case 'Companies':
-				$phonenumber = $manager::findById($object[1])->getFaxNumber();
-				$controller = "company";
-				$action = "edit_client";
-				break;
-			case 'Contacts':
-				$phonenumber = $manager::findById($object[1])->getWFaxNumber();
-				$controller = "contact";
-				$action = "edit";
-				break;
-			default:
-				$phonenumber = false;
+		$phonenumbers = array();
+		$object_strings = array();
+		$nofax = array();
+		foreach (split(",", $objects) as $object_string) {
+			$object = split(":", $object_string);
+			switch ($manager = $object[0]) {
+				case 'Companies':
+					$company = $manager::findById($object[1]);
+					$phonenumber = $company->getFaxNumber();
+					$controller = "company";
+					$action = "edit_client";
+					$name = $company->getName();
+					break;
+				case 'Contacts':
+					$contact = $manager::findById($object[1]);
+					$phonenumber = $contact->getWFaxNumber();
+					$controller = "contact";
+					$action = "edit";
+					$name = $contact->getFirstname() . ' ' . $contact->getLastname();
+					break;
+				default:
+					$phonenumber = false;
+			}
+
+			if ($phonenumber) {
+				$phonenumbers[] = $phonenumber;
+				$object_strings[] = $object_string;
+			} else {
+				$nofax[] = array(
+					'controller' => $controller,
+					'action' => $action,
+					'id' => $object[1],
+					'name' => $name
+				);
+			}
 		}
 
-		if ($phonenumber) {
-			$this->sendfax($phonenumber, $file_path) &&
-					ApplicationLogs::createLog($file, $file->getWorkspaces(), ApplicationLogs::ACTION_FAX, false, null, true, $objects);
-		} else {
-			ajx_extra_data(array(
-				'error' => array(
-					'code' => 'nofax',
-					'extra' => array(
-						'controller' => $controller,
-						'action' => $action,
-						'id' => $object[1]
+		// Gestione dei contatti senza numero di fax
+		switch (count($nofax)) {
+			case 0:
+				foreach ($object_strings as $object_str) {
+					ApplicationLogs::createLog($file, $file->getWorkspaces(), ApplicationLogs::ACTION_FAX, false, null, true, $object_str);
+				}
+				$hylafax_return = $this->sendfax($phonenumbers, $file_path);
+				$hylafax_return ? flash_success("Fax accodati con successo!") : flash_error("Errore di HylaFAX");
+				break;
+			case 1:
+				ajx_extra_data(array(
+					'error' => array(
+						'code' => 'nofax',
+						'extra' => $nofax[0]
 					)
-				)
-			));
-			flash_error('Manca il numero di fax del contatto scelto');
+				));
+				flash_error('Manca il numero di fax del contatto scelto');
+				break;
+			default:
+				$names = ": ";
+				foreach ($nofax as $k => $contact) {
+					if ($k != 0) {
+						$names .= ", ";
+					}
+
+					$names .= $contact['name'];
+				}
+				flash_error("Manca il numero di fax dei contatti" . $names);
 		}
 
 		ajx_current('empty');
