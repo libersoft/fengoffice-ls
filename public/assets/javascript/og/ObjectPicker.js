@@ -144,7 +144,8 @@ og.ObjectPicker = function(config) {
 				this.type = filter.type;
 				this.store.baseParams.type = this.type;
 			} else if (filter.filter == 'tag') {
-				this.tag = filter.name;
+				// BRUTAL FIX
+				this.tag = filter.name.name;
 				this.store.baseParams.tag = this.tag;
 			} else if (filter.filter == 'ws') {
 				this.ws = filter.id;
