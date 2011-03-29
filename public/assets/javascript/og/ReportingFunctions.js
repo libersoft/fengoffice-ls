@@ -232,7 +232,7 @@ og.fieldChanged = function(id, condition, value){
 			var valuesList = fieldValues[id][selField].split(',');
 			var listValueField = '<b>' + lang('value') + '</b>:<br/><select class="reportConditionDD" id="conditions[' + id + '][value]" name="conditions[' + id + '][value]">';
 			for(var i=0; i < valuesList.length; i++){
-				listValueField += '<option ' + (valuesList[i] == value ? "selected" : "") + '>' + valuesList[i] + '</option>';
+				listValueField += '<option ' + 'value="' + valuesList[i] + '" ' + (valuesList[i] == value ? "selected" : "") + '>' + valuesList[i] + '</option>'; //hace un fix para IE, sino no deja guardar los cambios				
 			}
 			listValueField += '</select>' + type_and_name; 
 			document.getElementById('tdValue' + id).innerHTML = listValueField;

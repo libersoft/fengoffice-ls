@@ -117,8 +117,6 @@ $genid = gen_id();
     Foundation Inc, 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 $object = $event;
-
-$active_projects = logged_user()->getActiveProjects();
 $project = active_or_personal_project();
 
 $day =  array_var($event_data, 'day');

@@ -117,4 +117,11 @@
 	'no files to compress' => 'Žádný soubor ke komprimaci',
 	'cant modify subscribers' => 'Nelze měnit účastníky',
 	'this object must belong to a ws to modify its subscribers' => 'Chcete-li měnit účastníky, pak tento objekt musí patřit do nějakého pracovního prostoru.',
+	'error invalid recipients' => 'V poli "{0}" nalezeny neplatné adresy: {1}',
+	'mailAccount dnx' => 'Emailový účet neexistuje',
+	'error add contact from user' => 'Nelze vytvořit kontakt.',
+	'zip not supported' => 'ZIP není serverem podporován',
+	'no tag specified' => 'Není specifikován žádný štítek',
+	'no mailAccount error' => 'Akce není možná. Nemáte přidán emailový účet.',
+	'content too long not loaded' => 'Předchozí obsah mailu byl příliš dlouhý, proto je odeslán tímto mailem.',
 ); ?>

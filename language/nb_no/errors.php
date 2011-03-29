@@ -114,4 +114,8 @@
 	'must choose at least one workspace error' => 'Du må velge minst et arbeidsområde til dette objektet.',
 	'maximum number of users exceeded error' => 'Maksimalantallet for brukere er nådd. Applikasjonen vil ikke fungere til dette er rettet på.',
 	'maximum disk space reached' => 'Din diskkapasitet er oppbrukt. Vennligst slett noen objekter før du forsøker å legge til nye, eller kontakt administratoren.',
+	'error invalid recipients' => 'Ugyldig(e) e-postadress(er) funnet i feltet "{0}": {1}',
+	'no tag specified' => 'Ingen stikkord er spesifisert',
+	'no mailAccount error' => 'Handlingen er ikke tilgjengelig. Du har ikke lagt inn noen e-postkontoer.',
+	'content too long not loaded' => 'Den forrige e-postens innhold er for langt og vil ikke bli vist, men det vil bli sendt med denne e-posten.',
 ); ?>

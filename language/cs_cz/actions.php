@@ -150,4 +150,13 @@
 	'apply milestone to subtasks' => 'Přiřadit milník k vnořeným úkolům',
 	'apply workspace to subtasks' => 'Přiřadit pracovní plochu k vnořeným úkolům',
 	'show all linked objects' => 'Zobrazit všechny spojené objekty({0})',
+	'show' => 'Zobrazit',
+	'archive' => 'Archivovat',
+	'unarchive' => 'Dearchivovat',
+	'confirm archive selected objects' => 'Určitě chcete archivovat vybrané objekty?',
+	'confirm archive object' => 'Určitě chcete dearchivovat vybrané objekty?',
+	'confirm unarchive object' => 'Určitě chcete dearchivovat vybraný objekt?',
+	'report as spam' => 'Nahlásit jako spam',
+	'not spam' => 'Není Spam',
+	'mark as unread' => 'Označit jako nepřečteno',
 ); ?>

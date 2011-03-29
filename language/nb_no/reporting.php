@@ -25,4 +25,10 @@
 	'columns to print desc' => 'Flytt kolonnene du ønsker å skrive ut til boksen ved å klokke på pilene.',
 	'reporting workspace' => 'Arbeidsområde',
 	'reporting user' => 'Bruker',
+	'columns' => 'Kolonner',
+	'report pdf options' => 'PDF-alternativer',
+	'report pdf page layout' => 'Sideoppsett',
+	'report pdf vertical' => 'Vertikal',
+	'report pdf landscape' => 'Horisontal',
+	'report font size' => 'Skriftstørrelse',
 ); ?>

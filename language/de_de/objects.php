@@ -105,7 +105,7 @@
 	'activity untrash' => '{1} stellte {0} „{2}“ aus dem Papierkorb wieder her.',
 	'activity open' => '{1} eröffnete {0} „{2}“ wieder.',
 	'activity close' => '{1} markierte {0} „{2}“ als „Erledigt“.',
-	'activity subscribe' => '{1} abonnierte für {3}: {0} „{2}“.',
+	'activity subscribe' => '{1} abonnierte für {3} - {0}: „{2}“.',
 	'activity unsubscribe' => '{1} kündigte Abonnent von {3} für {0} „{2}“.',
 	'activity tag' => '{1} verschlagwortete {0} „{2}“ als „{3}“.',
 	'activity untag' => '{1} löschte die Schlagwörter von {0} „{2}“.',
@@ -126,4 +126,6 @@
 	'activity download' => '{1} lud {0} „{2}“ herunter.',
 	'x users' => '{0} Benutzer{1}',
 	'the file_revision' => 'die Dateirevision',
+	'activity checkout' => '{1} gesperrt {0} {2}',
+	'activity checkin' => '{1} freigegeben {0} {2}',
 ); ?>

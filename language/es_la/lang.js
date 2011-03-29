@@ -4,6 +4,7 @@ addLangs({
 	'cannot check in': 'No es posible devolver',
 	'add as new revision to': 'Agregar como nueva revisión a',
 	'error loading content': 'Error cargando contenido. Inténtelo nuevamente en otro momento.\nSi los problemas persisten no dude en contactar al administrador.',
+	'http error': 'Error {0}: {1}',
 	'projects': 'Espacios',
 	'administration': 'Administración',
 	'open link': 'Abrir vínculo',
@@ -698,5 +699,6 @@ addLangs({
     'add object subtype' : 'Agregar tipo de objeto',
     'delete object subtype' : 'Eliminar tipo de objeto',
     'delete object subtype warning' : 'Si elimina este tipo de objeto éste será removido de todos los objetos a los cuales ha sido asignado. ¿Está seguro que lo quiere eliminar?',
-    'object subtype deleted' : 'Subtype deleted. {0}'
+    'object subtype deleted' : 'Subtype deleted. {0}',
+    'change status': 'Cambiar estado'
 });

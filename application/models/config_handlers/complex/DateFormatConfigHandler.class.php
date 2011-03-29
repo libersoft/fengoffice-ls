@@ -29,7 +29,7 @@
       $option_attributes = $this->getValue() == 'd-m-Y' ? array('selected' => 'selected') : null;
       $options[] = option_tag('dd-mm-yyyy', 'd-m-Y', $option_attributes);
       
-      $option_attributes = $this->getValue() == 'm/d/Y' ? array('selected' => 'selected') : null;
+      $option_attributes = $this->getValue() == 'm-d-Y' ? array('selected' => 'selected') : null;
       $options[] = option_tag('mm-dd-yyyy', 'm-d-Y', $option_attributes);
       
       $option_attributes = $this->getValue() == 'Y-m-d' ? array('selected' => 'selected') : null;
@@ -38,7 +38,7 @@
       $option_attributes = $this->getValue() == 'd.m.Y' ? array('selected' => 'selected') : null;
       $options[] = option_tag('dd.mm.yyyy', 'd.m.Y', $option_attributes);
       
-      $option_attributes = $this->getValue() == 'm/d/Y' ? array('selected' => 'selected') : null;
+      $option_attributes = $this->getValue() == 'm.d.Y' ? array('selected' => 'selected') : null;
       $options[] = option_tag('mm.dd.yyyy', 'm.d.Y', $option_attributes);
       
       $option_attributes = $this->getValue() == 'Y.m.d' ? array('selected' => 'selected') : null;

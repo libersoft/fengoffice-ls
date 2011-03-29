@@ -77,6 +77,9 @@ og.TagPanel = function(config) {
 		style: 'border-top-width: 1px',
 		bodyBorder: false,
 		collapsible: true,
+		collapsed: false,
+		collapsedTitle:  lang('tags'),
+		plugins: new Ext.ux.collapsedPanelTitlePlugin(),
 		layout: 'fit',
 		items: [this.tree],
 		tbar: tbar
@@ -94,6 +97,47 @@ og.TagPanel = function(config) {
 		scope:this
 	});
 };
+
+Ext.ux.collapsedPanelTitlePlugin = function ()
+{
+    this.init = function(p) {
+        if (p.collapsible)
+        {
+            var r = p.region;
+            if ((r == 'north') || (r == 'south'))
+            {
+                p.on ('render', function()
+                    {
+                        var ct = p.ownerCt;
+                        ct.on ('afterlayout', function()
+                            {
+                                if (ct.layout[r].collapsedEl)
+                                {
+                                    var leftPadding = ( p.collapsedIcon ? 24 : 4 ); 
+                                    p.collapsedTitleEl = ct.layout[r].collapsedEl.createChild ({
+                                        tag: 'div',
+                                        style: 'color : #15428B; font-weight: bold; padding-left:' + leftPadding + 'px; margin-left:4px; margin-top:2px; background: url(' + p.collapsedIcon + ') no-repeat left center;',
+                                        html: p.collapsedTitle
+                                    });
+                                }
+                            }, false, {single:true});
+                        p.on ('collapse', function()
+                            {
+                                if (ct.layout[r].collapsedEl && !p.collapsedTitleEl)
+                                {
+                                    var leftPadding = ( p.collapsedIcon ? 24 : 4 ); 
+                                    p.collapsedTitleEl = ct.layout[r].collapsedEl.createChild ({
+                                        tag: 'span',
+                                        style: 'color : #15428B; padding-left:' + leftPadding + 'px; margin-left:4px; margin-top:2px; background: url(' + p.collapsedIcon + ') no-repeat left center;',
+                                        html: p.collapsedTitle
+                                    });
+                                }
+                            }, false, {single:true});
+                    });
+            }
+        }
+    };
+}
 
 Ext.extend(og.TagPanel, Ext.Panel, {});
 

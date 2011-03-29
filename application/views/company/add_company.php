@@ -1,7 +1,6 @@
 <?php 
 	require_javascript('og/modules/addMessageForm.js');
 	$project = active_or_personal_project();
-	$projects =  active_projects();
 	$genid = gen_id();
 	$object = $company;
 	if($company->isNew()) { 

@@ -227,4 +227,8 @@
 	'field Projects archived_by_id' => 'Archiviert durch',
 	'field Users type' => 'Typ',
 	'field MailContents received_date' => 'Erhalten',
+	'field ProjectTasks object_subtype' => 'Objekt-Untertyp',
+	'field MailContents sync' => 'Synchronisiert',
+	'field MailContents body' => 'Body',
+	'field ProjectFileRevisions filecontent' => 'Dateiinhalt',
 ); ?>

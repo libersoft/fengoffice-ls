@@ -67,6 +67,9 @@
 	if (config_option('use_owner_company_logo_at_header') && owner_company()->hasLogo()) {
 		$use_owner_company_logo = true; 
 	}
+	if (GlobalCache::isAvailable()) {
+		GlobalCache::update('check_for_popup_reminders_'.logged_user()->getId(), 1);
+	}
 ?>
 <!-- header -->
 <div id="header">
@@ -131,8 +134,7 @@
 <!-- /footer -->
 
 <script>
-		
-	
+
 // OG config options
 og.hostName = '<?php echo ROOT_URL ?>';
 og.sandboxName = <?php echo defined('SANDBOX_URL') ? "'".SANDBOX_URL."'" : 'false'; ?>;
@@ -199,12 +201,31 @@ og.preferences = {
 
 Ext.Ajax.timeout = <?php echo get_max_execution_time()*1100 // give a 10% margin to PHP's timeout ?>;
 og.musicSound = new Sound();
-og.systemSound = new Sound();
+og.systemSound = og.musicSound;//new Sound();
 
 var quickAdd = new og.QuickAdd({renderTo:'quickAdd'});
 var searchbutton = new Ext.Button({renderTo:'searchboxButton', text: lang('search'), type:'submit', handler:function(){document.getElementById('searchButtonReal').click()} });
 
 <?php if (!defined('DISABLE_JS_POLLING') || !DISABLE_JS_POLLING) { ?>
+
+og.skipEmailPolling = 0;
+
+// check if feng is running on active tab
+active_element = document.activeElement;
+window.onblur = function() {
+	if (Ext.isIE) {
+		if (active_element != document.activeElement) {
+			active_element = document.activeElement;
+			return;
+		}
+	}
+	og.fengHasBrowserFocus = false;
+};
+
+window.onfocus = function() {
+	og.fengHasBrowserFocus = true;
+};
+
 setInterval(function() {
 	og.openLink(og.getUrl('object', 'popup_reminders'), {
 		hideLoading: true,

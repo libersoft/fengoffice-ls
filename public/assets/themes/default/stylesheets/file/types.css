@@ -1,5 +1,5 @@
 .ico-project, .ico-workspace {
-	background-image: url(../../images/16x16/workspace.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -620px !important;
 }
 .ico-projectmilestone, .ico-milestone {
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -400px !important;
@@ -20,7 +20,7 @@
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -80px !important;
 }
 .ico-projecttask, .ico-task {
-	background: transparent url(../../images/16x16/tasks.png) no-repeat !important;
+	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -179px !important;
 }
 .ico-projectevent, .ico-event {
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 0px !important;
@@ -32,7 +32,7 @@
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -540px !important;
 }
 .ico-projectmessage, .ico-message {
-	background: transparent url(../../images/16x16/message.png) no-repeat !important;
+	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -420px !important;
 }
 .ico-message-rfc822 {
 	background-image: url(../../images/16x16/types/message.png) !important;

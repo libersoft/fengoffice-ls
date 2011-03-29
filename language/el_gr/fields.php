@@ -225,4 +225,8 @@
 	'field ProjectEvents repeat_wnum' => 'Επανάληψη αριθμού εβδομάδας',
 	'field MailContents received_date' => 'Ημερομηνία παραλαβής',
 	'field Users type' => 'Τύπος',
+	'field MailContents body' => 'Κείμενο',
+	'field MailContents sync' => 'Συγχρονισμένο',
+	'field ProjectFileRevisions filecontent' => 'Περιεχόμενο αρχείου',
+	'field ProjectTasks object_subtype' => 'Υποτύπος αντικειμένου',
 ); ?>

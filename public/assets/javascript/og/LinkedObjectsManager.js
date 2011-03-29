@@ -409,7 +409,8 @@ Ext.extend(og.LinkedObjectManager, Ext.grid.GridPanel, {
 		}
 		Ext.apply(this.store.baseParams, {
 			tag: Ext.getCmp('tag-panel').getSelectedTag(),
-			active_project: Ext.getCmp('workspace-panel').getActiveWorkspace().id,
+			//active_project: Ext.getCmp('workspace-panel').getActiveWorkspace().id,
+			active_project: 0,
 			linkedobject: this.linked_object,
 			linkedmanager: this.linked_manager,
 			filtermanager: this.filter_manager

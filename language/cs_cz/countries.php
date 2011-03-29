@@ -237,4 +237,5 @@
 	'country ye' => 'Jemen',
 	'country zm' => 'Zambie',
 	'country zw' => 'Zimbabwe',
+	'country cd' => 'Demokratická Republika Kongo',
 ); ?>

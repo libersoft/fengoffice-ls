@@ -223,4 +223,10 @@
 	'field Users can_manage_reports' => 'Kan administrere tid',
 	'field Users can_manage_time' => 'Kan legge til e-postkontoer',
 	'field Users can_add_mail_accounts' => 'Kan legge til e-postkontoer',
+	'field MailContents received_date' => 'Mottatt dato',
+	'field MailContents body' => 'Kropp',
+	'field MailContents sync' => 'Synkronisert',
+	'field ProjectFileRevisions filecontent' => 'Filinnhold',
+	'field ProjectTasks object_subtype' => 'Objektundertype',
+	'field Users type' => 'Type',
 ); ?>

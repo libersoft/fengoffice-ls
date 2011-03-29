@@ -142,15 +142,15 @@ Ext.onReady(function(){
 		listeners: {
 			'render': function() {
 				// hide disabled modules
-				if (!og.config['enable_notes_module']) Ext.get('tabs-panel__messages-panel').setDisplayed(false);
-				if (!og.config['enable_email_module']) Ext.get('tabs-panel__mails-panel').setDisplayed(false);
-				if (!og.config['enable_contacts_module']) Ext.get('tabs-panel__contacts-panel').setDisplayed(false);
-				if (!og.config['enable_calendar_module']) Ext.get('tabs-panel__calendar-panel').setDisplayed(false);
-				if (!og.config['enable_documents_module']) Ext.get('tabs-panel__documents-panel').setDisplayed(false);
-				if (!og.config['enable_tasks_module']) Ext.get('tabs-panel__tasks-panel').setDisplayed(false);
-				if (!og.config['enable_weblinks_module']) Ext.get('tabs-panel__webpages-panel').setDisplayed(false);
-				if (!og.config['enable_time_module']) Ext.get('tabs-panel__time-panel').setDisplayed(false);
-				if (!og.config['enable_reporting_module']) Ext.get('tabs-panel__reporting-panel').setDisplayed(false);
+				if (!og.config['enable_notes_module']) if (panel = Ext.get('tabs-panel__messages-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_email_module']) if (panel = Ext.get('tabs-panel__mails-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_contacts_module']) if (panel = Ext.get('tabs-panel__contacts-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_calendar_module']) if (panel = Ext.get('tabs-panel__calendar-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_documents_module']) if (panel = Ext.get('tabs-panel__documents-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_tasks_module']) if (panel = Ext.get('tabs-panel__tasks-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_weblinks_module']) if (panel = Ext.get('tabs-panel__webpages-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_time_module']) if (panel = Ext.get('tabs-panel__time-panel')) panel.setDisplayed(false);
+				if (!og.config['enable_reporting_module']) if (panel = Ext.get('tabs-panel__reporting-panel')) panel.setDisplayed(false);
 			}
 		}
 	});

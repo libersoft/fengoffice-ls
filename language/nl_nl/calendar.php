@@ -147,4 +147,9 @@
 	'reject invitation' => 'Uitnodiging weigeren',
 	'invitation accepted' => 'Uitnodiging aangenomen',
 	'invitation rejected' => 'Uitnodiging geweigerd',
+	'also confirmed attendance' => 'Heeft deelname bevestigd',
+	'awaiting confirmation' => 'Wacht op bevestiging',
+	'rejected invitation' => 'Neemt niet deel',
+	'who' => 'Wie',
+	'what' => 'Wat',
 ); ?>

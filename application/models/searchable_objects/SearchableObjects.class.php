@@ -101,6 +101,8 @@
     	}
     	
     	// if search criteria is a mail address, remove its domain to avoid matching emails with same domain that are not from this address
+    	
+    	/*
     	$pos = strpos_utf($search_for, '@');
     	while ($pos !== FALSE) {
     		$esp = strpos_utf($search_for, ' ', $pos);
@@ -108,6 +110,8 @@
     		else $search_for = substr_utf($search_for, 0, $pos);
     		$pos = strpos_utf($search_for, '@');
     	}
+    	*/
+    	// Commented by pepe
     	
     	if($include_private) {
     		$privSearch = 'AND `is_private` = 0';
@@ -125,7 +129,6 @@
     		$search_for = str_replace('"', '', $search_for);    		
     	}	  	    	
 
-    	
     	if (user_config_option('search_engine', substr(Localization::instance()->getLocale(),0,2) == 'zh' ? 'like' : null) == 'like' || $few_chars == true) {
     	    $search_for = str_replace("*", "%", $search_for); 
     		if (!$search_deep){     				
@@ -153,7 +156,10 @@
     		else{
     			$search_for = "\"".$search_for."\"";	
     		}
-    		return DB::prepareString("MATCH (`content`) AGAINST ('$search_for' IN BOOLEAN MODE) $privSearch $wsSearch $trashed $otSearch $columnsSearch");
+    		//return DB::prepareString("MATCH (`content`) AGAINST ('$search_for' IN BOOLEAN MODE) $privSearch $wsSearch $trashed $otSearch $columnsSearch"); 
+    		//@pepe - AGAINST() fails with special characters like '@' or '/' if string not scaped
+    		
+    		return  DB::prepareString("MATCH (`content`) AGAINST ('\"".$search_for."\"' IN BOOLEAN MODE) $privSearch $wsSearch $trashed $otSearch $columnsSearch");
     	}
     } // getSearchConditions
     

@@ -289,7 +289,6 @@ class MailController extends ApplicationController {
 			if (($pre_body_fname = array_var($mail_data, 'pre_body_fname')) != "") {
 				$body = str_replace(lang('content too long not loaded'), '', $body, $count=1);
 				$tmp_filename = ROOT . "/tmp/$pre_body_fname";
-				alert($tmp_filename);
 				if (is_file($tmp_filename)) {
 					$body .= file_get_contents($tmp_filename);
 					if (!$isDraft) @unlink($tmp_filename);
@@ -378,7 +377,7 @@ class MailController extends ApplicationController {
  					} else if (count($split) == 4) {
  						if ($split[0] == 'FwdMailAttach') {
  							$tmp_filename = ROOT . "/tmp/" . logged_user()->getId() . "_" . $mail_data['account_id'] . "_FwdMailAttach_" . $split[3];
- 							if (is_file($tmp_filename)) {	 						
+ 							if (is_file($tmp_filename)) {
 	 							$attachments[] = array(
 			 						"data" => file_get_contents($tmp_filename),
 			 						"name" => $split[1],
@@ -747,20 +746,11 @@ class MailController extends ApplicationController {
 				$count = 0;
 				foreach ($mails as $mail) {
 					
-					try {
-						DB::beginWork();
-						$state = -1;
-						$saved = "false";
-						$stete = $mail->getState();
-						$mail->setState($state + 2);
-						$mail->save();
-						$saved = "true";
-						DB::commit();
-					} catch (Exception $e) {
-						DB::rollback();
-						Logger::log("Could not advance email state, email skipped: ".$e->getMessage()."\nmail_id=".$mail->getId()."\nstate=$state\nsaved=$saved");
-						continue;
-					}
+					// Only send mails with pair status
+					if ($mail->getState() % 2 == 1) continue;
+					
+					// Set impair status, to avoid sending it again when sending it in parallel
+					if (!$mail->addToStatus(1)) continue;
 					
 					try {
 					
@@ -803,6 +793,8 @@ class MailController extends ApplicationController {
 							DB::commit();
 						} else {
 							Logger::log("Swift returned sentOK = false after sending email\nmail_id=".$mail->getId());
+							// set status to a higher and pair value, to retry later.
+							if (!$mail->addToStatus(1)) Logger::log("Swift could not send the email and the state could not be set to retry later.\nmail_id=".$mail->getId());
 						}
 					} catch (Exception $e) {
 						Logger::log("Exception marking email as sent: ".$e->getMessage()."\nmail_id=".$mail->getId());
@@ -814,7 +806,7 @@ class MailController extends ApplicationController {
 					try {	
 						//if user selected the option to keep a copy of sent mails on the server						
 						if ($sentOK && config_option("sent_mails_sync") && $account->getSyncServer() != null && $account->getSyncSsl()!=null && $account->getSyncSslPort()!=null && $account->getSyncFolder()!=null && $account->getSyncAddr()!=null && $account->getSyncPass()!=null){							
-							$check_sync_box = MailUtilities::checkSyncMailbox($server, $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass());
+							$check_sync_box = MailUtilities::checkSyncMailbox($account->getSyncServer(), $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass());
 							if ($check_sync_box) MailUtilities::sendToServerThroughIMAP($account->getSyncServer(), $account->getSyncSsl(), $account->getOutgoingTrasnportType(), $account->getSyncSslPort(), $account->getSyncFolder(), $account->getSyncAddr(), $account->getSyncPass(), $complete_mail);
 						}
 					} catch (Exception $e) {
@@ -1074,7 +1066,7 @@ class MailController extends ApplicationController {
 			}
 		}
 		if ($email->getBodyHtml() != '') {
-			$tmp_folder = "/tmp/" . $email->getAccountId() . "_" . logged_user()->getId() . "_temp_mail_content_res";
+			$tmp_folder = "/tmp/" . $email->getAccountId() . "_" . logged_user()->getId()."_". $email->getId() . "_temp_mail_content_res";
 			if (is_dir(ROOT . $tmp_folder)) remove_dir(ROOT . $tmp_folder);
 			$parts_array = array_var($decoded, 0, array('Parts' => ''));
 			$email->setBodyHtml(self::rebuild_body_html($email->getBodyHtml(), array_var($parts_array, 'Parts'), $tmp_folder));
@@ -1098,7 +1090,7 @@ class MailController extends ApplicationController {
 	 */
 	private function rebuild_body_html($html, $parts, $tmp_folder) {
 		$enc_conv = EncodingConverter::instance();
-		$html = str_replace('src=cid:', 'src="cid:', $html);
+		$html = preg_replace("/src=cid:([^[:space:]>]*)/i", "src=\"cid:$1\"", $html);
 		$end_find = false;
 		$to_find = 'src="cid:';
 		$end_pos = 0;
@@ -1107,11 +1099,7 @@ class MailController extends ApplicationController {
 			$cid_pos = strpos($html, $to_find, $end_pos);
 			if ($cid_pos !== FALSE) {
 				$cid_pos += strlen($to_find);
-				$end_pos_array = array();
-				if (strpos($html, '"', $cid_pos) !== FALSE) $end_pos_array[] = strpos($html, '"', $cid_pos);
-				if (strpos($html, ' ', $cid_pos) !== FALSE) $end_pos_array[] = strpos($html, ' ', $cid_pos);
-				if (strpos($html, '>', $cid_pos) !== FALSE) $end_pos_array[] = strpos($html, '>', $cid_pos);
-				$end_pos = min($end_pos_array);
+				$end_pos = strpos($html, '"', $cid_pos);
 
 				$part_name = substr($html, $cid_pos, $end_pos-$cid_pos);
 			} else 
@@ -1131,8 +1119,8 @@ class MailController extends ApplicationController {
 							fwrite($handle, $file_content);
 							fclose($handle);
 							
-							$html = str_replace("src=\"cid:$part_name\"", "src=\"".ROOT_URL."$tmp_folder/$filename\"", $html);
-							$html = str_replace("src=\"cid:$part_name", "src=\"".ROOT_URL."$tmp_folder/$filename\"", $html);
+							$html = str_replace('src="cid:'.$part_name.'"', "src=\"".ROOT_URL."$tmp_folder/$filename\"", $html);
+							$html = str_replace('src="cid:'.$part_name, "src=\"".ROOT_URL."$tmp_folder/$filename\"", $html);
 						} else {
 							if (isset($part['Parts'])) $html = self::rebuild_body_html($html, $part['Parts'], $tmp_folder);
 						}
@@ -2187,8 +2175,7 @@ class MailController extends ApplicationController {
 			} else {
 				$fwd_body = $fwd_info . $pre_quote . $body . $post_quote;
 			}
-			$fwd_body = $fwd_body;
-			
+						
 			// Put original mail images in the forwarded mail
 			if ($original_mail->getBodyHtml() != '') {
 				MailUtilities::parseMail($original_mail->getContent(), $decoded, $parsedEmail, $warnings);
@@ -2941,7 +2928,7 @@ class MailController extends ApplicationController {
 		 
 		if ($email->getBodyHtml() != '') {
 			MailUtilities::parseMail($email->getContent(), $decoded, $parsedEmail, $warnings);
-			$tmp_folder = "/tmp/" . $email->getAccountId() . "_" . logged_user()->getId() . "_temp_mail_content_res";
+			$tmp_folder = "/tmp/" . $email->getAccountId() . "_" . logged_user()->getId()."_". $email->getId() . "_temp_mail_content_res";
 			if (is_dir(ROOT . $tmp_folder)) remove_dir(ROOT . $tmp_folder);
 			if ($parts_container = array_var($decoded, 0)) {
 				$email->setBodyHtml(self::rebuild_body_html($email->getBodyHtml(), array_var($parts_container, 'Parts'), $tmp_folder));

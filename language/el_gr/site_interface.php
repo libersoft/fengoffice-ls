@@ -561,4 +561,10 @@
 	'guest user' => 'Επισκέπτης',
 	'admin user' => 'Διαχειριστής',
 	'user type' => 'Είδος χρήστη',
+	'password confirmation' => 'Επιβεβαίωση κωδικού',
+	'mail account password confirmation' => 'Μπορείτε να χρησιμοποιήσετε αυτό το πεδίο για να ελέγξετε τον κωδικό',
+	'wrong password confirmation' => 'Προειδοποίηση: Οι κωδικοί δεν ταιριάζουν. Παρακαλώ ελέγξτε τους.',
+	'meeting_time' => 'Ώρα',
+	'object subtypes' => 'Υποτύποι αντικειμένων',
+	'add object subtype' => 'Προσθήκη υποτύπου αντικειμένου',
 ); ?>

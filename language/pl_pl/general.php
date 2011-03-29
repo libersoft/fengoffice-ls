@@ -218,4 +218,5 @@
 	'latest activity' => 'Najnowsza aktywność',
 	'view all activity' => 'Zobacz wszystko...',
 	'advanced' => 'Zaawansowane',
+	'workspace and tags' => 'Projekt i tagi',
 ); ?>

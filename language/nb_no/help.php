@@ -34,4 +34,18 @@
 	'chelp addfile' => 'Du har valget mellom å laste opp en fil eller via ei vevlenke.<br/>
 						<b> Fil:</b> Lar deg søke etter og laste opp hvilket som helst dokument på ditt lagringssted.<br/>
 						<b> vevlenke:</b> Lar deg skrive inn adressen til et vevsted du ønsker å referere til.<br/>',
+	'help opt show' => 'Vis',
+	'help opt hide' => 'Skjul',
+	'context help messages' => 'Informasjonslinjer',
+	'enable all chelp messages' => 'Aktiver alle stengte informasjonslinjer',
+	'enable all chelp messages click' => 'klikk her',
+	'help manual' => 'Hjelpemanual',
+	'about us' => 'Om oss',
+	'success enable all context help' => 'Alle informasjonslinjer gjenåpnet.',
+	'success enable context help' => 'Informasjonslinjene er aktivert.',
+	'success disable context help' => 'Informasjonslinjene er deaktivert.',
+	'how to purchase' => 'Hvordan kjøpe',
+	'how to purchase desc' => 'Informasjon om våre ulike produkter og tjenester',
+	'add ticket' => 'Legg til en ny hjelpehenvendelse',
+	'add ticket desc' => 'For å få personalisert hjelp for Feng Office',
 ); ?>

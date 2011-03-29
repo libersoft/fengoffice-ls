@@ -1,5 +1,5 @@
 
-    About Feng Office 1.7.3.1
+    About Feng Office 1.7.4
     =========================
 
     Feng Office is a free and open source Web Office, project management
@@ -90,6 +90,58 @@
 
 	Changelog
 	=========
+	
+	Since 1.7.3.3
+	------------
+	bugfix: Security issue with cookies.
+	bugfix: Issue in combine.php.
+	bugfix: Issue with report conditions with date comparisons.
+	bugfix: Fixed langs for es_es and es_la.
+	bugfix: Logs were not written for subtasks when trashing, untrashing, archiving and unarchiving tasks.
+	bugfix: Permissions issue at users history log.
+	bugfix: Tasks reports shows priority codes instead of showing prioriy names.
+	bugfix: Fixed: reminder didn't use timezone in some cases.
+	bugfix: Class name removed from search results.
+	bugfix: File revisions in search results sometimes shows html code.
+	bugfix: When reporting objects with list custom properties only the first value was shown.
+	bugfix: When composing an email, fields to, cc and bcc not always select the email from the list if clicking it.
+	bugfix: Event creator appears twice in the email when other user accepted the invitation.
+	bugfix: Email signature does not change when composing an email and changing the from address.
+	bugfix: Issue with upload control when attaching a file that already exists in the system.
+	bugfix: Bug with CKEditor and Chrome when adding an image to a document.
+	bugfix: Checkbox were not cleared when reloading contact list.
+	bugfix: Issue when having more than one tab with Feng Office and viewing emails in each tab. 
+	bugfix: Templates with assigned tasks are not shown properly at tasks widgets.
+	bugfix: Date format config handler is not initializing correctly for some values.
+	bugfix: Escape characters for report results.
+	bugfix: Issue with calendar reports.
+	bugfix: Issue with tasks widget in dashboard.
+	bugfix: Issue with milestone due dates in listing.
+	bugfix: Issue with conversation list permissions when viewing an email.
+	bugfix: LinkedObjectManager issue fixed.
+	
+	system: CKEditor upgraded to version 3.5.1
+	
+	feature: Added APC cache for config options and other frequent objects.
+	feature: Added languages: Bulgarian, Suomi and Svenska.
+	feature: Upgraded languages: cs_cz, de_de, el_gr, it_it, ja_jp, nb_no, nl_nl, pl_pl, zh_cn.
+	feature: Improved the message for emails in outbox when logging in.
+	feature: Added some indexes and improved parts of the code to improve performance.
+	feature: Added more checks when sending emails.
+	feature: Performance improved for reminder and email pollings.
+	feature: Show label "Tags" when tags panel is collapsed.
+	feature: Javascript injection prevention.
+	
+	
+	Since 1.7.3.2
+	------------
+	bugfix: Sending emails fixed to avoid sending an email more than one time when receiving 'mysql has gone away' msg in the middle of the process.
+	
+	
+	Since 1.7.3.1
+	------------
+	bugfix: HtmlPurifier library updated
+	
 	
 	Since 1.7.3
 	------------

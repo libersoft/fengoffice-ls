@@ -6,6 +6,7 @@ class MailUtilities {
 
 	function getmails($accounts = null, &$err, &$succ, &$errAccounts, &$mailsReceived, $maxPerAccount = 0) {
 		Env::useHelper('permissions');
+		Env::useHelper('format');
 		if (is_null($accounts)) {
 			$accounts = MailAccounts::findAll();
 		}
@@ -161,16 +162,43 @@ class MailUtilities {
 		return $res;
 	}
 	
+	static function log_connection_status() {
+		if (mysql_ping(DB::connection()->getLink())) Logger::log("Mysql ping OK");
+		else Logger::log("Mysql ping ERROR **********");
+	}	
+	
 	function SaveMail(&$content, MailAccount $account, $uidl, $state = 0, $imap_folder_name = '') {
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			self::log_connection_status();
+			Logger::log("UID: $uidl");
+		}
+		
+		if (!mysql_ping(DB::connection()->getLink())) {
+			DB::connection()->reconnect();
+			Logger::log("*** Connection Lost -> Reconnected ***");
+		}
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  1) " . format_filesize(memory_get_usage()));
+		
 		if (strpos($content, '+OK ') > 0) $content = substr($content, strpos($content, '+OK '));
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  2) " . format_filesize(memory_get_usage()));
+		
 		self::parseMail($content, $decoded, $parsedMail, $warnings);
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  3) " . format_filesize(memory_get_usage()));
+		
 		$encoding = array_var($parsedMail,'Encoding', 'UTF-8');
 		$enc_conv = EncodingConverter::instance();
+			
 		$to_addresses = self::getAddresses(array_var($parsedMail, "To"));
 		$from = self::getAddresses(array_var($parsedMail, "From"));
 		
 		$message_id = self::getHeaderValueFromContent($content, "Message-ID");
 		$in_reply_to_id = self::getHeaderValueFromContent($content, "In-Reply-To");
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  4) " . format_filesize(memory_get_usage()));
 		
 		$uid = trim($uidl);
 		if (str_starts_with($uid, '<') && str_ends_with($uid, '>')) {
@@ -192,7 +220,9 @@ class MailUtilities {
 		if (!$from) {
 			$parsedMail["From"] = self::getFromAddressFromContent($content);
 			$from = array_var($parsedMail["From"][0], 'address', '');
+			if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  4.1) " . format_filesize(memory_get_usage()));
 		}
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) Logger::log("mem  5) " . format_filesize(memory_get_usage()));
 		
 		if (defined('EMAIL_MESSAGEID_CONTROL') && EMAIL_MESSAGEID_CONTROL) {
 			if (trim($message_id) != "") {
@@ -215,10 +245,15 @@ class MailUtilities {
 				else $state = 1; //Show only in sent folder
 			}
 		}
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			Logger::log("mem  6) " . format_filesize(memory_get_usage()));
+			self::log_connection_status();
+		}
 		
 		$from_spam_junk_folder = strpos(strtolower($imap_folder_name), 'spam') !== FALSE 
 			|| strpos(strtolower($imap_folder_name), 'junk')  !== FALSE || strpos(strtolower($imap_folder_name), 'trash') !== FALSE;
 		$user_id = logged_user() instanceof User ? logged_user()->getId() : $account->getUserId();
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) self::log_connection_status();
 		$max_spam_level = user_config_option('max_spam_level', null, $user_id);
 		if ($max_spam_level < 0) $max_spam_level = 0;
 		$mail_spam_level = strlen(trim( array_var($decoded[0]['Headers'], 'x-spam-level:', '') ));
@@ -230,6 +265,11 @@ class MailUtilities {
 		if (($max_spam_level < 10 && ($mail_spam_level > $max_spam_level || $from_spam_junk_folder)) || $spam_in_subject) {
 			$state = 4; // send to Junk folder
 		}
+		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			Logger::log("mem  7) " . format_filesize(memory_get_usage()));
+			self::log_connection_status();
+		}
 
 		if (!isset($parsedMail['Subject'])) $parsedMail['Subject'] = '';
 		$mail = new MailContent();
@@ -240,6 +280,10 @@ class MailUtilities {
 		$cc = trim(self::getAddresses(array_var($parsedMail, "Cc")));
 		if ($cc == '' && array_var($decoded, 0) && array_var($decoded[0], 'Headers')) {
 			$cc = array_var($decoded[0]['Headers'], 'cc:', '');
+		}
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			self::log_connection_status();
+			Logger::log("mem  8) " . format_filesize(memory_get_usage()));
 		}
 		$mail->setCc($cc);
 		
@@ -275,6 +319,11 @@ class MailUtilities {
 			$utf8_subject = utf8_safe($subject_aux);
 			$mail->setSubject($utf8_subject);
 		}
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			self::log_connection_status();
+			Logger::log("mem  9) " . format_filesize(memory_get_usage()));
+		}
+		
 		$mail->setTo($to_addresses);
 		$sent_timestamp = false;
 		if (array_key_exists("Date", $parsedMail)) {
@@ -305,6 +354,10 @@ class MailUtilities {
 			$mail->setReceivedDate(new DateTimeValue($received_timestamp));
 			if ($state == 5 && $mail->getSentDate()->getTimestamp() > $received_timestamp)
 				$mail->setReceivedDate($mail->getSentDate());
+		}
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			self::log_connection_status();
+			Logger::log("mem 10) " . format_filesize(memory_get_usage()));
 		}
 		$mail->setSize(strlen($content));
 		$mail->setHasAttachments(!empty($parsedMail["Attachments"]));
@@ -356,7 +409,8 @@ class MailUtilities {
 				if ($alt['Type'] == 'html') {
 					$mail->setBodyHtml($body);
 				} else if ($alt['Type'] == 'text') {
-					$mail->setBodyPlain($body);
+					$plain = html_to_text(html_entity_decode($utf8_body,null, "UTF-8"));
+					$mail->setBodyPlain($plain);
 				}
 				// other alternative parts (like images) are not saved in database.
 			}
@@ -365,7 +419,10 @@ class MailUtilities {
 		$repository_id = self::SaveContentToFilesystem($mail->getUid(), $content);
 		$mail->setContentFileId($repository_id);
 		
-		
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			self::log_connection_status();
+			Logger::log("mem 11) " . format_filesize(memory_get_usage()));
+		}
 		try {
 			if ($in_reply_to_id != "") {
 				if ($message_id != "") {
@@ -403,7 +460,15 @@ class MailUtilities {
 				$mail->setConversationId($conv_id);
 			}
 			
+			if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+				self::log_connection_status();
+				Logger::log("mem 12) " . format_filesize(memory_get_usage()));
+			}
 			$mail->save();
+			if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+				self::log_connection_status();
+				Logger::log("mem 13) " . format_filesize(memory_get_usage()));
+			}
 
 			// CLASSIFY RECEIVED MAIL WITH THE CONVERSATION
 			if (user_config_option('classify_mail_with_conversation', null, $account->getUserId()) && isset($conv_mail) && $conv_mail instanceof MailContent) {
@@ -435,6 +500,10 @@ class MailUtilities {
 			}
 		}
 		unset($parsedMail);
+		if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+			Logger::log("mem fin) " . format_filesize(memory_get_usage()));
+			self::log_connection_status();
+		}
 		return false;
 	}
 	
@@ -494,7 +563,15 @@ class MailUtilities {
 		$mailsToGet = array_reverse($mailsToGet, true);
 		foreach ($mailsToGet as $idx) {
 			if ($toGet <= $received) break;
+			if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+				if (mysql_ping(DB::connection()->getLink())) Logger::log("Antes de pedir content" . date("H:i:s") . " Mysql ping OK");
+				else Logger::log("Antes de pedir content" . date("H:i:s") . " Mysql ping ERROR **********");
+			}
 			$content = $pop3->getMsg($idx+1); // message index is 1..N
+			if (defined('DEBUG_EMAIL_RETRIEVAL') && DEBUG_EMAIL_RETRIEVAL) {
+				if (mysql_ping(DB::connection()->getLink())) Logger::log("Despues de pedir content" . date("H:i:s") . " Mysql ping OK");
+				else Logger::log("Despues de pedir content" . date("H:i:s") . " Mysql ping ERROR **********");
+			}
 			if ($content != '') {
 				$uid = $summary[$idx]['uidl'];
 				try {
@@ -638,7 +715,16 @@ class MailUtilities {
 			}
 			
 			$mailer = Swift_Mailer::newInstance($mail_transport);
-	
+			
+			// init Swift logger
+			if (defined('LOG_SWIFT') && LOG_SWIFT > 0) {
+				$swift_logger = new Swift_Plugins_Loggers_ArrayLogger();
+				$mailer->registerPlugin(new Swift_Plugins_LoggerPlugin($swift_logger));
+				$swift_logger_level = LOG_SWIFT; // 0: no log, 1: log only errors, 2: log everything
+			} else {
+				$swift_logger_level = 0;
+			}
+			
 			if (is_string($from)) {
 				$pos = strrpos($from, "<");
 				if ($pos !== false) {
@@ -712,10 +798,30 @@ class MailUtilities {
 			//Send the message
 			$complete_mail = self::retrieve_original_mail_code($message);
 			$result = $mailer->send($message);
+
+			if ($swift_logger_level >= 2 || ($swift_logger_level > 0 && !$result)) {
+				file_put_contents(CACHE_DIR."/swift_log.txt", "\n".gmdate("Y-m-d H:i:s")." DEBUG:\n" . $swift_logger->dump() . "----------------------------------------------------------------------------", FILE_APPEND);
+				$swift_logger->clear();
+			}
+			
 			return $result;
 			
 		} catch (Exception $e) {
 			Logger::log("ERROR SENDING EMAIL: ". $e->getTraceAsString(), Logger::ERROR);
+			
+			//if there is an error with the connection, let the user know about it 
+			$mail_error = $e->getMessage(); 
+			$mail_error  = stristr ($mail_error ,'Log data:', true );			
+			flash_error(lang('mail not sent')." '".$mail_error."'");
+			
+			if ($swift_logger_level > 0) {
+				$dump = $swift_logger->dump();
+				if ($dump != '') {
+					file_put_contents(CACHE_DIR."/swift_log.txt", "\n".gmdate("Y-m-d H:i:s")." DEBUG:\n" . $dump . "----------------------------------------------------------------------------", FILE_APPEND);
+					$swift_logger->clear();
+				}
+			}
+			
 			throw $e;
 		}
 		
@@ -755,7 +861,8 @@ class MailUtilities {
 		
 		// add text/plain alternative part
 		if ($type == 'text/html') {
-			$onlytext = html_to_text($body);
+			$onlytext = html_to_text(html_entity_decode($body, null, "UTF-8"));
+			//$onlytext = html_to_text($body);
 			$message->addPart($onlytext, 'text/plain');
  		}
 	}

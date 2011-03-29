@@ -109,7 +109,8 @@ class Timeslots extends BaseTimeslots {
 		if ($start_date)
 			$commonConditions .= DB::prepareString(' AND `ts`.`start_time` >= ? ', array($start_date));
 		if ($end_date)
-			$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0 AND `ts`.`end_time` < ?) ', array($end_date));
+			$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` < ? ', array($end_date)); 
+			//$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` > 0 AND `ts`.`end_time` < ? ', array($end_date));  -- another fix reported by a user, but we have to test it yet
 			
 		//User condition
 		$commonConditions .= $user? ' AND `ts`.`user_id` = '. $user->getId() : '';
@@ -167,7 +168,7 @@ class Timeslots extends BaseTimeslots {
 		switch($timeslot_type){
 			case 0: //Task timeslots
 				$from = "`" . TABLE_PREFIX . "timeslots` AS `ts`, `" . TABLE_PREFIX . "project_tasks` AS `pt`, `" . TABLE_PREFIX ."projects` AS `pr`, `" . TABLE_PREFIX ."workspace_objects` AS `wo`";
-				$conditions = " WHERE `ts`.`object_manager` = 'ProjectTasks'  AND `pt`.`id` = `ts`.`object_id` AND `pt`.`trashed_by_id` = 0 AND `pt`.`archived_by_id` = 0 AND `wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `ts`.`object_id` AND `wo`.`workspace_id` = `pr`.`id`";
+				$conditions = " WHERE `ts`.`object_manager` = 'ProjectTasks'  AND `pt`.`id` = `ts`.`object_id` AND `pt`.`trashed_on` = " . DB::escape(EMPTY_DATETIME) . " AND `pt`.`archived_by_id` = 0 AND `wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `ts`.`object_id` AND `wo`.`workspace_id` = `pr`.`id`";
 				//Project condition
 				$conditions .= $workspacesCSV ? ' AND `pr`.`id` IN (' . $workspacesCSV . ')' : '';
 				if ($custom) {
@@ -188,7 +189,7 @@ class Timeslots extends BaseTimeslots {
 				$from1 = "`" . TABLE_PREFIX . "timeslots` AS `ts`, `" . TABLE_PREFIX . "project_tasks` AS `pt`, `" . TABLE_PREFIX ."projects` AS `pr`, `" . TABLE_PREFIX ."workspace_objects` AS `wo`";
 				$from2 = "`" . TABLE_PREFIX . "timeslots` AS `ts`, `" . TABLE_PREFIX ."projects` AS `pr`";
 				
-				$conditions1 = " WHERE `ts`.`object_manager` = 'ProjectTasks'  AND `pt`.`id` = `ts`.`object_id` AND `pt`.`trashed_by_id` = 0 AND `pt`.`archived_by_id` = 0 AND `wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `ts`.`object_id` AND `wo`.`workspace_id` = `pr`.`id`";
+				$conditions1 = " WHERE `ts`.`object_manager` = 'ProjectTasks'  AND `pt`.`id` = `ts`.`object_id` AND `pt`.`trashed_on` = " . DB::escape(EMPTY_DATETIME) . " AND `pt`.`archived_by_id` = 0 AND `wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `ts`.`object_id` AND `wo`.`workspace_id` = `pr`.`id`";
 				//Project condition
 				$conditions1 .= $workspacesCSV ? ' AND `pr`.`id` IN (' . $workspacesCSV . ')' : '';
 				if ($object_subtype) $conditions1 .= " AND `pt`.`object_subtype`=$object_subtype";
@@ -315,13 +316,13 @@ class Timeslots extends BaseTimeslots {
 		
 		$projectCondition = '';
 		if ($workspacesCSV && $object_manager == 'ProjectTasks')
-			$projectCondition = ' AND (SELECT count(*) FROM `'. TABLE_PREFIX . 'project_tasks` as `pt`, `' . TABLE_PREFIX . 'workspace_objects` AS `wo` WHERE `pt`.`id` = `object_id` AND `pt`.`trashed_by_id` = 0 AND ' .
+			$projectCondition = ' AND (SELECT count(*) FROM `'. TABLE_PREFIX . 'project_tasks` as `pt`, `' . TABLE_PREFIX . 'workspace_objects` AS `wo` WHERE `pt`.`id` = `object_id` AND `pt`.`trashed_on` = ' . DB::escape(EMPTY_DATETIME) . ' AND ' .
 			"`wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `object_id` AND `wo`.`workspace_id` IN (" . $workspacesCSV . ')) > 0';
 			
 		/* TODO: handle permissions with permissions_sql_for_listings */
 		$permissions = "";
 		if ($object_manager == 'ProjectTasks') {
-			$permissions = ' AND (SELECT count(*) FROM `'. TABLE_PREFIX . 'project_tasks` as `pt`, `' . TABLE_PREFIX . 'workspace_objects` AS `wo` WHERE `pt`.`id` = `object_id` AND `pt`.`trashed_by_id` = 0 AND ' .
+			$permissions = ' AND (SELECT count(*) FROM `'. TABLE_PREFIX . 'project_tasks` as `pt`, `' . TABLE_PREFIX . 'workspace_objects` AS `wo` WHERE `pt`.`id` = `object_id` AND `pt`.`trashed_on` = ' . DB::escape(EMPTY_DATETIME) . ' AND ' .
 			"`wo`.`object_manager` = 'ProjectTasks' AND `wo`.`object_id` = `object_id` AND `wo`.`workspace_id` IN (" . logged_user()->getWorkspacesQuery() . ')) > 0';
 		}
 			

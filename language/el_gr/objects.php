@@ -126,4 +126,6 @@
 	'activity unsubscribe' => '{1} απ-εγγράφηκε {3} από {0} {2}',
 	'activity comment' => '{1} σχολιάστηκε {0} {2}:<br>    "{3}"',
 	'activity read' => '{1} read {0} {2}',
+	'activity checkout' => '{1} checked out {0} {2}',
+	'activity checkin' => '{1} checked in {0} {2}',
 ); ?>

@@ -69,17 +69,6 @@ class ApplicationReadLog extends BaseApplicationReadLog {
 	} // isYesterday
 
 	/**
-	 * Return project
-	 *
-	 * @access public
-	 * @param void
-	 * @return Project
-	 */
-	function getProject() {
-		return Projects::findById($this->getProjectId());
-	} // getProject
-
-	/**
 	 * Return text message for this entry. If is lang formed as 'log' + action + manager name
 	 *
 	 * 'log add projectmessages'
@@ -100,6 +89,10 @@ class ApplicationReadLog extends BaseApplicationReadLog {
 		
 		return lang($code, clean($object->getTitle()));
 	} // getText
+	
+	function getLogData() {
+      return "";
+    } // getLogData()
 	
 	function getActionData() {
 		$result = $this->getLogData();

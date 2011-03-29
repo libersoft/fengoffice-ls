@@ -1114,8 +1114,10 @@ class ProjectTask extends BaseProjectTask {
 			$trashDate = DateTimeValueLib::now();
 		if($trash_children)  {
 			$children = $this->getAllSubTasks();
-			foreach($children as $child)
+			foreach($children as $child) {
 				$child->trash(true,$trashDate);
+				ApplicationLogs::createLog($child, $child->getWorkspaces(), ApplicationLogs::ACTION_TRASH);
+			}
 		}
 		return parent::trash($trashDate);
 	} // delete
@@ -1125,8 +1127,10 @@ class ProjectTask extends BaseProjectTask {
 			$archiveDate = DateTimeValueLib::now();
 		if($archive_children)  {
 			$children = $this->getAllSubTasks();
-			foreach($children as $child)
+			foreach($children as $child) {
 				$child->archive(true,$archiveDate);
+				ApplicationLogs::createLog($child, $child->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);
+			}
 		}
 		return parent::archive($archiveDate);
 	} // delete
@@ -1398,6 +1402,7 @@ class ProjectTask extends BaseProjectTask {
 		
 		if ($this->isCompleted())
 			$result['s'] = 1;
+		else $result['s'] = $this->getState();
 			
 		if ($this->getParentId() > 0)
 			$result['pid'] = $this->getParentId();

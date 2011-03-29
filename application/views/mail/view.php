@@ -217,7 +217,7 @@ if (isset($email)){
 			if (!is_dir(ROOT.'/tmp')) mkdir(ROOT.'/tmp');
 			
 			// HIDE QUOTED TEXT AND IMAGES IF APPLICABLE
-			$tmpfile = $email->getAccountId() . '_' . logged_user()->getId() . '_temp_mail_content.html';
+			$tmpfile = $email->getAccountId() . '_' . logged_user()->getId() ."_". $email->getId().'_temp_mail_content.html';
 			// FULL CONTENT
 			$tmppath = ROOT.'/tmp/'.$tmpfile;
 			$handle = fopen($tmppath, 'wb');
@@ -262,7 +262,7 @@ if (isset($email)){
 			if ($hide_quoted_text_in_emails && MailUtilities::hasQuotedBlocks($html_content)) {
 				$remove_quoted = true;
 			}
-			$pre = $email->getAccountId() . '_' . logged_user()->getId();
+			$pre = $email->getAccountId() . '_' . logged_user()->getId() . '_' . $email->getId();
 			$user_token = defined('SANDBOX_URL') ? logged_user()->getTwistedToken() : '';
 			$content = "";
 			if ($remove_images) {

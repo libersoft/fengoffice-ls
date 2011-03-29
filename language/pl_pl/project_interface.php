@@ -278,4 +278,5 @@ Temat:       {0}
 	'linked event tab' => 'Wydarzenia',
 	'urgent priority' => 'Pilne',
 	'apply assignee to subtasks' => 'Zastosuj przypisanego do zadań podrzędnych',
+	'attachment from email' => 'Dołączono do wiadomości e-mail "{0}"',
 ); ?>

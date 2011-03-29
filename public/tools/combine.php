@@ -156,7 +156,11 @@ if (!in_array('combine.php', $allowed)) die("This tool is disabled.");
 
 		// Store cache
 		if ($cache) {
-			if ($fp = fopen($cachedir . '/' . $cachefile, 'wb')) {
+            
+            $base = realpath ($cachedir);
+            $path = $base . '/' . $cachefile;
+			
+            if ($fp = fopen($path, 'wb')) {
 				fwrite($fp, $contents);
 				fclose($fp);
 			}

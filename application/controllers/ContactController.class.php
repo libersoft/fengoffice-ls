@@ -320,7 +320,7 @@ class ContactController extends ApplicationController {
 				}; // for
 				if ($err > 0) {
 					$resultCode = 2;
-					$resultMessage = lang("error delete objects", $err) . "<br />" . ($succ > 0 ? lang("success delete objects", $succ) : "");
+					$resultMessage = lang("error delete objects", $err) . "" . ($succ > 0 ? lang("success delete objects", $succ) : "");					
 				} else {
 					$resultMessage = lang("success delete objects", $succ);
 				}
@@ -787,10 +787,10 @@ class ContactController extends ApplicationController {
 					$company->save();
 					ApplicationLogs::createLog($company, null, ApplicationLogs::ACTION_ADD);
 					$newCompany = true;
-					if(active_project() instanceof Project) {
-						if ($company->canAdd(logged_user(), active_project())) {
-							$company->addToWorkspace(active_project());
-						}
+					if(active_project() instanceof Project && $company->canAdd(logged_user(), active_project())) {
+						$company->addToWorkspace(active_project());
+					}else{
+						$company->addToWorkspace(logged_user()->getPersonalProject());
 					}
 				}
 				
@@ -1000,14 +1000,15 @@ class ContactController extends ApplicationController {
 					$company = new Company();
 					$company->setFromAttributes($company_data);
 					$company->setClientOfId(1);
-					
+															
 					$company->save();
 					ApplicationLogs::createLog($company, null, ApplicationLogs::ACTION_ADD );
 					$newCompany = true;
-					if(active_project() instanceof Project) {
-						if ($company->canAdd(logged_user(), active_project())) {
-							$company->addToWorkspace(active_project());
-						}
+					
+					if(active_project() instanceof Project && $company->canAdd(logged_user(), active_project())) {
+						$company->addToWorkspace(active_project());
+					}else{
+						$company->addToWorkspace(logged_user()->getPersonalProject());
 					}
 				}
 				

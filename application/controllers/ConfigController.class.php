@@ -64,7 +64,13 @@ class ConfigController extends ApplicationController {
 
 				$option->setValue($new_value);
 				$option->save();
+				
 				evt_add("config option changed", array('name' => $option->getName(), 'value' => $option->getValue()));
+				
+				// update global cache if available
+				if (GlobalCache::isAvailable() && GlobalCache::key_exists('config_option_'.$option->getName())) {
+					GlobalCache::update('config_option_'.$option->getName(), $new_value);
+				}
 			} // foreach
 			flash_success(lang('success update config category', $category->getDisplayName()));
 			ajx_current("back");
@@ -115,6 +121,11 @@ class ConfigController extends ApplicationController {
 					$option->save();
 					if (!user_has_config_option($option->getName())) {
 						evt_add('user preference changed', array('name' => $option->getName(), 'value' => $new_value));
+						
+						// update global cache if available
+						if (GlobalCache::isAvailable() && GlobalCache::key_exists('user_config_option_def_'.$option->getName())) {
+							GlobalCache::update('user_config_option_def_'.$option->getName(), $new_value);
+						}
 					}
 				} // foreach
 				DB::commit();

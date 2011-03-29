@@ -122,4 +122,6 @@
 	'zip not supported' => 'Zip-Archive werden vom Server nicht unterstützt!',
 	'no tag specified' => 'Kein Schlagwort festgelegt!',
 	'no mailAccount error' => 'Aktion unmöglich! Es wurde kein E-Mail-Postfach eingerichtet.',
+	'error invalid recipients' => 'Nicht gültige E-Mail-Adressen im Feld „{0}“ gefunden: {1}',
+	'content too long not loaded' => 'Ursprünglicher E-Mail-Inhalt ist zu lang und wurde nicht geladen, wird aber mit der E-Mail verschickt.',
 ); ?>

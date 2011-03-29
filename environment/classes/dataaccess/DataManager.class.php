@@ -249,14 +249,22 @@
       $order_by   = array_var($arguments, 'order', '');
       $offset     = (integer) array_var($arguments, 'offset', 0);
       $limit      = (integer) array_var($arguments, 'limit', 0);
+      $columns    = array_var($arguments, 'columns', null);
       
       // Prepare query parts
       $where_string = trim($conditions) == '' ? '' : "WHERE " . preg_replace("/\s+in\s*\(\s*\)/i", " = -1", $conditions);
       $order_by_string = trim($order_by) == '' ? '' : "ORDER BY $order_by";
       $limit_string = $limit > 0 ? "LIMIT $offset, $limit" : '';
       
+      if ($columns && is_array($columns) && count($columns) > 0) {
+      	$columns_string = "`" . implode('`, `', $columns) . "`";
+      } else {
+      	$columns_string = ($id ? '`id`' : '*');
+      }
+      
+      
       // Prepare SQL
-      $sql = "SELECT " . ($id ? '`id`' : '*') . " FROM " . $this->getTableName(true) . " $where_string $order_by_string $limit_string";
+      $sql = "SELECT " . $columns_string . " FROM " . $this->getTableName(true) . " $where_string $order_by_string $limit_string";
 
       // Run!
       $rows = DB::executeAll($sql);

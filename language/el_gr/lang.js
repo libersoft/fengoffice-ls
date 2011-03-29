@@ -688,5 +688,15 @@ addLangs({
 	'assign contact role on workspace': 'Ανάθεση στις επαφές ρόλους για την περιοχή εργασίας',
 	'work week view': 'Εβδομάδα εργασίας',
 	'autoconfig ymail message': 'Εντοπίστηκαν αυτόματες ρυθμίσεις από το Yahoo Mail. <br> Για να χρησιμοποιήσετε την υπηρεσία POP3 πρέπει να διαθέτετε έναν λογαριασμό Yahoo Plus. Περισσότερες πληροφορίες θα βρείτε <a href="http://overview.mail.yahoo.com/enhancements/mailplus" class="internallink" target="_blank">εδώ</a>',
-	'autoconfig rocketmail message': 'Εντοπίστηκαν αυτόματες ρυθμίσεις από το Yahoo Mail. <br> Για να χρησιμοποιήσετε την υπηρεσία POP3 πρέπει να διαθέτετε έναν λογαριασμό Yahoo Plus. Περισσότερες πληροφορίες θα βρείτε <a href="http://overview.mail.yahoo.com/enhancements/mailplus" class="internallink" target="_blank">εδώ</a>'
+	'autoconfig rocketmail message': 'Εντοπίστηκαν αυτόματες ρυθμίσεις από το Yahoo Mail. <br> Για να χρησιμοποιήσετε την υπηρεσία POP3 πρέπει να διαθέτετε έναν λογαριασμό Yahoo Plus. Περισσότερες πληροφορίες θα βρείτε <a href="http://overview.mail.yahoo.com/enhancements/mailplus" class="internallink" target="_blank">εδώ</a>',
+	'to vcard all': 'Όλα στη VCard',
+	'overdue': 'Πέραν του ορίου',
+	'active': 'Ενεργό',
+	'my active': 'Τα ενεργά μου',
+	'my subscribed': 'Οι εγγραφές μου',
+	'empty milestones': 'Κενά ορόσημα',
+	'add object subtype': 'Προσθήκη αντικειμένου',
+	'delete object subtype': 'Διαγραφή αντικειμένου',
+	'delete object subtype warning': 'Εάν διαγράψετε αυτόν τον υποτύπο, θα διαγραφεί από όλα τα ανικείμενα στα οποία βρίσκεται. Είστε σίγουροι για τη διαγραφή;',
+	'object subtype deleted': 'Ο Υποτύπος διαγράφηκε. {0}'
 });

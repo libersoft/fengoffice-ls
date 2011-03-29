@@ -87,10 +87,25 @@ class Companies extends BaseCompanies {
 	 * @return Company
 	 */
 	static function getOwnerCompany() {
-		return Companies::findOne(array(
+		
+		$owner_company = null;
+		if (GlobalCache::isAvailable()) {
+			$owner_company = GlobalCache::get('owner_company', $success);
+			if ($success && $owner_company instanceof Company) {
+				return $owner_company;
+			}
+		}
+		
+		$owner_company = Companies::findOne(array(
         	'conditions' => array('`client_of_id` = ?', 0),
 			'include_trashed' => true,
 		)); // findOne
+		
+		if (GlobalCache::isAvailable()) {
+			GlobalCache::update('owner_company', $owner_company);
+		}
+		
+		return $owner_company;
 	} // getOwnerCompany
 
 	/**

@@ -138,12 +138,13 @@ class AdministrationController extends ApplicationController {
 	 * @return null
 	 */
 	function company() {
-		if(!logged_user()->isCompanyAdmin(owner_company())) {
+		$company = owner_company();
+		if(!logged_user()->isCompanyAdmin($company)) {
 			flash_error(lang('no access permissions'));
 			ajx_current("empty");
 			return;
 		} // if
-		tpl_assign('company', owner_company());
+		tpl_assign('company', $company);
 		ajx_set_no_toolbar(true);
 		$this->setTemplate(get_template_path('view_company', 'company'));
 	} // company

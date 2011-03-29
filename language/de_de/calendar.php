@@ -147,4 +147,9 @@
 	'invitation accepted' => 'Sie haben die Einladung angenommen!',
 	'invitation rejected' => 'Sie haben die Einladung abgelehnt!',
 	'CAL_NO_WRITE' => 'Keine Erlaubnis neue Termine zu erstellen!',
+	'rejected invitation' => 'Wird nicht teilnehmen',
+	'who' => 'Wer',
+	'what' => 'Was',
+	'awaiting confirmation' => 'Auf Bestätigung wartend',
+	'also confirmed attendance' => 'Auch bestätigte Teilnahmen',
 ); ?>

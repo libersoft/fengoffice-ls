@@ -278,4 +278,6 @@
 	'user ws config option desc activity widget elements' => 'Liczba pozycji wyświetlanych w fiszce aktywności.',
 	'user ws config option name task_display_limit' => 'Maksymalna liczba zadań do wyświetlenia',
 	'user ws config option desc task_display_limit' => 'Ze względu na wydajność, ta liczba nie powinna być zbyt duża (0 - bez limitu).',
+	'config option name use_owner_company_logo_at_header' => 'Użyj logo firmy właściciela jako logo aplikacji',
+	'config option desc use_owner_company_logo_at_header' => 'Umieść logo firmy właściciela w prawym górnym rogu ekranu. Musisz odświeżyć stronę (F5) aby wprowadzić zmiany. Zalecany rozmiar: 50x50 pikseli.',
 ); ?>

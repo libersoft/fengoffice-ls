@@ -86,7 +86,7 @@ $object = $file;
 				<table>
 					<tr>
 						<td style="height: 20px; padding-right: 4px">
-							<?php echo radio_field('file[_option]',true, array("id" => $genid . 'radioAddFileAnyway', "value" => -1, 'tabindex' => '30')) ?>
+							<?php echo radio_field('file[upload_option]',true, array("id" => $genid . 'radioAddFileAnyway', "value" => -1, 'tabindex' => '30')) ?>
 						</td><td>
 							<?php echo lang('upload anyway')?>
 						</td>

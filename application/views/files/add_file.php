@@ -10,7 +10,6 @@ if ($file->isNew()) {
 }
 
 $project = active_or_personal_project();
-$projects =  active_projects();
 
 $enableUpload = $file->isNew()
 || (isset($checkin) && $checkin) || ($file->getCheckedOutById() == 0) || ($file->getCheckedOutById() != 0 && logged_user()->isAdministrator())
@@ -107,9 +106,9 @@ if (active_project()!= null)
 
 	<div style="padding-top: 5px">
 	<?php if ($all) { ?>
-		<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_select_workspace_div',this)"><?php echo lang('workspace') ?></a> - 
+		<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_select_workspace_div',this)"><?php echo lang('workspace') ?></a> 
 	<?php } else {?>
-		<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_select_workspace_div',this)"><?php echo lang('workspace') ?></a> -
+		<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_select_workspace_div',this)"><?php echo lang('workspace') ?></a> 
 	<?php }?>
 	- <a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_tags_div', this)"><?php echo lang('tags') ?></a>
 	- <a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_file_description_div',this)"><?php echo lang('description') ?></a>

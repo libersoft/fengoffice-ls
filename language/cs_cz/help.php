@@ -34,4 +34,18 @@
 <b>Milník</b>: Skupina úkolů podle milníku<br/>
 <b>Priorita</b>: Skupina úkolů podle priority (nízká, normální, vysoká) <br/>
 <b>Pracovní prostor</ b>: Skupina úkolů podle pracovního prostoru <br/>',
+	'help opt show' => 'Zobrazit',
+	'help opt hide' => 'Skrýt',
+	'context help messages' => 'Kontextová nápověda',
+	'enable all chelp messages' => 'Otevřít kontextovou nápovědu',
+	'enable all chelp messages click' => 'klikněte zde',
+	'help manual' => 'Nápověda',
+	'about us' => 'O nás',
+	'success enable all context help' => 'Nápověda znovu úspěšně otevřena.',
+	'success enable context help' => 'Nápověda povolena.',
+	'success disable context help' => 'Nápověda uzavřena.',
+	'how to purchase' => 'Jak zakoupit',
+	'how to purchase desc' => 'Informace obchodního charatkteru',
+	'add ticket' => 'Nové hlášení pro podporu',
+	'add ticket desc' => 'Osobní podpora',
 ); ?>

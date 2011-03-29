@@ -14,8 +14,8 @@ return array(
     'my tasks' => '私のタスク',
     'welcome back' => 'ようこそ、<strong>{0}</strong>さん。',
 
-    'online users' => 'オンラインなユーザ',
-    'online users desc' => '15分以内にアクティブであったユーザ:',
+    'online users' => 'オンラインなユーザー',
+    'online users desc' => '15分以内にアクティブであったユーザー:',
 
     'charts' => 'チャート',
     'contacts' => '連絡先',
@@ -25,7 +25,7 @@ return array(
     'my documents' => '私のドキュメント',
     'documents' => 'ドキュメント',
     'my projects' => '私のワークスペース',
-    'my projects archive desc' => '完了している(アーカイブされている)ワークスペースのリストです。これらのワークスペースへのすべての動作はロックされていますが、参照することはできます。',
+    'my projects archive desc' => '完了している(書庫に収納済みの)ワークスペースのリストです。これらのワークスペースへのすべての動作はロックされていますが、参照することはできます。',
 
     'company online' => 'オンラインな会社',
 
@@ -34,15 +34,15 @@ return array(
     'user password generate' => 'ランダムなパスワードを生成します。',
     'user password specify' => 'パスワードを指定してください。',
     'is administrator' => '管理者',
-    'is auto assign' => '新しいワークスペースに自動的に指定しますか?',
-    'auto assign' => '自動的に指定',
+    'is auto assign' => '新しいワークスペースに自動的に割り当てますか?',
+    'auto assign' => '自動的に割り当て',
     'administrator update profile notice' => '管理のオプション(管理者のみ利用可能!)',
 
     'project completed on by' => '{1}が{0}を完了にしました。',
 
     'im service' => 'サービス',
-    'primary im service' => 'プライマリのインスタント・メッセンジャー',
-    'primary im description' => 'すべてのインスタント・メッセンジャーのアドレスは、あなたのカード・ページに一覧されます。最初のインスタント・メッセンジャーのアドレスだけが(ワークスペースの人々のページといった)他のページに表示されます。',
+    'primary im service' => 'プライマリのインスタントメッセンジャー',
+    'primary im description' => 'すべてのインスタントメッセンジャーのアドレスは、あなたのカードのページに一覧されます。最初のインスタントメッセンジャーのアドレスだけが(ワークスペースの人々のページといった)他のページに表示されます。',
     'contact online' => 'オンラインの連絡先',
     'contact offline' => 'オフラインの連絡先',
 
@@ -57,7 +57,7 @@ return array(
     'days late' => '{0}日の遅れ',
     'days left' => '{0}日の残り',
 
-    'user card of' => '{0}のユーザー・カード',
+    'user card of' => '{0}のユーザーカード',
     'company card of' => '{0}の会社カード',
 
 // Upgrade
@@ -74,10 +74,10 @@ return array(
 
 // Administration
     'welcome to administration' => 'ようこそ',
-    'welcome to administration info' => '管理パネルへようこそ。 このツールを使用すると、会社のデータ、メンバー、顧客、従事するワークスペースを管理できます。',
+    'welcome to administration info' => '管理パネルへようこそ。 このツールを使用すると会社のデータ、メンバー、顧客、従事するワークスペースを管理できます。',
 
     'send new account notification' => '通知のメールを送信',
-    'send new account notification desc' => '「はい」を選択すると、ユーザは招待メッセージと(パスワードを含む)ログインするための情報をメールで受け取ります。',
+    'send new account notification desc' => '「はい」を選択すると、ユーザーは招待メッセージと(パスワードを含む)ログインするための情報をメールで受け取ります。',
 
 // Tools
     'administration tools' => 'ツール',
@@ -93,7 +93,7 @@ return array(
 // Dashboard
 
     'welcome to new account' => 'ようこそ、新しく登録された{0}さん',
-    'welcome to new account info' => 'あなたのアカウントに今後は{0}でアクセスできます。(このリンクをブックマークしておくことをお勧めします。)<br/>以下の手順でFeng Officeの使い始めるできます:',
+    'welcome to new account info' => 'あなたのアカウントに今後は{0}でアクセスできます。(このリンクをブックマークしておくことをお勧めします。)<br/>以下の手順でFeng Officeの使用を始めてください:',
 
     'new account step1' => 'ステップ1: あなた自身の会社情報の作成 ',
     'new account step1 info' => '会社情報とメンバーを入力するには、このページの右上にある管理のリンクをクリックします。',
@@ -105,22 +105,26 @@ return array(
     'new account step update account info' => 'このページの右上にあるアカウントのリンクをクリックして、自分の個人情報の更新とパスワードの変更をしてください。',
 
     'new account step add members' => 'ステップ{0}: チームのメンバーを追加',
-    'new account step add members info' => 'あなたのチームのすべてのメンバーの<a class="internalLink" href="{0}">ユーザ・アカウントを作成</a>できます。それぞれのメンバーには、システムにアクセスするのに使用するユーザ名とパスワードが用意されます。',
+    'new account step add members info' => 'あなたのチームのすべてのメンバーの<a class="internalLink" href="{0}">ユーザーアカウントを作成</a>できます。それぞれのメンバーには、システムにアクセスするのに使用するユーザー名とパスワードが用意されます。',
 
     'new account step start workspace' => 'ステップ {0}: 情報の構成を開始: ワークスペースを作成',
-    'new account step start workspace info' => 'ワークスペースは会社の情報の保管と構成する場所です。',
+    'new account step start workspace info' => 'ワークスペースは会社の情報の保管と構成する場所です。<br/>
+ワークスペースは顧客、プロジェクト、会社の部署、他の使用したい分類体系のどのような方法でも分類できます。<br/>
+新しいワークスペースはパネルに配置された{0}をクリックして作成します。<br/>
+システムは各ユーザー({1})に個人のワークスペースを自動的に作成します。すべての個人のワークスペースにある情報は、初期状態ではその所有者だけに見えます。',
 
-    'new account step configuration' => 'ステップ {0}: 環境設定',
-    'new account step configuration info' => 'Feng Officeの一般的な設定、メールの環境設定、モジュールの有効・無効、その他のオプションといった<a class="internalLink" href="{0}">管理</a>を行います。',
+    'new account step configuration' => 'ステップ {0}: 構成',
+    'new account step configuration info' => 'Feng Officeの一般的な設定、メールの構成、モジュールの有効・無効、その他のオプションといった<a class="internalLink" href="{0}">管理</a>を行います。',
 
     'new account step profile' => 'ステップ {0}: プロフィールの更新',
-    'new account step profile info' => 'あなたの<a class="internalLink" href="{0}">ユーザのプロフィール</a>を更新します。',
-    'new account step preferences' => 'ステップ {0}: ユーザ設定の更新',
-    'new account step preferences info' => '一般的な設定、ダッシュボードのオプション、タスクのオプションといった<a class="internalLink" href="{0}">ユーザ設定</a>を更新します。',
+    'new account step profile info' => 'あなたの<a class="internalLink" href="{0}">ユーザーのプロフィール</a>を更新します。',
+    'new account step preferences' => 'ステップ {0}: ユーザー設定の更新',
+    'new account step preferences info' => '一般的な設定、ダッシュボードのオプション、タスクのオプションといった<a class="internalLink" href="{0}">ユーザー設定</a>を更新します。',
     'getting started' => '始めましょう',
 
-    'new account step actions' => 'ステップ {0}: あなたのオンライン・オフィスの管理を開始',
-    'new account step actions info' => '会社のワークスペースにドキュメントやタスクを作成して、会社のユーザ間で共有してください。<br/>',
+    'new account step actions' => 'ステップ {0}: あなたのオンラインオフィスの管理を開始',
+    'new account step actions info' => '会社のワークスペースにドキュメントやタスクを作成して、会社のユーザー間で共有してください。<br/>
+作業したいワークスペースをクリックしてから<b>作成</b>しましょう。<br />',
 
 //  'getting started' => '始めましょう',
 
@@ -135,7 +139,7 @@ return array(
     'recent project activities feed' => 'ワークスペース{0}の最近の活動',
 
 // Update company permissions
-    'update company permissions hint' => 'ワークスペースを確認して、この会社にアクセス権を与えてください。<br/>また、選択したワークスペースのアクセスと管理を可能としたい会社のメンバーに、アクセス権限を指定する必要があります。(これはワークスペースの人々のページかユーザ設定からできます。)',
+    'update company permissions hint' => 'ワークスペースを確認して、この会社にアクセス権を与えてください。<br/>また、選択したワークスペースのアクセスと管理を可能としたい会社のメンバーに、アクセス権限を指定する必要があります。(これはワークスペースの人々のページかユーザー設定からできます。)',
 
     'footer copy with homepage' => '© {0} by <a class="internalLink" href="{1}">{2}</a>. All rights reserved.',
     'footer copy without homepage' => '© {0} by {1}. All rights reserved',
@@ -165,7 +169,7 @@ return array(
     'email address 3' => 'メールアドレス3',
     'website' => 'ウェブサイト',
     'notes' => 'ノート',
-    'assigned user' => '割り当てられたユーザ',
+    'assigned user' => '登録されたユーザー',
     'contact information' => '連絡先の情報',
     'first name' => '名',
     'last name' => '姓',
@@ -186,16 +190,16 @@ return array(
     'home information' => '自宅の情報',
     'other information' => 'その他情報',
 
-    'email and instant messaging' => 'メールとインスタント・メッセンジャー',
+    'email and instant messaging' => 'メールとインスタントメッセンジャー',
     'no contacts in project' => 'このワークスペースに連絡先の情報はありません。',
     'picture' => 'アバター',
     'current picture' => '現在の写真',
     'delete current picture' => '現在の写真を削除',
     'confirm delete current picture' => '現在の写真を削除してもよろしいですか?',
     'new picture' => '新しい写真',
-    'new picture notice' => '現在の写真は新しいピクチャで上書きされることに注意してください!',
+    'new picture notice' => '現在の写真は新しい写真で上書きされることに注意してください!',
 
-    'assign to project' => '割り当てられたワークスペース',
+    'assign to project' => 'ワークスペースに割り当て',
     'role' => '役割',
     'contact projects' => 'ワークスペースに連絡',
     'contact identifier required' => '連絡先を特定するのに、姓または名のどちらかが必要です。',
@@ -211,36 +215,36 @@ return array(
     'file not exists' => '指定されたファイルは存在しません。',
     'field delimiter' => 'フィールドの区切り文字(オプション)',
     'first record contains field names' => '最初の行はフィールド名',
-    'import contact success' => '連絡先のインポートに成功しました。',
+    'import contact success' => '連絡先をインポートしました。',
     'contact fields' => '連絡先のフィールド',
     'fields from file' => 'ファイルからフィールド',
     'you must match the database fields with file fields before executing the import process' => 'インポートの処理をする前にデータベースのフィールドとファイルのフィールドを合わせなければなりません。',
     'import result' => 'インポートの結果',
-    'contacts succesfully imported' => '連絡先のインポートに成功しました。',
-    'contacts import fail' => '連絡先のインポートに失敗しました。',
-    'contacts import fail help' => 'インポートの処理は、名前やメールアドレスなどのデータベースの既存のデータが原因で失敗するかもしれません。',
-    'import fail reason' => '失敗の理由',
+    'contacts succesfully imported' => '連絡先をインポートしました。',
+    'contacts import fail' => '連絡先をインポートできませんでした。',
+    'contacts import fail help' => '名前やメールアドレスなどのデータベースの既存のデータが原因で、インポートの処理ができないかもしれません。',
+    'import fail reason' => 'できなかった理由',
     'select a file in order to load its data' => 'インポートするためにCSVファイルの順番を選択してください。',
 
     'import contacts from vcard' => 'VCardのファイルから連絡先をインポート',
     'select a vcard file to load its data' => 'インポートするVCardファイル(.vcf)を選択してください。',
     'you can tag the contacts before running the import' => 'インポート前に連絡先に付けるタグを指定できます。',
     'you must select the contacts from the grid' => 'エクスポートしたい連絡先を選択しなければなりません。',
-    'vcard successfully created' => 'VCardの作成に成功して、{0}個の連絡先をエクスポートしました。',
+    'vcard successfully created' => 'VCardの作成して、{0}個の連絡先をエクスポートしました。',
 
 // Contact export
     'export contacts to csv' => 'CSVファイルで連絡先をエクスポート',
     'export' => 'エクスポート',
     'fields to export' => 'エクスポートする情報',
-    'success export contacts' => '連絡先のエクスポートに成功しました。',
+    'success export contacts' => '連絡先をエクスポートしました。',
 
 // Company import/export
     'import companies from csv' => 'CSVファイルから会社をインポートする',
     'company fields' => '会社のフィールド',
-    'companies succesfully imported' => '会社のインポートに成功しました。',
-    'companies import fail' => '会社のインポートに失敗しました。',
+    'companies succesfully imported' => '会社をインポートしました。',
+    'companies import fail' => '会社をインポートできませんでした。',
     'export companies to csv' => 'CSVファイルで会社をエクスポート',
-    'success export companies' => '会社のエクスポートに成功しました。',
+    'success export companies' => '会社をエクスポートしました。',
 
 //Webpages
     'add webpage' => 'ウェブリンクを追加',
@@ -260,7 +264,7 @@ return array(
     'add mail account' => 'メールアカウントを追加',
     'new mail account' => '新しいメールアカウント',
     'no emails in this account' => 'このアカウントにメールはありません。',
-    'server address' => 'サーバアドレス',
+    'server address' => 'サーバーアドレス',
     'mail account id' => 'アカウントID',
     'mail account name' => 'アカウント名',
     'is imap' => 'これはIMAPアカウントです。',
@@ -288,13 +292,13 @@ return array(
     'no emails in this project' => 'このワークスペースにメールはありません。',
     'mail content' => 'メール',
     'mail account name description' => 'このアカウントの識別に使用する名前(例えば、「自宅のメールアカウント」)',
-    'mail account id description' => 'サーバに接続するのに使用するユーザ名かIDのアカウント (例えば、\'john@mailserver.com\')',
+    'mail account id description' => 'サーバーに接続するのに使用するユーザー名かIDのアカウント (例えば、\'john@mailserver.com\')',
     'mail account password description' => 'このアカウントで接続のに必要なパスワード',
-    'mail account server description' => 'メールサーバのアドレス(例えば、\'pop3.mailserver.com\')',
-    'folders to check' => '確認するフォルダ',
+    'mail account server description' => 'メールサーバーのアドレス(例えば、\'pop3.mailserver.com\')',
+    'folders to check' => '確認するフォルダー',
     'after' => '後',
-    'delete mails from server' => 'サーバからメールを削除',
-    'mail account delete mails from server description' => 'このオプションを有効にすると、指定した時間が過ぎるとメールをサーバから削除します。',
+    'delete mails from server' => 'サーバーからメールを削除',
+    'mail account delete mails from server description' => 'このオプションを有効にすると、指定した時間が過ぎるとメールをサーバーから削除します。',
     'show images' => '画像を表示します。',
     'images are blocked' => '画像は遮断中です。',
     'mail add contacts' => '新しい連絡先を追加',
@@ -302,6 +306,9 @@ return array(
     'linked attachments' => 'リンクによる添付',
     'conversation x mails' => '({0}の通のスレッド)',
     'show quoted text' => '引用されたテキストを表示',
+    'password confirmation' => 'パスワードの確認',
+    'mail account password confirmation' => 'この入力欄をパスワードを二重に確認するために使用できます。',
+    'wrong password confirmation' => '警告: パスワードが一致していません。入力内容を確認してください。',
 
 //Checkout
     'checkout file' => 'ファイルをチェックアウト',
@@ -316,9 +323,9 @@ return array(
     'checking filename' => 'ファイル名を確認中...',
     'check' => '確認',
     'add file check in' => 'このファイルの新しいバージョンとしてチェックイン',
-    'filters' => 'フィルタ',
+    'filters' => 'フィルター',
 
-    'permissions for user' => 'ユーザ{0}のアクセス権限',
+    'permissions for user' => 'ユーザー{0}のアクセス権限',
     'can read messages' => 'メッセージを読むことができます。',
     'can write messages' => 'メッセージを書くことができます。',
     'can read tasks' => 'タスクを読むことができます。',
@@ -337,6 +344,7 @@ return array(
     'can write files' => 'ファイルを書くことができます。',
     'can read events' => 'イベントを書くことができます。',
     'can write events' => 'イベントを読むことができます。',
+
 //  'new mail account' => '新しいメールアカウント',
     'new company' => '新しい会社',
     'add a new company' => '新しい会社を追加',
@@ -347,7 +355,7 @@ return array(
     'new milestone' => '新しいマイルストーン',
     'new message' => '新しいノート',
     'new group' => '新しいグループ',
-    'new user' => '新しいユーザ',
+    'new user' => '新しいユーザー',
     'add tags' => 'タグを追加',
     'save changes' => '変更を保存',
     'administrator options' => '管理者のオプション',
@@ -355,10 +363,11 @@ return array(
     'system permissions' => 'システムのアクセス設定',
     'project permissions' => 'ワークスペースのアクセス設定',
 
+
 /* Search */
 
-    'actions' => 'アクション',
-    'edit properties' => 'プロパティを編集',
+    'actions' => '処理',
+    'edit properties' => '属性を編集',
     'you' => 'あなた',
     'created by' => '作成者',
     'modified by' => '編集者',
@@ -379,8 +388,8 @@ return array(
     'close' => '閉じる',
     'all projects' => 'すべてのワークスペース',
     'view as list' => 'リストで表示',
-    'pending tasks' => '保留のタスク',
-    'my pending tasks' => '私の保留のタスク',
+    'pending tasks' => '未完了のタスク',
+    'my pending tasks' => '私の未完了のタスク',
     'messages' => 'ノート',
     'complete' => '完了',
     'incomplete' => '未完了',
@@ -408,26 +417,26 @@ return array(
 
     'x ago' => '{0}前',
 
-    'object time slots' => 'オブジェクトの時間帯',
+    'object time slots' => 'オブジェクトの時間枠',
     'start work' => '作業を開始',
     'end work' => '作業を終了',
-    'confirm delete timeslot' => 'この時間帯を完全に削除してもよろしいですか?',
-    'success open timeslot' => '時間帯のオープンに成功しました。',
-    'success create timeslot' => '時間帯の作成に成功しました。',
-    'success cancel timeslot' => '時間帯の取り消しに成功しました。',
-    'success close timeslot' => '時間帯のクローズに成功しました。',
-    'success delete timeslot' => '時間帯の削除に成功しました。',
-    'success edit timeslot' => '時間帯の編集に成功しました。',
-    'open timeslot message' => '経過した総作業時間: ',
-    'success pause timeslot' => '時間帯の一時停止に成功しました。',
-    'success resume timeslot' => '時間帯の再開に成功しました。',
-    'paused timeslot message' => '一時停止している時間帯、合計時間: {0}',
+    'confirm delete timeslot' => 'この時間枠を完全に削除してもよろしいですか?',
+    'success open timeslot' => '時間枠を開始しました。',
+    'success create timeslot' => '時間枠を作成しました。',
+    'success cancel timeslot' => '時間枠を取り消しました。',
+    'success close timeslot' => '時間枠を終了しました。',
+    'success delete timeslot' => '時間枠を削除しました。',
+    'success edit timeslot' => '時間枠を編集しました。',
+    'open timeslot message' => '経過した総作業時間数: ',
+    'success pause timeslot' => '時間枠を一時停止しました。',
+    'success resume timeslot' => '時間枠を再開しました。',
+    'paused timeslot message' => '一時停止している時間枠、合計時間: {0}',
     'time since pause' => '一時停止してからの時間',
     'pause work' => '作業の一時停止',
     'resume work' => '作業の再開',
     'end work description' => '作業の終了の説明',
-    'add timeslot' => '時間帯の追加',
-    'edit timeslot' => '時間帯の編集',
+    'add timeslot' => '時間枠の追加',
+    'edit timeslot' => '時間枠の編集',
     'start date' => '開始日',
     'start time' => '開始時刻',
     'end date' => '終了日',
@@ -440,6 +449,7 @@ return array(
 
     'search for in project' => 'ワークスペース \'{1}\' で \'<i>{0}</i>\'の検索結果',
     'search for' => 'すべてのワークスペースで \'{0}\' の検索結果',
+
     'workspace permamanent delete' => 'ワークスペースを削除すると、以下の<b>保持しているコンテンツも完全に削除</b>されます。',
     'workspace permamanent delete messages' => ' ワークスペースのすべてのノート',
     'workspace permamanent delete tasks' => ' ワークスペースのすべてのタスク',
@@ -450,11 +460,11 @@ return array(
     'sub-workspaces permament delete' => '{1}の<b>{0 サブワークスペース</b> は、そのすべてのコンテンツと共に削除されます。',
     'multiples workspace object permanent delete' => '複数のワークスペースに含まれているオブジェクトは削除されません。',
     'cancel permanent delete' => '削除を取り消すには戻るボタンを押すか、このタブを閉じてください。',
-    'confirm permanent delete workspace' => 'ほんとうにワークスペース <b>{0}</b> を削除しても良いか確認してください。',
+    'confirm permanent delete workspace' => '本当にワークスペース <b>{0}</b> を削除しても良いか確認してください。',
     'confirm permanent delete user' => '削除する意思を確認してください:',
     'user personal workspace' => '個人のワークスペース<b>{0}</b>と、その内容も削除します。',
-    'other user personal workspace' => '<b>{0}</b>は個人のワークスペースとして他のユーザに割り当てられているため削除できません。',
-    'latest user activity' => '最新のユーザの活動',
+    'other user personal workspace' => '<b>{0}</b>は個人のワークスペースとして他のユーザーに割り当てられているため削除できません。',
+    'latest user activity' => '最近のユーザーの活動',
 
     'hours' => '時間',
     'minutes' => '分',
@@ -466,14 +476,15 @@ return array(
 
     'upload anyway' => 'このままアップロード',
 
-    'print view' => '表示を印刷',
+    'print view' => '印刷用表示',
     'export csv' => 'CSVにエクスポート',
     'export pdf' => 'PDFにエクスポート',
     'activity' => '活動',
     'statistics' => '統計',
     'time' => '時間',
+    'meeting_time' => '時刻',
     'task time report' => 'タスク実行の合計時間',
-    'new tasks by user' => 'ユーザによる新しいタスク',
+    'new tasks by user' => 'ユーザーによる新しいタスク',
     'generate report' => 'レポートを作成',
     'task title' => 'タスクの表題',
 //  'total time' => '合計時間',
@@ -485,7 +496,7 @@ return array(
     'last month' => '先月',
     'select dates...' => '日付を選択...',
 
-    'task time report description' => 'このレポートは、日付、ユーザ(オプション)、ワークスペース(オプション)で指定されたリストのタスクに付いて、達成にかかった時間の合計を表示します。',
+    'task time report description' => 'このレポートは、日付、ユーザー(オプション)、ワークスペース(オプション)で指定されたリストのタスクに付いて、達成にかかった時間の合計を表示します。',
     'no data to display' => '表示するデータはありません。',
 
     'new company name' => '新しい会社名',
@@ -493,7 +504,7 @@ return array(
     'country' => '国',
 
     'email addresses' => 'メールアドレス',
-    'instant messaging' => 'インスタント・メッセンジャー',
+    'instant messaging' => 'インスタントメッセンジャー',
     'phone' => '電話',
     'phone 2' => '電話2',
     'fax' => 'FAX',
@@ -531,34 +542,38 @@ return array(
     'total' => '合計',
     'enter tags desc' => 'カンマ区切りのタグを入力...',
 
-    'user subscribed to object' => 'このオブジェクトを購読しています。',
-    'user not subscribed to object' => 'このオブジェクトを購読していません。',
-    'tasks updated' => 'タスクの更新に成功しました。',
-    'too many tasks to display' => '表示するタスクが多すぎて、もっとも最近の{0}のタスクだけを表示しています。タスクを正しく表示して、この警告を消すにはワークスペース、タグ、タスクのフィルタ、状態でタスクをフィルタしてください。',
+    'user subscribed to object' => 'このオブジェクトに登録しています。',
+    'user not subscribed to object' => 'このオブジェクトに登録していません。',
+
+    'tasks updated' => 'タスクを更新しました。',
+    'too many tasks to display' => '表示するタスクが多すぎて、もっとも最近の{0}件のタスクだけを表示しています。タスクを正しく表示して警告を消すにはワークスペース、タグ、タスクのフィルター、状態でタスクをフィルターしてください。',
+
+
     'show image in new page' => '新しいページで画像を表示',
     'no tasks to display' => '表示するタスクはありません。',
     'do complete' => '完了',
+
     'task data' => 'タスクのデータ',
-    'search in all workspaces' => 'すべててのワークスペースを検索',
+    'search in all workspaces' => 'すべてのワークスペースを検索',
 
     'paused time' => '中断時間',
     'total pause time' => '合計中断時間',
     'pause time cannot be negative' => '中断時間は負の値にできません。',
-    'pause time cannot exceed timeslot time' => '中断時間は時間帯の時間を超えることはできません。',
-    'timeslots' => '時間帯',
+    'pause time cannot exceed timeslot time' => '中断時間は時間枠の時間数を超えることはできません。',
+    'timeslots' => '時間枠',
 
-    'task timeslots' => 'タスクの時間帯',
-    'time timeslots' => '一般的な時間帯',
-    'all timeslots' => 'タスクと一般的な時間帯',
+    'task timeslots' => 'タスクの時間枠',
+    'time timeslots' => '一般的な時間枠',
+    'all timeslots' => 'タスクと一般的な時間枠',
 
     'print report' => 'レポートを印刷',
 
     'all active tasks' => 'すべての活動状態にあるタスク',
 
-    'unique id' => '一意なID',
+    'unique id' => '一意な識別子',
 
-//  'my pending tasks' => '私の保留のタスク',
-    'pending tasks for' => '{0}のため保留中のタスク',
+//  'my pending tasks' => '私の未完了のタスク',
+    'pending tasks for' => '{0}のため未完了のタスク',
     'my late milestones and tasks' => '私の遅れているマイルストーンとタスク',
     'late milestones and tasks for' => '{0}の遅れているマイルストーンとタスク',
     'my tasks in progress' => '進行中の私のタスク',
@@ -581,7 +596,7 @@ return array(
     'must specify recipients' => '少なくとも1つメールを指定しなければなりません。',
     'share' => '共有',
     'share this' => 'これを共有',
-    'success sharing object' => 'オブジェクトを正常に共有できました。',
+    'success sharing object' => 'オブジェクト共有しました。',
     'actually sharing with' => '実際に共有中',
 
     'share notification message desc' => 'このノートを表示・編集するために、{1}さんがあなたを招待しました: {0}',
@@ -625,13 +640,13 @@ return array(
     'fixed billing' => '固定課金',
     'show billing information' => '課金情報を表示',
     'no billing categories' => '課金のカテゴリがありません。',
-    'no billing categories desc' => '時間帯と時間のレポートに課金のサポートを有効にしたい場合は、新しい課金のカテゴリを追加してください。',
+    'no billing categories desc' => '時間枠と時間のレポートに課金のサポートを有効にしたい場合は、新しい課金のカテゴリを追加してください。',
     'billing support is enabled' => '課金のカテゴリが有効',
     'BillingCategory default_value required' => 'この課金のカテゴリにはデフォルトの時間単価が必要です。',
     'defined in a parent workspace' => '親のワークスペースで定義',
     'defined in the current workspace' => '現在のワークスペースで定義',
-    'total billing by user' => 'ユーザ毎の合計課金',
-    'assign billing categories to users' => 'ユーザに課金のカテゴリを割り当て',
+    'total billing by user' => 'ユーザー毎の合計課金',
+    'assign billing categories to users' => 'ユーザーに課金のカテゴリを割り当て',
     'new version notification title' => '新しいバージョン',
 
     'workspace contacts' => '連絡先',
@@ -653,12 +668,12 @@ return array(
     'personal workspace name' => '{0}の個人',
     'personal workspace description' => '個人のワークスペース',
 
-    'wiki help link' => 'http://fengoffice.com/web/wiki',
+    'wiki help link' => 'http://www.fengoffice.com/web/wiki/doku.php/jp:home',
     'last language' => '最後に使用',
 
     'reset password expired' => 'パスワードをリセットする要求は期限が切れています。"{0}"をクリックして、新しくリクエストしてください。',
-    'invalid parameters' => '不正なパラメータ',
-    'reset password' => 'パスワードをリセット',
+    'invalid parameters' => '不正なパラメーター',
+    'reset password' => 'Feng Officeのパスワードの変更をリクエスト',
     'reset password form desc' => '<b>{0}</b>さん, 新しいパスワードを二回入力してください:',
     'success reset password' => '新しいパスワードを保存しました。',
 
@@ -666,37 +681,31 @@ return array(
     'confirm discard email' => 'このメールを廃棄したいですか?',
     'download email' => 'メールをダウンロード',
     'instantiate' => 'インスタンス生成',
-    'template parameters' => 'テンプレートのパラメータ',
+    'template parameters' => 'テンプレートのパラメーター',
     'add image' => '画像を追加',
     'update image' => '画像を更新',
 
-    'can_edit_company_data description' => 'このアクセス権限を有効にすると、ユーザはオーナ会社のデータを編集できます。',
-    'can_manage_security description' => 'このアクセス権限を有効にすると、ユーザはユーザやグループを作成、更新、削除と、アクセス権限を変更できます。',
-    'can_manage_workspaces description' => 'このアクセス権を有効にすると、ユーザはワークスペースを作成、更新、削除できます。',
-    'can_manage_configuration description' => 'このアクセス権を有効にすると、ユーザは環境設定、独自の属性、Cronイベント、アプリケーションの更新といった、アプリケーションの設定を編集できます。',
-    'can_manage_contacts description' => 'このアクセス権を有効にすると、ユーザはシステムのすべての連絡先を作成、更新、削除、表示できるようになります。',
-    'can_manage_templates description' => 'このアクセス権を有効にすると、ユーザはテンプレートを作成、更新、削除できるようになります。',
-    'can_manage_reports description' => 'このアクセス権を有効にすると、ユーザーはカスタム・レポートを作成、更新、削除できるようになります。',
-    'can_manage_time description' => 'このアクセス権を有効にすると、ユーザーは時間のモジュールお使用と、タスクに時間帯を追加ができるようになります。',
+    'can_edit_company_data description' => 'このアクセス権限を有効にすると、ユーザーはオーナ会社のデータを編集できます。',
+    'can_manage_security description' => 'このアクセス権限を有効にすると、ユーザーはユーザーやグループを作成、更新、削除と、アクセス権限を変更できます。',
+    'can_manage_workspaces description' => 'このアクセス権を有効にすると、ユーザーはワークスペースを作成、更新、削除できます。',
+    'can_manage_configuration description' => 'このアクセス権を有効にすると、ユーザーは構成、独自の属性、Cronイベント、アプリケーションの更新といった、アプリケーションの設定を編集できます。',
+    'can_manage_contacts description' => 'このアクセス権を有効にすると、ユーザーはシステムのすべての連絡先を作成、更新、削除、表示できるようになります。',
+    'can_manage_templates description' => 'このアクセス権を有効にすると、ユーザーはテンプレートを作成、更新、削除できるようになります。',
+    'can_manage_reports description' => 'このアクセス権を有効にすると、ユーザーはカスタムレポートを作成、更新、削除できるようになります。',
+    'can_manage_time description' => 'このアクセス権を有効にすると、ユーザーは時間のモジュールお使用と、タスクに時間枠を追加ができるようになります。',
     'can_add_mail_accounts description' => 'このアクセス権を有効にすると、ユーザーは新しい電子メールのアカウントを作成できるようになります。',
 
-    'archived by' => 'アーカイブ者',
+    'archived by' => '収納者',
     'hidden quoted text' => '非表示の引用テキスト',
-    'subscribe invited users' => '招待したユーザを登録',
+    'subscribe invited users' => '招待したユーザーを登録',
     'personal project' => '個人のワークスペース',
-'personal project desc' => '個人のワークスペースはオブジェクトが(ワークスペースのパネルで「すべて」が選択されているときに)デフォルトで保存される場所です。このワークスペースを変更すると、ユーザはすべてのアクセス権をそのワークスペースに与えられます。これはユーザ、またはワークスペースのアクセス権を編集して後で変更することができます。',
-
-// Obsoleted?
-    'mime type' => 'MIMEタイプ',
-    'new account step2' => 'ステップ 2: チームメンバーの追加',
-    'new account step2 info' => '<a class="internalLink" href="{0}">アカウントの作成</a> からあなたのチームのメンバーを登録してください (アカウント数は無制限)。 各メンバーはユーザ名とパスワードを使用してFeng Officeにログインすることができます。',
-    'new account step3' => 'ステップ 3: 顧客の会社名と担当者を登録します。',
-    'new account step3 info' => '<a class="internalLink" href="{0}">顧客の登録</a> (顧客数は無制限)。 顧客の会社の登録が完了すると、メンバーを追加するか、チームのリーダーを設定することができます。顧客のメンバーは機能に制限された内容にアクセスすることができます。(顧客のメンバーに対してはワークスペースをメンバー単位で設定できます)',
-    'new account step4' => 'ステップ 4: ワークスペースを開始',
-    'new account step4 info' => '<a class="internalLink" href="{0}">新しいワークスペース</a>を定義するのは簡単です: 名前、詳細情報(オプション)をセットして登録するだけです。その後は、あなたはチームメンバーとクライアントにパーミションを設定できます。',
+'personal project desc' => '個人のワークスペースはオブジェクトが(ワークスペースのパネルで「すべて」が選択されているときに)デフォルトで保存される場所です。このワークスペースを変更すると、ユーザーはすべてのアクセス権をそのワークスペースに与えられます。これはユーザー、またはワークスペースのアクセス権を編集して後で変更することができます。',
     'normal user' => '通常',
     'guest user' => 'ゲスト',
     'admin user' => '管理者',
-    'user type' => 'ユーザの種類',
+    'user type' => 'ユーザーの種類',
+    'object subtypes' => 'オブジェクトのサブタイプ',
+    'add object subtype' => 'オブジェクトのサブタイプを追加',
+); // array
 
-); ?>
+?>

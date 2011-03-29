@@ -4,6 +4,7 @@ addLangs({
 	'cannot check in': 'Cannot check in',
 	'add as new revision to': 'Add as new revision to',
 	'error loading content': 'Error loading content. Try again later.\nIf the problem persists contact the administrator.',
+	'http error': 'Error {0}: {1}',
 	'projects': 'Workspaces',
 	'administration': 'Administration',
 	'open link': 'Open Link',
@@ -802,5 +803,6 @@ addLangs({
     'delete object subtype': 'Delete object subtype',
     'delete object subtype warning': 'If you delete this subtype it will be removed from all objects that have it set. Are you sure you want to delete this subtype?',
     'object subtype deleted': 'Subtype deleted. {0}',
-    'linked': 'Linked'
+    'linked': 'Linked',
+    'change status': 'Change status'
 });

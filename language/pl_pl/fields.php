@@ -223,4 +223,6 @@
 	'field ProjectWebpages archived_by_id' => 'Zarchiwizowane przez',
 	'field Projects archived_on' => 'Zarchiwizowane dnia',
 	'field Projects archived_by_id' => 'Zarchiwizowane przez',
+	'field MailContents received_date' => 'Data odbioru',
+	'field Users type' => 'Typ',
 ); ?>

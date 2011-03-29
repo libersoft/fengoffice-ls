@@ -156,7 +156,11 @@
      *
      */
     function setUserValue($new_value, $user_id = 0, $workspace_id = 0){
-    	$val = UserWsConfigOptionValues::findById(array('option_id' => $this->getId(), 'user_id' => $user_id, 'workspace_id' => $workspace_id));
+    	$val = null;
+    	if (GlobalCache::isAvailable()) {
+			$val = GlobalCache::get('user_copt_val_'.$user_id."_".$this->getId(), $success);
+		}
+    	if (!$val) $val = UserWsConfigOptionValues::findById(array('option_id' => $this->getId(), 'user_id' => $user_id, 'workspace_id' => $workspace_id));
 		if(!$val){
 			// if value was not found, create it
 			$val = new UserWsConfigOptionValue();
@@ -167,6 +171,10 @@
 		$val->setValue($new_value);
 		$val->save();
 		$this->updateUserValueCache($user_id,$workspace_id, $val->getValue());
+		
+    	if (GlobalCache::isAvailable()) {
+    		GlobalCache::update('user_copt_val_'.$user_id."_".$this->getId(), $val);
+		}
     }
     
     /**

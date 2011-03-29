@@ -680,6 +680,7 @@ addLangs({
 	'new email in conversation text': 'W konwersacji na którą odpowiadasz znajduje się nowa wiadomość. Czy mimo wszystko wysłać odpowiedź czy też chcesz przeczytać wiadomość w nowej zakładce?',
 	'send anyway': 'Wyślij mimo wszystko',
 	'view new email': 'Zobacz nową wiadomość',
+	'apply assignee to subtasks': 'Dowiąż podwykonawcę do zadania podrzędnego',
 	'urgent': 'Pilne',
 	'assign contact role on workspace': 'Przypisz kontaktom rolę w projekcie',
 	'assign roles': 'Pprzypisz role',
