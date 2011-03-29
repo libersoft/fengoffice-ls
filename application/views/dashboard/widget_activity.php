@@ -43,6 +43,8 @@
 	$activities = ApplicationLogs::getLastActivities($ws, active_tag(), user_config_option('activity widget elements'));
 	$groups = array();
 	$first = null;
+	
+	$obj_wss_cache = array();
 		
 	foreach ($activities as $act) {
 		$user = Users::findById($act->getCreatedById());
@@ -72,10 +74,19 @@
 		
 		$act_data = array('avatar' => $avatar_url, 'date' => $date, 'act_data' => $activity_data);
 		
+		$obj_wss = null;
 		if ($act->getRelObjectManager() != 'Comments') {
-			$obj_wss = WorkspaceObjects::getWorkspacesByObject($act->getRelObjectManager(), $act->getRelObjectId());
+			$obj_wss = array_var($obj_wss_cache, $act->getRelObjectManager() ."::". $act->getRelObjectId());
+			if (!$obj_wss) {
+				$obj_wss = WorkspaceObjects::getWorkspacesByObject($act->getRelObjectManager(), $act->getRelObjectId());
+				$obj_wss_cache[$act->getRelObjectManager() ."::". $act->getRelObjectId()] = $obj_wss;
+			}
 		} else {
-			$obj_wss = WorkspaceObjects::getWorkspacesByObject(get_class($object->getObject()->manager()), $object->getObject()->getId());
+			$obj_wss = array_var($obj_wss_cache, get_class($object->getObject()->manager()) ."::". $object->getObject()->getId());
+			if (!$obj_wss) {
+				$obj_wss = WorkspaceObjects::getWorkspacesByObject(get_class($object->getObject()->manager()), $object->getObject()->getId());
+				$obj_wss_cache[get_class($object->getObject()->manager()) ."::". $object->getObject()->getId()] = $obj_wss;
+			}
 		}
 		
 		$object_ws = null;
@@ -100,7 +111,7 @@
 		
 		if ($object_ws) {
 			$group_id = $object_ws->getId();
-			$group_name = '<a href="#" onclick="Ext.getCmp(\'workspace-panel\').select('. $group_id .')"><img src="'. image_url('16x16/wscolors/color') . $object_ws->getColor() . '.png" />&nbsp;' . $object_ws->getName() .'</a>';
+			$group_name = '<a href="#" onclick="Ext.getCmp(\'workspace-panel\').select('. $group_id .')"><span class="ico-color' . $object_ws->getColor() . '" style="padding: 0 16px 0 0">&nbsp;</span>&nbsp;' . $object_ws->getName() .'</a>';
 		} else {
 			$group_id = 0;
 			$group_name = 'nosubgroup';
@@ -125,7 +136,7 @@
 			?><tr><td colspan="1" class="groupTitle" style="padding:20px 0 5px;">
 				<?php echo $gr['name'] ?>
 			</td><td align="center" class="groupTitle" style="padding:20px 0 5px; width: 20px;" onclick="og.showHideActivityGroup('<?php echo $genid + $id?>')">
-				<span id="hidelnk<?php echo $genid + $id?>" style="cursor:pointer;" title="<?php echo lang('hide') ?>">-</span>
+				<span id="hidelnk<?php echo $genid + $id?>" style="cursor:pointer;" title="<?php echo lang('hide') ?>">&#8211;</span>
 				<span id="showlnk<?php echo $genid + $id?>" style="cursor:pointer; display:none;" title="<?php echo lang('show') ?>">+</span>
 			</td></tr>
 			

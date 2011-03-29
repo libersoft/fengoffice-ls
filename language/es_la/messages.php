@@ -193,6 +193,7 @@
 	'success add billing category' => 'Categoría de facturación agregada satisfactoriamente',
 	'success delete billing category' => 'Categoría de facturación eliminada satisfactoriamente',
 	'success edit billing category' => 'Categoría de facturación editada satisfactoriamente',
+	'error forgot password' => 'Ha ocurrido un error al enviar la nueva contraseña. Contacte a su administrador de Feng Office.',
 	'error checkin file' => 'Ha ocurrido un error al devolver el archivo',
 	'error edit timeslot' => 'Ha ocurrido un error al guardar el tiempo de trabajo',
 	'error delete timeslot' => 'Ha ocurrido un error al eliminar el tiempo de trabajo',
@@ -634,5 +635,8 @@
   	'the ProjectTasks' => 'la tarea',
   	'the ProjectWebpages' => 'la página web',
   	'the Timeslots' => 'el tiempo de trabajo',
+
+	'mail not sent' => "Este correo, u otro ubicado en su bandeja de 'Salientes', no ha podido ser enviado por podría haber un error con la configuración de su cuenta de correo o con su servidor de correo. El mensaje de error es:",	
+   	'mail not sent, wrong settings/receiver' => "Este correo, u otro ubicado en su bandeja de 'Salientes', no ha podido ser enviado porque hay un error en la configuración de su cuenta de correo o el receptor no es válido. El mensaje de error es:",
 
 ); ?>

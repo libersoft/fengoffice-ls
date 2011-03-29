@@ -407,7 +407,18 @@ function upload_hook() {
  * @return mixed
  */
 function config_option($option, $default = null) {
-	return ConfigOptions::getOptionValue($option, $default);
+	// check the cache for the option value
+	if (GlobalCache::isAvailable()) {
+		$option_value = GlobalCache::get('config_option_'.$option, $success);
+		if ($success) return $option_value;
+	}
+	// value not found in cache
+	$option_value = ConfigOptions::getOptionValue($option, $default);
+	if (GlobalCache::isAvailable()) {
+		GlobalCache::update('config_option_'.$option, $option_value);
+	}
+	
+	return $option_value;
 } // config_option
 
 /**
@@ -424,6 +435,12 @@ function set_config_option($option_name, $value) {
 	} // if
 
 	$config_option->setValue($value);
+	
+	// update cache if available
+	if (GlobalCache::isAvailable() && GlobalCache::key_exists('config_option_'.$option_name)) {
+		GlobalCache::update('config_option_'.$option_name, $value);
+	}
+	
 	return $config_option->save();
 } // set_config_option
 
@@ -441,12 +458,35 @@ function user_config_option($option, $default = null, $user_id = null) {
 		if (logged_user() instanceof User) {
 			$user_id = logged_user()->getId();
 		} else if (is_null($default)) {
-			return UserWsConfigOptions::getDefaultOptionValue($option, $default);
+			$def_value = null;
+			// check the cache for the option default value
+			if (GlobalCache::isAvailable()) {
+				$def_value = GlobalCache::get('user_config_option_def_'.$option, $success);
+				if ($success) return $def_value;
+			}
+			// default value not found in cache
+			$def_value = UserWsConfigOptions::getDefaultOptionValue($option, $default);
+			if (GlobalCache::isAvailable()) {
+				GlobalCache::update('user_config_option_def_'.$option, $def_value);
+			}
+			return $def_value;
 		} else {
 			return $default;
 		}
 	}
-	return UserWsConfigOptions::getOptionValue($option, $user_id, $default);
+	
+	// check the cache for the option value
+	if (GlobalCache::isAvailable()) {
+		$option_value = GlobalCache::get('user_config_option_'.$user_id.'_'.$option, $success);
+		if ($success) return $option_value;
+	}
+	// default value not found in cache
+	$option_value = UserWsConfigOptions::getOptionValue($option, $user_id, $default);
+	if (GlobalCache::isAvailable()) {
+		GlobalCache::update('user_config_option_'.$user_id.'_'.$option, $option_value);
+	}
+	
+	return $option_value;
 } // user_config_option
 
 function user_has_config_option($option_name, $user_id = 0, $workspace_id = 0) {
@@ -496,6 +536,12 @@ function set_user_config_option($option_name, $value, $user_id = null ) {
 		return false;
 	} // if
 	$config_option->setUserValue($value, $user_id);
+	
+	// update cache if available
+	if (GlobalCache::isAvailable() && GlobalCache::key_exists('user_config_option_'.$user_id.'_'.$option_name)) {
+		GlobalCache::update('user_config_option_'.$user_id.'_'.$option_name, $value);
+	}
+	
 	return $config_option->save();
 } // set_config_option
 

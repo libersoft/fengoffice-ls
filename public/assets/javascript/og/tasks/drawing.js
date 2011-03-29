@@ -578,6 +578,7 @@ ogTasks.drawGroup = function(displayCriteria, drawOptions, group){
 		if (drawOptions.show_dates){
 			sb.append('<td><span style="padding-left:12px;color:#888;">');
 			var date = new Date(milestone.dueDate * 1000);
+			date = new Date(Date.parse(date.toUTCString().slice(0, -4)));		
 			var now = new Date();
 			var dateFormatted = date.getYear() != now.getYear() ? date.dateFormat('M j, Y'): date.dateFormat('M j');
 			if (milestone.completedById > 0){

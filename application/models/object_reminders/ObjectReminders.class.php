@@ -60,6 +60,23 @@ class ObjectReminders extends BaseObjectReminders {
 		));
 	}
 	
+	function getNextDueReminders($type = null, DateTimeValue $start, DateTimeValue $end) {
+		if (isset($type)) {
+			$extra = ' AND `type` = ' . DB::escape($type);
+		} else {
+			$extra = "";
+		}
+		// get reminders that will not be shown in time if shown after $end time
+		$reminders = ObjectReminders::findAll(array(
+			'conditions' => array(
+				"`date` > ? AND `date` < ? AND ADDDATE(`date`, INTERVAL `minutes_before` MINUTE) < ?" . $extra, $start, $end, $end,
+			),
+			'limit' => config_option('cron reminder limit', 100)
+		));
+		
+		return $reminders;
+	}
+	
 	/**
 	 * Return array of users that have reminders for an object
 	 *

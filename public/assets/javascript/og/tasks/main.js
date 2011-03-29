@@ -13,6 +13,14 @@ ogTasks.Companies = [];
 ogTasks.Milestones = [];
 
 ogTasks.Groups = [];
+var wp = Ext.getCmp("workspace-panel");
+
+og.workspaces = Ext.getCmp("workspace-panel").getWsList(0,true);
+
+og.wsNames  = [] ;
+for (var i = 0 ; i < og.workspaces.length ; i ++){
+	og.wsNames[og.workspaces[i].id] = og.workspaces[i].name ;
+}
 
 ogTasks.redrawGroups = true;
 
@@ -554,8 +562,9 @@ ogTasks.orderTasks = function(displayCriteria, tasks){
 							swap = false;
 					}
 					break;
-				case 'workspace' : //TODO: Correct this sorting method
-					swap = tasks[i].workspaceIds > tasks[j].workspaceIds;
+				case 'workspace' : //TODO: Correct this sorting method // DONE - Corrected by pepe
+					swap = og.wsNames[tasks[i].workspaceIds].toUpperCase() > og.wsNames[tasks[j].workspaceIds].toUpperCase();
+					//swap = tasks[i].workspaceIds > tasks[j].workspaceIds ;
 					if (!swap && (tasks[i].workspaceIds == tasks[j].workspaceIds))
 						resolveByName = true;
 					break;

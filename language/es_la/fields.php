@@ -217,6 +217,7 @@
 	'field ProjectTasks repeat_d' => 'Día de repetición',
 	'field ProjectTasks repeat_m' => 'Mes de repetición',
 	'field ProjectTasks repeat_y' => 'Año de repetición',
+	'field ProjectTasks state' => 'Estado',
 	'field Users created_by_id' => 'Creado por',
 	'field Users updated_by_id' => 'Actualizado por',
 	'field Users company_id' => 'Empresa',

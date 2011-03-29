@@ -235,8 +235,10 @@ class CompanyController extends ApplicationController {
 
 		if(is_array(array_var($_POST, 'company'))) {
 			$company->setFromAttributes($company_data);
+			$is_owner_company = false;
 			if (owner_company()->getId() == $company->getId()) {
 				$company->setClientOfId(0);
+				$is_owner_company = true;
 			} else {
 				$company->setClientOfId(owner_company()->getId());
 			}
@@ -255,6 +257,11 @@ class CompanyController extends ApplicationController {
 				ApplicationLogs::createLog($company, $company->getWorkspaces(), ApplicationLogs::ACTION_EDIT);
 				DB::commit();
 
+				// Update global cache
+				if ($is_owner_company && GlobalCache::isAvailable()) {
+					GlobalCache::update('owner_company', $company);
+				}
+				
 				flash_success(lang('success edit client', $company->getName()));
 				ajx_current("back");
 

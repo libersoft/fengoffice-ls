@@ -46,8 +46,8 @@
       
       $objects = array();
       foreach($relations as $relation) {
-        $object = $relation->getOtherObject($originalObject);
-        if (!can_access(logged_user(), $object, ACCESS_LEVEL_READ)) continue;
+	  $object = $relation->getOtherObject($originalObject);
+		if (!$object || !can_access(logged_user(), $object, ACCESS_LEVEL_READ)) continue;
         if($object instanceof ProjectDataObject) {
           if(!($exclude_private && $object->isPrivate())) $objects[] = $object;
         } else {

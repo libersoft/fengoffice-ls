@@ -192,6 +192,11 @@ class User extends BaseUser {
 	        }
    		}
         parent::save();
+
+        // update logged_user info in global cache
+        if (logged_user() instanceof User && $this->getId() == logged_user()->getId() && GlobalCache::isAvailable()) {
+			GlobalCache::update('logged_user_'.$this->getId(), $this);
+		}
     }
     
     /**
@@ -1472,7 +1477,7 @@ class User extends BaseUser {
 		$gids = "SELECT `group_id` FROM `{$tp}group_users` WHERE `user_id` = $uid";
 		$q1 = "SELECT `project_id` FROM `{$tp}project_users` WHERE (`user_id` = $uid OR `user_id` IN ($gids)) AND `can_assign_to_other` = '1'";
 		$q2 = "SELECT `project_id` FROM `{$tp}project_users` WHERE (`user_id` = $uid OR `user_id` IN ($gids)) AND `can_assign_to_owners` = '1'";
-		if ($ws) {
+		if (isset($ws)) {
 			 $q1 .= " AND `project_id` IN ($ws)";
 			 $q2 .= " AND `project_id` IN ($ws)";
 		}
@@ -1502,7 +1507,7 @@ class User extends BaseUser {
 		$gids = "SELECT `group_id` FROM `{$tp}group_users` WHERE `user_id` = $uid";
 		$q1 = "SELECT `project_id` FROM `{$tp}project_users` WHERE (`user_id` = $uid OR `user_id` IN ($gids)) AND `can_assign_to_other` = '1'";
 		$q2 = "SELECT `project_id` FROM `{$tp}project_users` WHERE (`user_id` = $uid OR `user_id` IN ($gids)) AND `can_assign_to_owners` = '1'";
-		if ($ws) {
+		if (isset($ws)) {
 			 $q1 .= " AND `project_id` IN ($ws)";
 			 $q2 .= " AND `project_id` IN ($ws)";
 		}

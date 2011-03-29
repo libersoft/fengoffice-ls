@@ -110,7 +110,17 @@ class Env {
 		ajx_check_login();
 		
 		if (isset($_GET['active_project']) && logged_user() instanceof User) {
-			set_user_config_option('lastAccessedWorkspace', $_GET['active_project'], logged_user()->getId());
+			$dont_update = false;
+			if (GlobalCache::isAvailable()) {
+				$option_value = GlobalCache::get('user_config_option_'.logged_user()->getId().'_lastAccessedWorkspace', $success);
+				if ($success) $dont_update = ($option_value == $_GET['active_project']);
+			}
+			if (!$dont_update) {
+				set_user_config_option('lastAccessedWorkspace', $_GET['active_project'], logged_user()->getId());
+				if (GlobalCache::isAvailable()) {
+					GlobalCache::update('user_config_option_'.logged_user()->getId().'_lastAccessedWorkspace', $_GET['active_project']);
+				}
+			}
 		}
 		
 		Env::useController($controller_name);

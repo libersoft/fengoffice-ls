@@ -64,7 +64,19 @@ final class CompanyWebsite {
 			throw new OwnerCompanyDnxError();
 		} // if
 
-		if(!($company->getCreatedBy() instanceof User)) {
+		// check the cache if available
+		$owner = null;
+		if (GlobalCache::isAvailable()) {
+			$owner = GlobalCache::get('owner_company_creator', $success);
+		}
+		if (!($owner instanceof User)) {
+			$owner = $company->getCreatedBy();
+			// Update cache if available
+			if ($owner instanceof User && GlobalCache::isAvailable()) {
+				GlobalCache::update('owner_company_creator', $owner);
+			}
+		}
+		if(!($owner instanceof User)) {
 			throw new AdministratorDnxError();
 		} // if
 
@@ -84,7 +96,18 @@ final class CompanyWebsite {
 		if (empty($project_id)) {
 			$this->setProject(null);
 		} else {
-			$project = Projects::findById($project_id);
+			$do_find = true;
+			// check the cache for the option value
+			if (GlobalCache::isAvailable()) {
+				$active_ws = GlobalCache::get('active_ws_'.logged_user()->getId(), $success);
+				if ($success) $do_find = ($active_ws->getId() != $project_id);
+			}
+			if ($do_find) {
+				$project = Projects::findById($project_id);
+				if (GlobalCache::isAvailable()) {
+					GlobalCache::update('active_ws_'.logged_user()->getId(), $project);
+				}
+			} else $project = $active_ws;
 			$this->setProject($project);
 		} // if
 	} // initActiveProject
@@ -103,20 +126,35 @@ final class CompanyWebsite {
 	private function initLoggedUser() {
 		$user_id       = Cookie::getValue('id');
 		$twisted_token = Cookie::getValue('token');
+		$cn = Cookie::getValue('cn');
 		$remember      = (boolean) Cookie::getValue('remember', false);
 
 		if(empty($user_id) || empty($twisted_token)) {
 			return false; // we don't have a user
 		} // if
 
-		$user = Users::findById($user_id);
+		// check the cache if available
+		$user = null;
+		if (GlobalCache::isAvailable()) {
+			$user = GlobalCache::get('logged_user_'.$user_id, $success);
+		}
+		if (!($user instanceof User)) {
+			$user = Users::findById($user_id);
+			// Update cache if available
+			if ($user instanceof User && GlobalCache::isAvailable()) {
+				GlobalCache::update('logged_user_'.$user->getId(), $user);
+			}
+		}
 		if(!($user instanceof User)) {
 			return false; // failed to find user
 		} // if
 		if(!$user->isValidToken($twisted_token)) {
 			return false; // failed to validate token
 		} // if
-
+		if(!($cn == md5(array_var($_SERVER, 'REMOTE_ADDR', "")))) {
+			return false; // failed to check ip address
+		} // if
+		
 		$last_act = $user->getLastActivity();
 		if ($last_act) {
 			$session_expires = $last_act->advance(SESSION_LIFETIME, false);
@@ -218,14 +256,19 @@ final class CompanyWebsite {
 	 */
 	function setLoggedUser(User $user, $remember = false, $set_last_activity_time = true, $set_cookies = true) {
 		if($set_last_activity_time) {
-			$user->setLastActivity(DateTimeValueLib::now());
-			
-			// Disable updating user info
-			$old_updated_on = $user->getUpdatedOn();
-			$user->setUpdatedOn(DateTimeValueLib::now()); 
-			$user->setUpdatedOn($old_updated_on);
-			
-			$user->save();
+			$last_activity_mod_timestamp = array_var($_SESSION, 'last_activity_mod_timestamp', null);
+			if (!$last_activity_mod_timestamp || $last_activity_mod_timestamp < time() - 60 * 10) {
+				
+				$user->setLastActivity(DateTimeValueLib::now());
+				
+				// Disable updating user info
+				$old_updated_on = $user->getUpdatedOn();
+				$user->setUpdatedOn(DateTimeValueLib::now()); 
+				$user->setUpdatedOn($old_updated_on);
+				
+				$user->save();
+				$_SESSION['last_activity_mod_timestamp'] = time();
+			}
 		} // if
 
 		if ($set_cookies) {
@@ -233,6 +276,7 @@ final class CompanyWebsite {
 	
 			Cookie::setValue('id', $user->getId(), $expiration);
 			Cookie::setValue('token', $user->getTwistedToken(), $expiration);
+			Cookie::setValue('cn', md5(array_var($_SERVER, 'REMOTE_ADDR', "")));
 	
 			if($remember) {
 				Cookie::setValue('remember', 1, $expiration);

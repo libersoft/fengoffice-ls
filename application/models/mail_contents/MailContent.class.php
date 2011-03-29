@@ -752,5 +752,26 @@ class MailContent extends BaseMailContent {
 		else
 			return parent::getTagNames();
 	} // getTagNames
+	
+	
+	
+	function addToStatus($amount) {
+		try {
+			DB::beginWork();
+			$state = -1;
+			$saved = "false";
+			$state = $this->getState();
+			$this->setState($state + $amount);
+			$this->save();
+			$saved = "true";
+			DB::commit();
+			return true;
+		} catch (Exception $e) {
+			Logger::log("Could not advance email state, email skipped: ".$e->getMessage()."\nmail_id=".$this->getId()."\nstate=$state\nsaved=$saved");
+			DB::rollback();
+		}
+		return false;
+	}
+	
 }
 ?>

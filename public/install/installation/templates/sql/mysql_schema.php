@@ -30,7 +30,8 @@ CREATE TABLE `<?php echo $table_prefix ?>application_logs` (
   `is_silent` tinyint(1) unsigned NOT NULL default '0',
   `log_data` text <?php echo $default_collation ?>,
   PRIMARY KEY  (`id`),
-  KEY `created_on` (`created_on`)
+  KEY `created_on` (`created_on`),
+  KEY `by_object` USING BTREE (`rel_object_manager`,`rel_object_id`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>comments` (
@@ -50,7 +51,7 @@ CREATE TABLE `<?php echo $table_prefix ?>comments` (
   `trashed_on` datetime NOT NULL default '0000-00-00 00:00:00',
   `trashed_by_id` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`),
-  KEY `object_id` (`rel_object_id`,`rel_object_manager`),
+  KEY `object_id` (`rel_object_manager`, `rel_object_id`),
   KEY `created_on` (`created_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
@@ -82,7 +83,8 @@ CREATE TABLE `<?php echo $table_prefix ?>companies` (
   `archived_by_id` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`),
   KEY `created_on` (`created_on`),
-  KEY `client_of_id` (`client_of_id`)
+  KEY `client_of_id` (`client_of_id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>config_categories` (
@@ -170,7 +172,8 @@ CREATE TABLE `<?php echo $table_prefix ?>linked_objects` (
   `created_on` datetime NOT NULL default '0000-00-00 00:00:00',
   `created_by_id` int(10) unsigned default NULL,
   `object_manager` varchar(50) <?php echo $default_collation ?> NOT NULL default '',  
-  PRIMARY KEY(`rel_object_manager`,`rel_object_id`,`object_id`,`object_manager`)  
+  PRIMARY KEY(`rel_object_manager`,`rel_object_id`,`object_id`,`object_manager`),
+  KEY `other_obj` USING BTREE (`object_manager`,`object_id`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>im_types` (
@@ -196,7 +199,9 @@ CREATE TABLE `<?php echo $table_prefix ?>object_reminders` (
   `context` varchar(40) NOT NULL default '',
   `minutes_before` int(10) default NULL,
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `type_date` (`type`,`date`),
+  KEY `object` USING BTREE (`object_manager`,`object_id`,`date`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>object_reminder_types` (
@@ -271,7 +276,8 @@ CREATE TABLE  `<?php echo $table_prefix ?>project_events` (
   `repeat_mjump` int(10) unsigned NOT NULL default '0',
   `type_id` int(11) NOT NULL default '0',
   `special_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_file_revisions` (
@@ -293,7 +299,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_file_revisions` (
   PRIMARY KEY  (`id`),
   KEY `file_id` (`file_id`),
   KEY `updated_on` (`updated_on`),
-  KEY `revision_number` (`revision_number`)
+  KEY `revision_number` (`revision_number`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_files` (
@@ -321,7 +328,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_files` (
   `type` int(1) NOT NULL DEFAULT 0,
   `url` varchar(255) NULL,
   `mail_id` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_forms` (
@@ -341,7 +349,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_forms` (
   `is_visible` tinyint(1) unsigned NOT NULL default '0',
   `is_enabled` tinyint(1) unsigned NOT NULL default '0',
   `order` smallint(6) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_messages` (
@@ -364,7 +373,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_messages` (
   `archived_by_id` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`),
   KEY `milestone_id` (`milestone_id`),
-  KEY `created_on` (`created_on`)
+  KEY `created_on` (`created_on`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_milestones` (
@@ -391,7 +401,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_milestones` (
   PRIMARY KEY  (`id`),
   KEY `due_date` (`due_date`),
   KEY `completed_on` (`completed_on`),
-  KEY `created_on` (`created_on`)
+  KEY `created_on` (`created_on`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>project_tasks` (
@@ -437,7 +448,8 @@ CREATE TABLE `<?php echo $table_prefix ?>project_tasks` (
   KEY `parent_id` (`parent_id`),
   KEY `completed_on` (`completed_on`),
   KEY `created_on` (`created_on`),
-  KEY `order` (`order`)
+  KEY `order` (`order`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 
@@ -494,7 +506,8 @@ CREATE TABLE `<?php echo $table_prefix ?>projects` (
   `p9` int(10) unsigned NOT NULL default '0',
   `p10` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `completed_on` (`completed_on`)
+  KEY `completed_on` (`completed_on`),
+  KEY `name` USING BTREE (`name`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>searchable_objects` (
@@ -520,7 +533,7 @@ CREATE TABLE `<?php echo $table_prefix ?>tags` (
   `is_private` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `tag` (`tag`),
-  KEY `object_id` (`rel_object_id`,`rel_object_manager`)
+  KEY `object_id` (`rel_object_manager`, `rel_object_id`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>users` (
@@ -622,7 +635,8 @@ CREATE TABLE `<?php echo $table_prefix ?>contacts`(
   PRIMARY KEY  (`id`),
   KEY user_id (`user_id`),
   KEY created_by_id (`created_by_id`),
-  KEY company_id (`company_id`)
+  KEY company_id (`company_id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE  `<?php echo $table_prefix ?>contact_im_values` (
@@ -657,7 +671,8 @@ CREATE TABLE  `<?php echo $table_prefix ?>project_webpages` (
   `is_private` tinyint(1) unsigned NOT NULL default '0',
   `archived_on` datetime NOT NULL default '0000-00-00 00:00:00',
   `archived_by_id` int(10) unsigned default NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE  `<?php echo $table_prefix ?>mail_contents` (
@@ -695,7 +710,8 @@ CREATE TABLE  `<?php echo $table_prefix ?>mail_contents` (
   KEY `uid` (`uid`),
   KEY `conversation_id` (`conversation_id`),
   KEY `message_id` (`message_id`),
-  KEY `state` (`state`)
+  KEY `state` (`state`),
+  KEY `trashed_on` USING BTREE (`trashed_on`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE  `<?php echo $table_prefix ?>mail_datas` (
@@ -767,7 +783,7 @@ CREATE TABLE `<?php echo $table_prefix ?>workspace_objects` (
   `created_on` datetime default NULL,
   PRIMARY KEY  (`workspace_id`, `object_manager`, `object_id`),
   KEY `workspace_id` (`workspace_id`),
-  KEY `object_manager` (`object_manager`),
+  KEY `object_manager` (`object_manager`, `object_id`),
   KEY `object_id` (`object_id`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
@@ -1198,7 +1214,7 @@ CREATE TABLE  `<?php echo $table_prefix ?>application_read_logs` (
   `action` enum('read','download') <?php echo $default_collation ?> default NULL,
   PRIMARY KEY  (`id`),
   KEY `created_on` (`created_on`),
-  KEY `object_key` (`rel_object_id`, `rel_object_manager`)
+  KEY `object_key` (`rel_object_manager`, `rel_object_id`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE  `<?php echo $table_prefix ?>administration_logs` (

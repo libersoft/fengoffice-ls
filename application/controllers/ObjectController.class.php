@@ -316,6 +316,7 @@ class ObjectController extends ApplicationController {
 			ajx_current("empty");
 			return;
 		}
+		$popup_count = 0;
 		$object->clearReminders(logged_user(), true);
 		$typesC = array_var($_POST, 'reminder_type');
 		if (!is_array($typesC)) return;
@@ -347,7 +348,13 @@ class ObjectController extends ApplicationController {
 					$reminder->setDate($rdate);
 				}
 				$reminder->save();
+				$popup_count = $popup_count + ($type == 'reminder_popup' ? 1 : 0);
 			}
+		}
+		
+		if (count($popup_count) > 0 && GlobalCache::isAvailable()) {
+			$user_ids = Users::findAll(array('id' => true));
+			foreach ($user_ids as $uid)	GlobalCache::update('check_for_popup_reminders_'.$uid, 1);
 		}
 	}
 
@@ -1486,6 +1493,13 @@ class ObjectController extends ApplicationController {
 					try {
 						$obj->untrash();
 						ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
+						if ($obj->getObjectManagerName() == 'ProjectTasks'){							
+							$subtasks = $obj->getAllSubtasks();
+							foreach ($subtasks as $st){
+								ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
+								$success++;
+							}							
+						}
 						$success++;
 					} catch (Exception $e) {
 						$error++;
@@ -1686,11 +1700,24 @@ class ObjectController extends ApplicationController {
 								if ($obj instanceof MailContent) {
 									$obj->delete(false);
 								} else {
+									if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_DELETE);							
+										}
+									}
 									$obj->delete();
 								}
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_DELETE);
 								$succ++;
 							} else if ($obj->isTrashable()) {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+									$subtasks = $obj->getAllSubtasks();
+									foreach ($subtasks as $st){
+										ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_TRASH);	
+										$succ++;						
+									}
+								}								
 								$obj->trash();
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_TRASH);
 								$succ++;
@@ -1707,11 +1734,24 @@ class ObjectController extends ApplicationController {
 								if ($obj instanceof MailContent) {
 									$obj->delete(false);
 								} else {
+									if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_DELETE);							
+										}
+									}
 									$obj->delete();
 								}
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_DELETE);
 								$succ++;
 							} else if ($obj->isTrashable()) {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+									$subtasks = $obj->getAllSubtasks();
+									foreach ($subtasks as $st){
+										ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_TRASH);	
+										$succ++;						
+									}
+								}
 								$obj->trash();
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_TRASH);
 								$succ++;
@@ -1736,10 +1776,24 @@ class ObjectController extends ApplicationController {
 						$obj = get_object_by_manager_and_id($id, $manager);
 						if ($obj->canEdit(logged_user())) {
 							if ($action == 'archive') {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);	
+											$succ++;						
+										}
+								}								
 								$obj->archive();
 								$succ++;
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);
 							} else if ($action == 'unarchive') {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNARCHIVE);
+											$succ++;							
+										}
+								}
 								$obj->unarchive();
 								$succ++;
 								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_UNARCHIVE);
@@ -1757,10 +1811,24 @@ class ObjectController extends ApplicationController {
 						if ($obj->canEdit(logged_user())) {
 							$workspaces = $obj instanceof Project ? null : $obj->getWorkspaces();
 							if ($action == 'archive') {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);
+											$succ++;							
+										}
+								}
 								$obj->archive();
 								$succ++;
 								ApplicationLogs::createLog($obj, $workspaces, ApplicationLogs::ACTION_ARCHIVE);
 							} else if ($action == 'unarchive') {
+								if ($obj->getObjectManagerName()== 'ProjectTasks') {
+										$subtasks = $obj->getAllSubtasks();
+										foreach ($subtasks as $st){
+											ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNARCHIVE);
+											$succ++;							
+										}
+								}
 								$obj->unarchive();
 								$succ++;
 								ApplicationLogs::createLog($obj, $workspaces, ApplicationLogs::ACTION_UNARCHIVE);
@@ -2290,9 +2358,17 @@ class ObjectController extends ApplicationController {
 		if ($object instanceof ApplicationDataObject && $object->canEdit(logged_user())) {
 			try {
 				DB::beginWork();
+				if ($obj->getObjectManagerName()== 'ProjectTasks') {
+					$subtasks = $obj->getAllSubtasks();						
+				}				
 				$object->unarchive();
-				$ws = $object->getWorkspaces();
+				$ws = $object->getWorkspaces();				
 				ApplicationLogs::createLog($object, $ws, ApplicationLogs::ACTION_UNARCHIVE);
+				if (isset ($subtasks)){
+					foreach ($subtasks as $st){
+						ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNARCHIVE);							
+					}
+				}
 				DB::commit();
 				flash_success(lang("success unarchive objects", 1));
 			} catch (Exception $e) {
@@ -2308,7 +2384,19 @@ class ObjectController extends ApplicationController {
 
 	function popup_reminders() {
 		ajx_current("empty");
+		
+		// if no new popup reminders don't make useless queries
+		if (GlobalCache::isAvailable()) {
+			$check = GlobalCache::get('check_for_popup_reminders_'.logged_user()->getId(), $success);
+			if ($success && $check == 0) return;
+		}
+		
 		$reminders = ObjectReminders::getDueReminders("reminder_popup");
+/*		
+		// look for reminders to send in the next 15 minutes that will not be shown in time, if found then show them now.
+		$next_reminders = ObjectReminders::getNextDueReminders("reminder_popup", DateTimeValueLib::now(), new DateTimeValue(time() + 15*60));
+		$reminders = array_merge($reminders, $next_reminders);
+*/		
 		$popups = array();
 		foreach ($reminders as $reminder) {
 			$object = $reminder->getObject();
@@ -2369,6 +2457,20 @@ class ObjectController extends ApplicationController {
 					}
 				}
 				$reminder->delete();
+		}
+		
+		// popup reminders already checked for logged user
+		if (GlobalCache::isAvailable()) {
+			$today_next_reminders = ObjectReminders::findAll(array(
+				'conditions' => array(
+					"`date` > ? AND `date` < ?", DateTimeValueLib::now(), DateTimeValueLib::now()->endOfDay(),
+				),
+				'limit' => config_option('cron reminder limit', 100)
+			));
+			
+			if (count($today_next_reminders) == 0) {
+				GlobalCache::update('check_for_popup_reminders_'.logged_user()->getId(), 0);
+			}
 		}
 	}
 

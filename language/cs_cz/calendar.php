@@ -145,4 +145,9 @@
 	'invitation rejected' => 'Pozvání je odmítnuto',
 	'week short' => 'Týden',
 	'week number x' => 'Týden {0}',
+	'also confirmed attendance' => 'Potvrzena účast',
+	'awaiting confirmation' => 'Potvrzení očekáváno',
+	'rejected invitation' => 'Nezúčastní se',
+	'who' => 'Kdo',
+	'what' => 'Co',
 ); ?>

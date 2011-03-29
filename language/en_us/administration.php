@@ -109,6 +109,8 @@
     'config option name smtp_secure_connection' => 'Use secure SMTP connection',
   	'config option name user_email_fetch_count' => 'Email fetch limit',
   	'config option desc user_email_fetch_count' => 'How many emails to fetch when a user clicks on the "Check mail accounts" button. Using a large value may cause timeout errors to the user. Use 0 for no limit. Note, this doesn\'t affect email fetching through cron.',
+	'config option name check_spam_in_subject' => 'Check email subjects for the text "**SPAM**"',
+	'config option desc check_spam_in_subject' => 'If "**SPAM**" is found in subject then the email is sent to the junk folder.',
   
   	// Passwords
   	'config option name min_password_length' => 'Minimum password length',

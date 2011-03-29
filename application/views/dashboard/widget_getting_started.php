@@ -29,10 +29,10 @@
 
 <?php if (count(Projects::count('`created_by_id` = ' . logged_user()->getId())) > 0) { ?>
   <p><b><?php echo '<a class="internalLin dashboard-link" href="' . get_url('project', 'add') . '">' . lang('new account step start workspace', $step) . '</a>' ?></b><img src="<?php echo image_url('16x16/complete.png');?>"/></p>
-  <?php echo lang('new account step start workspace info', '<img src="'.image_url('16x16/add.png').'" />', logged_user()->getPersonalProject()->getName()) ?><br/><br/>
+  <?php echo lang('new account step start workspace info', '<span class="ico-workspace-add" style="padding: 5px 16px 0 0">&nbsp;</span>', logged_user()->getPersonalProject()->getName()) ?><br/><br/>
 <?php } else { ?>
   <b><?php echo '<a class="internalLink dashboard-link" href="' . get_url('project', 'add') . '">' . lang('new account step start workspace', $step) . '</a>' ?></b><br/>
-  <?php echo lang('new account step start workspace info', '<img src="'.image_url('16x16/add.png').'" />', logged_user()->getPersonalProject()->getName()) ?><br/><br/>
+  <?php echo lang('new account step start workspace info', '<span class="ico-workspace-add" style="padding: 5px 16px 0 0">&nbsp;</span>', logged_user()->getPersonalProject()->getName()) ?><br/><br/>
 <?php } ?>
 <?php $step++ ?>  
 
@@ -46,34 +46,34 @@
 	}?><br/>
 <?php echo lang('new account step actions info') ?><br/>
 
-<img src='<?php echo image_url('16x16/message.png')?> ' />&nbsp;
+<span class="ico-message" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('message', 'add')?> ' ><?php echo lang('message')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/types/contact.png')?> ' />&nbsp;
+<span class="ico-contact" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('contact', 'add')?> ' ><?php echo lang('contact')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/companies.png')?> ' />&nbsp;
+<span class="ico-company" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('company', 'add_client')?> ' ><?php echo lang('company')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/types/event.png')?> ' />&nbsp;
+<span class="ico-event" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('event', 'add')?> ' ><?php echo lang('event')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/upload.png')?> ' />&nbsp;
+<span class="ico-upload" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('files', 'add_file')?> ' ><?php echo lang('upload a file')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/documents.png')?> ' />&nbsp;
+<span class="ico-documents" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('files', 'add_document')?> ' ><?php echo lang('document')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/prsn.png')?> ' />&nbsp;
+<span class="ico-prsn" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('files', 'add_presentation')?> ' ><?php echo lang('presentation')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/milestone.png')?> ' />&nbsp;
+<span class="ico-milestone" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('milestone', 'add')?> ' ><?php echo lang('milestone')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/types/task.png')?> ' />&nbsp;
+<span class="ico-task" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('task', 'add_task')?> ' ><?php echo lang('task')?></a>&nbsp;|&nbsp;
 
-<img src='<?php echo image_url('16x16/types/webpage.png')?> ' />&nbsp;
+<span class="ico-webpage" style="padding: 5px 16px 0 0">&nbsp;</span>
 <a class='internalLink dashboard-link' href='<?php echo get_url('webpage', 'add')?> ' ><?php echo lang('weblink')?></a>
 
 <?php /*&nbsp;|&nbsp;

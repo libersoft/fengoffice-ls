@@ -219,6 +219,8 @@
 	'config option desc ask_administration_autentification' => 'Indica si se debe desplegar un dialogo de autentificacion mediante contraseña antes de ingresar al panel de administracion. ',
 	'config option name user_email_fetch_count' => 'Límite de correos a obtener',
 	'config option desc user_email_fetch_count' => 'Cuántos correos obtener cuando el usuario hace clic en el botón "Verificar cuentas de correo". Si usa un valor muy grande puede causar errores de interrupción al usuario. Use 0 para no limitar la cantidad de correos a buscar. Nota, esta opción no afecta correo obtenido por cron.',
+	'config option name check_spam_in_subject' => 'Filtrar correos que tengan el texto "**SPAM**" en el asunto',
+	'config option desc check_spam_in_subject' => 'Si el texto "**SPAM**" es encontrado en el asunto entonces el correo es enviado a la carpeta basura.',
 	'user ws config option name noOfTasks' => 'Número de tareas mostradas por defecto',
 	'autentify password title' => 'Autentificar Contraseña',
 	'autentify password desc' => 'Has solicitado ingresar al panel de administración.<br/> Por favor ingresa tu contraseña nuevamente',

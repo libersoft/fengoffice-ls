@@ -178,4 +178,11 @@
 	'subscribed notification milestone desc' => 'Έχετε εγγραφεί στο Ορόσημο \'{0}\' από {1}.',
 	'subscribed notification email' => 'Εγγραφήκατε στην Ηλεκτρονικής Αλληλογραφίας \'{0}\'',
 	'subscribed notification email desc' => 'Έχετε εγγραφεί στην Ηλεκτρονική Αλληλογραφίας \'{0}\' από {1}.',
+	'sent mails sync' => 'Ρυθμίσεις συγχρονισμού των απεσταλμένων (μόνο για IMAP)',
+	'connnection security' => 'Ασφάλεια σύνδεσης',
+	'select folder for outbox' => 'Επιλέξτε το φάκελο των εξερχομένων',
+	'sync complete' => 'Ο συγχρονισμός ολοκληρώθηκε',
+	'invalid sync settings' => 'Λάθος στις ρυθμίσεις συγχρονισμού. Δεν έγινε εφικτή η σύνδεση με το διακομιστή',
+	'cant find user' => 'Ο χρήστης δεν βρέθηκε',
+	'cant find account' => 'Δεν βρέθηκε ο λογαριασμός e-mail',
 ); ?>

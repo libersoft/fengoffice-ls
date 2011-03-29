@@ -89,7 +89,7 @@
 	'order by filename' => 'Bestandsnaam (a-z)',
 	'order by posttime' => 'datum en tijd',
 	'all files' => 'Alle bestanden',
-	'upload file desc' => 'U kan alle soorten bestanden uploaden. De maximale grootte van het bestand dat u kan uploaden is {0}',
+	'upload file desc' => 'U kunt alle soorten bestanden uploaden. De maximale grootte van het bestand dat u kunt uploaden is {0}',
 	'file revision info short' => 'Revisie nr.{0} <span>(gemaakt op {1})</span>',
 	'file revision info long' => 'Revisie nr.{0} <span>(door <a class="internalLink" href="{1}">{2}</a> op {3})</span>',
 	'file revision title short' => 'Gemaakt op {0}</span>',
@@ -277,4 +277,6 @@ werkomgeving zal altijd door alle gebruikers van die werkomgeving gelezen kunnen
 	'linked task tab' => 'Taken',
 	'linked event tab' => 'Gebeurtenissen',
 	'apply assignee to subtasks' => 'Voeg subtaken aan verantwoordelijke toe',
+	'urgent priority' => 'Dringend',
+	'attachment from email' => 'Bijgevoegd bij email "{0}"',
 ); ?>

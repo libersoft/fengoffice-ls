@@ -156,7 +156,11 @@ if (!defined('DONT_USE_FENG_UTF8') || !DONT_USE_FENG_UTF8) {
 if(Env::isDebugging()) {
 	benchmark_timer_set_marker('Handle request');
 } // if
-
+$url=urldecode($_SERVER['REQUEST_URI']);
+if (preg_match('/<script[^>]*>.*(<\/script>|$)/i', $url)){
+	Logger::log("Javascript injection from ".$_SERVER['REMOTE_ADDR'] ." in URL:".$url);
+	remove_scripts_and_redirect($url);		
+}
 // Get controller and action and execute...
 try {
 	if (!defined( 'CONSOLE_MODE' )) {
@@ -176,11 +180,14 @@ try {
 if (Env::isDebuggingTime()) {
 	TimeIt::stop();
 	$report = TimeIt::getTimeReportByType();
-	Logger::log(array_var($_SERVER, 'QUERY_STRING', 'No query string')."\n$report");
-	$report = "\n";
+	//Logger::log(array_var($_SERVER, 'QUERY_STRING', 'No query string')."\n$report");
+	//$report = "\n";
 	/*foreach (TimeIt::$timeslots as $t) {
 		$report .= $t["type"] . ": (" . $t["start"] . ", " . $t["end"] . ")\n";
 	}*/
-	Logger::log($report);
+	//Logger::log($report);
+	
+	$to_log = gmdate("Y-m-d H:i:s") ."\n". array_var($_SERVER, 'QUERY_STRING', 'No query string')."\n$report--------------------------------------------------------\n\n";
+	file_put_contents(with_slash(CACHE_DIR) . "log_request_times.txt", $to_log, FILE_APPEND);
 }
 ?>

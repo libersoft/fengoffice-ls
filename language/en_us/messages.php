@@ -250,6 +250,7 @@
   	'success update billing values' => 'Timeslot billing values updated succesfully: {0} entries modified.',
     
     // Failures
+    'error forgot password' => 'Failed to send the new password. Contact your Feng Office administrator.',
     'error edit timeslot' => 'Failed to save timeslot',
   	'error delete timeslot' => 'Failed to delete the selected timeslot',
   	'error add timeslot' => 'Failed to add timeslot',
@@ -703,6 +704,9 @@
   	'ie browser outdated' => 'Your browser is not officially supported. For a better experience please upgrade your browser.',
   	'outbox mail not sent' => 'You still have {0} electronic mail in your outbox folder which has not been sent yet',
   	'outbox mails not sent' => 'You still have {0} electronic mails in your outbox folder which have not been sent yet',
+  	'mail not sent' => "This email, or another one located in your 'Outbox' folder, has not been sent because there seems to be a problem with your email account settings or email server. The error message is:",
+   	'mail not sent, wrong settings/receiver' => "This email, or another one located in your 'Outbox' folder, has not been sent because there either is a problem in your email account settings or the receiver is not valid. The error message is:",
+  
   
     'short search query warning' => 'You search query is too short. You can try searching for "<b>{0}*</b>" to find words starting with "<b>{0}</b>".',
   	'no attachments found for email' => 'No attachments found for email',

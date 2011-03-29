@@ -86,7 +86,8 @@
     */
     static function getByName($name) {
       return self::findOne(array(
-        'conditions' => array('`name` = ?', $name)
+        'conditions' => array('`name` = ?', $name),
+      	'columns' => array('value', 'config_handler_class')
       )); // if
     } // getByName
     

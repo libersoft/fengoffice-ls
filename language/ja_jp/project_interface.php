@@ -7,7 +7,7 @@ return array(
 
     'recent activities' => '最近の活動',
     'search button caption' => '検索',
-    'search result description' => '<strong>"{2}"</strong>にマッチしたオブジェクトの表示<strong>{0}/{1}</strong>',
+    'search result description' => '<strong>"{2}"</strong>に一致したオブジェクトの表示<strong>{0}/{1}</strong>',
     'search result description short' => '{0}から{2}の{1}',
 
 // Options and descriptions
@@ -17,9 +17,9 @@ return array(
     'important message desc' => '重要な注意はワークスペースノートページの「重要な注意」のサイドバーにリストアップされています。',
     'important file desc' => '重要なファイルはサイドバーの「重要なファイル」セクションに表示されています。',
     'enable comments' => 'コメントが有効',
-    'enable comments desc' => 'このオブジェクトを見ることができるユーザはコメントを投稿できます。コメントを止めるには「いいえ」を選択してください。',
+    'enable comments desc' => 'このオブジェクトを見ることができるユーザーはコメントできます。コメントを止めるには「いいえ」を選択してください。',
     'enable anonymous comments' => '匿名のコメント',
-    'enable anonymous comments desc' => 'このオブジェクトは匿名のコメントを投稿できます。匿名のコメントはAPIか(有効の場合は)他の発信元から投稿することができます。投稿者は名前と有効なメールアドレスを記入しなければなりません。また登録者のIPアドレスは登録されます。',
+    'enable anonymous comments desc' => 'このオブジェクトは匿名のコメントできます。匿名のコメントはAPIか(有効の場合は)他の発信元からできます。投稿者は名前と有効なメールアドレスを記入しなければなりません。コメント元のIPアドレスは記録されます。',
 
     'completed task' => '完了したタスク',
     'completed tasks' => '完了したタスク',
@@ -44,39 +44,39 @@ return array(
     'completed on by' => '{0} | <a class="internalLink" href="{1}">{2}</a>',
     'started on by' => '{0} | <a class="internalLink" href="{1}">{2}</a>',
     'posted on by' => '{0} | <a class="internalLink" href="{1}">{2}</a>',
-    'milestone assigned to' => '{0}に割り当て',
-    'assigned to' => '割り当て',
+    'milestone assigned to' => '{0}が担当',
+    'assigned to' => '担当',
     'project started on' => '開始した',
 
     'email sent by linktitle' => '{1}, {0}から送信された',
 
-    'send milestone assigned to notification' => 'ユーザに通知メールを送信',
-    'send task assigned to notification' => 'ユーザに通知メールを送信',
+    'send milestone assigned to notification' => 'ユーザーに通知のメールを送信',
+    'send task assigned to notification' => 'ユーザーに通知のメールを送信',
 
     'edit company data' => '<a class="internalLink" href="{0}">編集</a>会社情報',
-    'company users involved in project' => '{1}に含まれるユーザ{0}名',
+    'company users involved in project' => '{1}に含まれるユーザー{0}名',
     'companies involved in project' => '含まれる会社',
 
     'tags used on projects' => 'このワークスペースで使用されているタグ',
     'number of tagged objects' => '{0}個のオブジェクト',
-    'total objects tagged with' => 'このワークスペースに{1}とタグ付けされた<b>{0}</b>個のオブジェクト',
-    'no objects tagged with' => 'このワークスペースに<b>{0}</b>とタグ付けされたオブジェクトはありません。',
+    'total objects tagged with' => 'このワークスペースに{1}とタグの付いた<b>{0}</b>個のオブジェクト',
+    'no objects tagged with' => 'このワークスペースに<b>{0}</b>とタグの付いたオブジェクトはありません。',
     'tags widget description' => 'カンマで区切ったタグのリスト (例: "interface, javascript, public beta")',
 
-    'project permissions form hint' => '<a class="internalLink" href="{0}">アクセス権限のフォーム</a>を使用すると、簡単に会社とユーザの追加や削除したり、設定するアクセス権限を調整できます。',
+    'project permissions form hint' => '<a class="internalLink" href="{0}">アクセス権限のフォーム</a>を使用すると、簡単に会社とユーザーの追加や削除したり、設定するアクセス権限を調整できます。',
 
     'expand additional text' => '拡張',
     'collapse additional text' => '折り畳む',
     'email notification' => 'メールで通知',
-    'email notification desc' => '選択された人々をこのノートの購読者に登録してメールで通知',
-    'assign milestone task list desc' => 'タスクを既存のマイルストーン割り当てることができます。',
+    'email notification desc' => '選択した人たちをこのノートに登録して電子メールで通知します。',
+    'assign milestone task list desc' => 'タスクを既存のマイルストーンに割り当てできます。',
 
     'link existing object' => '既存のオブジェクトをリンク (ファイルセクションから)',
     'upload and link' => '新しいファイルをアップロードしてオブジェクトに添付',
-    'file permissions description' => '選択ボックスからユーザを選ぶか、または名前をテキストボックスに入力てください。それから「ユーザを追加」のボタンを押すと格子に表示されます。<br/>表示されたところで、格子にある適切なアクセス権限を選択してください。<br/>注意: 選択ボックスはあなたが現在ファイルを共有しているユーザのみを表示しています。',
+    'file permissions description' => '選択ボックスからユーザーを選ぶか、または名前をテキストボックスに入力てください。それから「ユーザーを追加」のボタンを押すと格子に表示されます。<br/>表示されたところで、格子にある適切なアクセス権限を選択してください。<br/>注意: 選択ボックスはあなたが現在ファイルを共有しているユーザーのみを表示しています。',
 
-    'subscribers desc' => 'このオブジェクトに誰かがコメントすると、購読者はメールの通知を受けます。',
-    'admins can post comments on locked objects desc' => '<strong>コメントはロックされています</strong>が、あなたは管理者としてならコメントを投稿する権限があります。 顧客と非管理者のユーザからの返事が欲しいのなら、このオブジェクトのコメントのロックを解除する必要があることい注意してください。<i>(「コメントを可能」というオプションを「はい」にします。)</i>.',
+    'subscribers desc' => 'このオブジェクトに誰かがコメントすると、登録者にメールの通知します。',
+    'admins can post comments on locked objects desc' => '<strong>コメントはロックされています</strong>が、あなたは管理者としてならコメントする権限があります。 顧客と非管理者のユーザーからの返事が欲しいのなら、このオブジェクトのコメントのロックを解除する必要があることい注意してください。<i>(「コメントを可能」というオプションを「はい」にします。)</i>.',
 
     'all permissions' => 'すべて',
     'can manage messages' => 'ノートを管理',
@@ -84,22 +84,22 @@ return array(
     'can manage milestones' => 'マイルストーンを管理',
     'can upload files' => 'ファイルをアップロード',
     'can manage files' => 'ファイルを管理',
-    'can assign to owners' => 'オーナー会社のメンバーにタスクを割り当て',
-    'can assign to other' => '他の顧客のメンバーにタスクを割り当て',
-    'can manage properties' => 'プロパティを管理',
+    'can assign to owners' => 'オーナー会社のメンバーをタスクの担当者に指定',
+    'can assign to other' => '他の顧客のメンバーをタスクの担当者に指定',
+    'can manage properties' => '属性を管理',
     'can manage events' => 'イベントを管理',
 
     'add by' => '追加者',
     'edit by' => '更新者',
     'delete by' => '削除者',
-    'close by' => '完了にした',
-    'open by' => '未完了にした',
+    'close by' => '完了者',
+    'open by' => '未完了の設定者',
     'upload by' => 'アップロードした者',
     'created by' => '作成者',
 
     'project description' => '説明',
     'project status' => 'ワークスペースの状態',
-    'show project desciption in overview' => '概観パネルでワークスペースの説明を表示しますか?',
+    'show project desciption in overview' => '概要パネルでワークスペースの説明を表示しますか?',
 
     'new file' => '新しいファイル',
     'existing file' => '既存ファイル',
@@ -135,17 +135,17 @@ return array(
     'select object' => 'オブジェクトを選択',
 
 
-    'admin notice comments disabled' => 'このオブジェクトにコメントは無効となっていますが、それでも管理者としてコメントできます。他の、非管理者のユーザからの返事が欲しい場合は、「コメントが有効」のオプションを「はい」にしなければなりません。',
+    'admin notice comments disabled' => 'このオブジェクトにコメントは無効となっていますが、それでも管理者としてコメントできます。他の、非管理者のユーザーからの返事が欲しい場合は、「コメントが有効」のオプションを「はい」にしなければなりません。',
 
 // iCal
     'icalendar' => 'iCalendar',
     'icalendar subscribe' => 'iCalendar',
-    'icalendar subscribe desc' => 'このリンクを使用するとマイルストーンを好みのカレンダー・アプリケーションに取り込めます。',
-    'icalendar password change notice' => '<strong>注意:</strong> パスワードを変更すると、カレンダー・データのリンクも変わります!  再購読しなければなりません。',
+    'icalendar subscribe desc' => 'このリンクを使用するとマイルストーンを好みのカレンダーのアプリケーションに取り込めます。',
+    'icalendar password change notice' => '<strong>注意:</strong> パスワードを変更すると、カレンダーのデータのリンクも変わります!  再購読しなければなりません。',
 
 // Add project form
     'success message' => 'サクセスノート',
-    'project form action' => 'アクション',
+    'project form action' => '処理',
     'project form action add comment' => 'コメントを追加',
     'project form action add task' => 'タスクを追加',
     'project form enabled' => '有効',
@@ -164,12 +164,12 @@ return array(
     'private file desc' => 'プライベートのファイルはオーナー会社のメンバーにだけ表示されます。顧客企業のメンバーには表示されません。',
 
     'select a tag' => 'タグを選択してください...',
-    'select a user' => 'ユーザを選択してください...',
+    'select a user' => 'ユーザーを選択してください...',
     'select a project' => 'ワークスペースを選択してください...',
     'upload a file' => 'ファイルをアップロード',
     'upload project desc' => 'アップロードしたファイルを保存するワークスペース',
     'upload tag desc' => 'ここでファイルに既存のタグか、新しいタグを選択できます。別のタグを追加するには、タグを選択した後でエンター押してください。',
-    'upload permissions desc' => 'ファイルにアクセスする許可を与えるユーザを選んでください。タグと同様に、ユーザ名を入力するか選択して、別のユーザを追加するにはエンターを押してください。',
+    'upload permissions desc' => 'ファイルにアクセスする許可を与えるユーザーを選んでください。タグと同様に、ユーザー名を入力するか選択して、別のユーザーを追加するにはエンターを押してください。',
     'upload description desc' => 'ファイルの説明を入力してください。',
     'uploading file' => 'ファイルをアップロード中...',
 
@@ -222,16 +222,16 @@ return array(
     'lines chart' => '折れ線グラフ',
     'draw chart' => '描画',
     'chart display' => '表示',
-    'bar sketch' => 'スケッチ・バー',
+    'bar sketch' => 'スケッチバー',
     'bar 3d' => '三次元グラフ',
-    'bar glass' => 'グラス・バー',
+    'bar glass' => 'グラスバー',
     'budgeted' => '予算計上済み',
     'current' => '現在',
 
     'executed' => '実行済み',
     'not executed' => '未実行',
 
-    'success deleted chart' => 'チャート \'{0}\' の削除に成功しました。',
+    'success deleted chart' => 'チャート \'{0}\' の削除しました。',
     'error deleted chart' => 'チャートの削除中にエラーが発生しました。',
 
     'task priority' => '優先度',
@@ -243,7 +243,7 @@ return array(
     'time estimate' => '時間の見積もり',
     'time estimate desc' => 'タスクのおおよその見積もり時間',
     'x hours' => '{0}時間',
-    'pending' => '保留',
+    'pending' => '未完了',
 
     'new task template' => '新しいタスクのテンプレート',
     'edit task template' => 'タスクのテンプレートを編集',
@@ -258,22 +258,22 @@ return array(
     'show all' => 'すべてを表示',
 
     'unassigned' => '未割り当て',
-    'latest comments' => '最新のコメント',
-    'include unworked pending tasks' => '保留中のタスクも含む',
-    'unworked pending tasks' => '保留中のタスク',
-    'assign contact to workspace desc' => '連絡先をワークスペースに割り当てるには、ワークスペースをチェックして、テキストフィールドに役割を入力してください。',
+    'latest comments' => '最近のコメント',
+    'include unworked pending tasks' => '未完了のタスクも含む',
+    'unworked pending tasks' => '未完了のタスク',
+    'assign contact to workspace desc' => '連絡先をワークスペースに設定するには、ワークスペースをチェックして、テキストフィールドに役割を入力してください。',
 
     'cannot change parent workspace' => '親のワークスペースを変更する十分なアクセス権限がありません。',
     'cannot change parent workspace description' => 'このワークスペースはあなたがアクセスできないワークスペースの子供かもしれません。',
 
     'copy of file' => '{0}のコピー',
-    'add subscribers desc' => 'このオブジェクトに選択した人々を登録します。登録されたユーザは、このオブジェクトに対する変更について通知を受けます。',
-    'add custom property' => 'カスタムプロパティを追加',
-    'fetch imap folders' => 'IMAPフォルダを取り出す',
+    'add subscribers desc' => 'このオブジェクトに選択した人々を登録します。登録されているユーザーは、このオブジェクトに対する変更について通知を受けます。',
+    'add custom property' => 'カスタム属性を追加',
+    'fetch imap folders' => 'IMAPフォルダーを取り出す',
     'no reports found' => '{0}にレポートはありません。',
 
     'remove this widget' => 'このウィジェットを削除',
-    'add a new' => '新規に追加',
+    'add a new' => '新しく追加',
     'other settings' => 'その他の設定',
     'incoming settings' => '取り込みの設定',
     'default account' => 'デフォルトのアカウント',
@@ -300,7 +300,7 @@ return array(
     'field firstname' => '氏名',
     'field lastname' => '姓',
     'field filecontent' => '内容',
-    'field uid' => '一意なID',
+    'field uid' => '一意な識別子',
     'field h_address' => '自宅の住所',
     'field w_address' => '就業場所の住所',
     'field o_address' => 'その他の住所',
@@ -313,19 +313,19 @@ return array(
     'suggested workspaces' => '推奨するワークスペース',
 
     'mail account sender name' => '送信者名',
-    'mail account sender name description' => 'メールを送信するときに"From"フィールドで使用する名前です。空白にすると、ユーザの表示名を使用します。',
-    'classify mails on workspace' => 'ワークスペースを自動分類',
+    'mail account sender name description' => 'メールを送信するときに"From"フィールドで使用する名前です。空白にすると、ユーザーの表示名を使用します。',
+    'classify mails on workspace' => 'ワークスペースに自動分類',
     'classify mails on workspace desc' => 'これを選択すると、このアカウントから送信またはアカウントに送信される、すべてのメールは自動的に選択したワークスペースに自動的に分類されます。',
 //  'signature' => '署名',
 //  'signature description' => '署名は、このアカウントから送信するすべての電子メールに追記されます。',
 
     'mail account permissions' => 'アカウントのアクセス設定',
-    'mail account permissions desc' => 'このアカウントのメールを誰が読み書きできるか、誰が一般的なアカウントの情報を編集できるか、そして誰がこのアカウントのアクセス権を持たないか、選択してください。<br/><b>注意</b>: ワークスペースに分類されたメールは、そのワークスペースを読めるすべてのユーザであれば、これらのアクセス権限に関わらず読むことが可能です。',
+    'mail account permissions desc' => 'このアカウントのメールを誰が読み書きできるか、誰が一般的なアカウントの情報を編集できるか、そして誰がこのアカウントのアクセス権を持たないか、選択してください。<br/><b>注意</b>: ワークスペースに分類されたメールは、そのワークスペースを読めるすべてのユーザーであれば、これらのアクセス権限に関わらず読むことが可能です。',
     'cannot access account' => 'アクセス不可',
-    'can view account emails' => 'メールの読み書きが可能',
+    'can view account emails' => 'メールを読み書き可能',
     'can view account emails and edit' => 'メールの読み書きとアカウントの編集が可能', 
     'personal settings' => '個人設定',
-    'personal settings desc' => 'これらの設定はあなたのユーザに特定なもので、他のユーザがこのアカウントにアクセスできるユーザに影響を与えません。',
+    'personal settings desc' => 'これらの設定はあなたのユーザーに特定なもので、他のユーザーがこのアカウントにアクセスできるユーザーに影響を与えません。',
 
     'linked main title' => 'リンク',
     'linked file tab' => 'ファイル',
@@ -339,7 +339,7 @@ return array(
     'linked milestone tab' => 'マイルストーン',
     'linked task tab' => 'タスク',
     'linked event tab' => 'イベント',
-    'apply assignee to subtasks' => 'サブタスクに指名者を適用',
+    'apply assignee to subtasks' => 'サブタスクに担当者を適用',
 
     'attachment from email' => 'メール"{0}"に添付',
 ); // array

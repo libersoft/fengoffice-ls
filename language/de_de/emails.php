@@ -187,4 +187,11 @@
 	'subscribed notification milestone desc' => 'Abonniert zum Meilenstein „{0}“ durch {1}.',
 	'subscribed notification email' => 'Abonniert zur E-Mail „{0}“',
 	'subscribed notification email desc' => 'Abonniert zur E-Mail „{0}“ durch {1}.',
+	'sent mails sync' => 'E-Mail-Synchronisationseinstellungen senden (Nur IMAP!)',
+	'connnection security' => 'Verbindungssicherheit',
+	'select folder for outbox' => 'Wählen Sie Ihren Postausgangsserver aus',
+	'sync complete' => 'Synchronisation abgeschlossen',
+	'invalid sync settings' => 'Falsche Synchronisationseinstellungen! Die Verbindung zum Server ist fehlgeschlagen!',
+	'cant find user' => 'Der eingegebene Benutzer existiert nicht!',
+	'cant find account' => 'Die eingegebene E-Mail-Adresse existiert nicht!',
 ); ?>

@@ -602,7 +602,7 @@ function purify_html($html) {
 	$config = null;
 	if (defined('CUSTOM_HTMLPURIFIER_CACHEDIR') && is_dir(CUSTOM_HTMLPURIFIER_CACHEDIR)) {
 		$config = HTMLPurifier_Config::createDefault();
-		$config->set('Cache', 'SerializerPath', CACHE_DIR);
+		$config->set('Cache.SerializerPath', CACHE_DIR);
 	}
 	$p = new HTMLPurifier($config);
 	return $p->purify($html);
@@ -630,5 +630,8 @@ function get_ip_address()
 
 function zip_supported() {
 	return class_exists('ZipArchive', false);
+}
+function remove_scripts_and_redirect(&$script) {
+	header('Location:'.preg_replace('/<script[^>]*>.*(<\/script>|$)/i', '', $script)) ;
 }
 ?>

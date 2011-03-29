@@ -138,9 +138,19 @@ class UserWsConfigOptions extends BaseUserWsConfigOptions {
 	 * @return UserWsConfigOption
 	 */
 	static function getByName($name) {
-		return self::findOne(array(
+		// check the cache for the option object
+		if (GlobalCache::isAvailable()) {
+			$object = GlobalCache::get('user_copt_obj_'.$name, $success);
+			if ($success) return $object;
+		}
+		$object = self::findOne(array(
         'conditions' => array('`name` = ?', $name)
 		)); // if
+		if (GlobalCache::isAvailable()) {
+			GlobalCache::update('user_copt_obj_'.$name, $object);
+		}
+			
+		return $object;
 	} // getByName
 
 } // ConfigOptions

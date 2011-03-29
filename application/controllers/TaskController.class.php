@@ -413,15 +413,23 @@ class TaskController extends ApplicationController {
 					case 'delete':
 						if ($task->canDelete(logged_user())){
 							$tasksToReturn[] = array('id' => $task->getId());
-							$task->trash();
+							$subtasks = $task->getAllSubtasks();
+							$task->trash();							
 							ApplicationLogs::createLog($task, $task->getWorkspaces(), ApplicationLogs::ACTION_TRASH);
+							foreach ($subtasks as $st){
+								ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_TRASH);
+							}
 						}
 						break;
 					case 'archive':
 						if ($task->canEdit(logged_user())){
 							$tasksToReturn[] = $task->getArrayInfo();
+							$subtasks = $task->getAllSubtasks();
 							$task->archive();
 							ApplicationLogs::createLog($task, $task->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);
+							foreach ($subtasks as $st){
+								ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_ARCHIVE);
+							}
 						}
 						break;
 					case 'start_work':

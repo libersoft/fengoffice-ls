@@ -329,7 +329,7 @@ addLangs({
 	'thursday': 'Quinta',
 	'friday': 'Sexta',
 	'saturday': 'Sábado',
-	'sunday': 'Sexta',
+	'sunday': 'Domingo',
 	'comment': 'Comentário',
 	'change user': 'Trocar Usuário',
 	'start work': 'Iniciar trabalho',

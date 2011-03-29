@@ -725,7 +725,7 @@ og.MailManager = function() {
 					for (var i=0; i < sel.length; i++) {
 						if (ids) ids += ",";
 						ids += "MailContents:" + sel[i].id;
-						this.store.remove(sel[i]);
+					//	this.store.remove(sel[i]);
 					}
 					if (ids) og.openLink(og.getUrl('object', 'trash', {ids:ids}),{callback:function(){Ext.getCmp('mails-manager').load()}});
 				}
@@ -745,9 +745,9 @@ og.MailManager = function() {
 					for (var i=0; i < sel.length; i++) {
 						if (ids) ids += ",";
 						ids += "MailContents:" + sel[i].id;
-						this.store.remove(sel[i]);
+					//	this.store.remove(sel[i]);
 					}
-					if (ids) og.openLink(og.getUrl('object', 'archive', {ids:ids}));
+					if (ids) og.openLink(og.getUrl('object', 'archive', {ids:ids}),{callback:function(){Ext.getCmp('mails-manager').load()}});
 				}
 			},
 			scope: this
@@ -1171,12 +1171,19 @@ og.MailManager = function() {
 	// auto refresh emails
 	var me = this;
 	this.emailRefreshInterval = setInterval(function() {
-		var p = me.getBottomToolbar().getPageData().activePage;
-		if (Ext.getCmp('tabs-panel').getActiveTab().id == 'mails-panel' && p == 1) {
-			me.needRefresh = false;
-			og.MailManager.store.load();
-		} else {
-			me.needRefresh = true;
+		if (og.fengHasBrowserFocus) og.skipEmailPolling = 0;
+		else {
+			if (og.skipEmailPolling > 0) og.skipEmailPolling--;
+			else (og.skipEmailPolling = 5);
+		}		
+		if (og.fengHasBrowserFocus || og.skipEmailPolling == 0) {
+			var p = me.getBottomToolbar().getPageData().activePage;
+			if (Ext.getCmp('tabs-panel').getActiveTab().id == 'mails-panel' && p == 1) {
+				me.needRefresh = false;
+				og.MailManager.store.load();
+			} else {
+				me.needRefresh = true;
+			}
 		}
 	}, 60000);
 	/*poll to see if an error has happened while checking mail*/

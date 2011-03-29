@@ -46,7 +46,7 @@
 	'emailunclassified' => 'E-mail',
 	'owner company' => 'Firma właścicielska',
 	'client companies' => 'Firmy klienckie',
-	'open milestone' => 'Otwarty etap',
+	'open milestone' => 'Otwórz etap',
 	'open milestones' => 'Otwarte etapy',
 	'completed milestone' => 'Zakończony etap',
 	'completed milestones' => 'Zakończone etapy',
@@ -125,4 +125,5 @@
 	'activity read' => '{1} odczytał/a {0} {2}',
 	'activity download' => '{1} pobrał/a {0} {2}',
 	'x users' => '{0} użytkowników {1}',
+	'the file_revision' => 'rewizja pliku',
 ); ?>

@@ -180,4 +180,11 @@
 	'subscribed notification milestone desc' => 'U bent verbonden aan mijlpaal \'{0}\' door {1}.',
 	'subscribed notification email' => 'Verbonden aan email \'{0}\'',
 	'subscribed notification email desc' => 'U bent verbonden aan email \'{0}\' door {1}.',
+	'sent mails sync' => 'Instellingen voor het synchroniseren van verzonden emails (alleen voor IMAP)',
+	'connnection security' => 'Verbindigsbeveiliging',
+	'select folder for outbox' => 'Kies uw map voor verzonden emails',
+	'sync complete' => 'Synchronisatie afgesloten',
+	'invalid sync settings' => 'Ongeldige synchronisatie instellingen. Kan niet verbinden met de server ',
+	'cant find user' => 'Kan de opgegeven gebruiker niet vinden ',
+	'cant find account' => 'Kan het opgegeven email account niet vinden',
 ); ?>

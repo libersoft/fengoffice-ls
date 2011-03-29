@@ -55,7 +55,7 @@ class Trash {
 								$count++;
 							} catch (Exception $e) {
 								DB::rollback();
-								Logger::log("Error delting object in purge_trash: " . $e->getMessage(), Logger::ERROR);
+								Logger::log("Error deleting object in purge_trash: " . $e->getMessage(), Logger::ERROR);
 							}
 						}
 					}

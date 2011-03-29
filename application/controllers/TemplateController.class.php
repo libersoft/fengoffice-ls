@@ -370,7 +370,7 @@ class TemplateController extends ApplicationController {
 				$workspace = active_or_personal_project();
 			}
 			$copy->addToWorkspace($workspace);
-			// ad object tags and specified tags
+			// add object tags and specified tags
 			$tags = implode(',', $object->getTagNames());
 			$copy->setTagsFromCSV($tags . "," . array_var($_POST, 'tags'));
 			// copy linked objects
@@ -426,6 +426,11 @@ class TemplateController extends ApplicationController {
 					$copy->save();
 				}
 			}
+			//copy assigned to company if applicable
+			if ($copy->getAssignedToUserId() != 0){				
+				$copy->setAssignedToCompanyId($copy->getAssignedTo()->getCompanyId());
+				$copy->save();				
+			}			
 			// copy reminders
 			$reminders = ObjectReminders::getByObject($object);
 			foreach ($reminders as $reminder) {

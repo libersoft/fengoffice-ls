@@ -1,13 +1,16 @@
 <?php 
+	
 $show_help_option = user_config_option('show_context_help'); 
 if ($show_help_option == 'always' || ($show_help_option == 'until_close' && user_config_option('show_pending_tasks_widget_context_help', true, logged_user()->getId()))) {
 	render_context_help($this, 'chelp pending tasks widget', 'pending_tasks_widget');
 }
 ?>
+<script>//ogTasks.loadStatusList();</script>
 
 <div style="padding:10px">
 <table id="dashTablePT" style="width:100%">
 <?php
+$genid = gen_id();
 $c = 0;
 foreach ($dashtasks as $task){
 	$stCount = $task->countAllSubTasks();
@@ -46,7 +49,12 @@ foreach ($dashtasks as $task){
 		else
 			echo lang('overdue by x days', -$task->getRemainingDays());
 		}?></td>
-	<td style="text-align:right"><a class='internalLink' href='<?php echo $task->getCompleteUrl() ?>' title="<?php echo lang('complete task')?>"><?php echo lang('do complete')?></a></td>
+	<td style="text-align:right"><div id="<?php echo "$genid" ?>_status_selector_cont_<?php echo $task->getId() ?>" style="cursor:pointer;"></div>
+	<script> 
+		if (!task_infos) var task_infos = [];
+		task_infos[task_infos.length] = {id:<?php echo $task->getId() ?>, state:<?php echo $task->getState() ?>};
+	</script>
+	</td>
 	</tr>
 	
 <?php } // foreach ?>
@@ -65,3 +73,21 @@ foreach ($dashtasks as $task){
   </div>
 <?php } //if ?>
 </div>
+
+<script>
+/*
+og.draw_status_selectors = function() {
+	setTimeout( function() {
+		if (ogTasks.status_list == 0) {
+			og.draw_status_selectors();
+		} else {
+			for (var i=0; i<task_infos.length; i++) {
+				id = task_infos[i].id;
+				ogTasks.drawStatusSelector('<?php echo "$genid" ?>_status_selector_cont_'+id, '<?php echo "$genid" ?>', id, task_infos[i].state);
+			}
+		}
+	}, 250);
+}
+og.draw_status_selectors();
+*/
+</script>

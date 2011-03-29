@@ -229,20 +229,20 @@ class Reports extends BaseReports {
 									$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' '.mysql_real_escape_string($value);
 								}else{
 									if ($condField->getCondition()=='=' || $condField->getCondition()=='<=' || $condField->getCondition()=='>='){
-										$equal = 'datediff(\''.mysql_real_escape_string($value).'\', `'.$condField->getFieldName().'`)=0';										
+										$equal = 'datediff(\''.mysql_real_escape_string($value).'\', `'.$condField->getFieldName().'`)=0';
 										switch($condField->getCondition()){
 											case '=':
 												$allConditions .= $equal;
 												break;
 											case '<=':
 											case '>=':
-												$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\''.' OR '.$equal.' ';
-												break;																
-										}										
+												$allConditions .= '(`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\''.' OR '.$equal.') ';
+												break;
+										}
 									}
 									else{
 										$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\'';
-									}									
+									}
 								}
 							}else{
 								$allConditions .= '`'.$condField->getFieldName().'` like "%'.mysql_real_escape_string($value).'"';
@@ -340,7 +340,7 @@ class Reports extends BaseReports {
 						$colCp = $column->getCustomPropertyId();
 						$cp = CustomProperties::getCustomProperty($colCp);
 						if ($cp instanceof CustomProperty) {
-							$selectCols .= ', cpv'.$colCp.'.value as "'.$cp->getName().'"';
+							$selectCols .= $cp->getIsMultipleValues() ? ', GROUP_CONCAT(DISTINCT cpv'.$colCp.'.value SEPARATOR ", ") as "'.$cp->getName().'"' : ', cpv'.$colCp.'.value as "'.$cp->getName().'"';
 							$results['columns'][] = $cp->getName();
 							$results['db_columns'][$cp->getName()] = $colCp;
 							
@@ -393,13 +393,13 @@ class Reports extends BaseReports {
 				unset($row['id']);
 				$row = array_slice($row, count($titleCols));
 				if (!$to_print) {
-					$row = array('link' => '<a class="link-ico ico-'.$iconame.'" title="' . $title . '" target="new" href="'.get_url($controller, $view, array('id' => $id)).'">&nbsp;</a>') + $row;
+					$row = array('link' => '<a class="link-ico ico-'.$iconame.'" title="' . clean($title) . '" target="new" href="'.get_url($controller, $view, array('id' => $id)).'">&nbsp;</a>') + $row;
 				}
 				foreach($row as $col => &$value){
 					if(in_array($col, $managerInstance->getExternalColumns())){
 						$value = self::getExternalColumnValue($col, $value);
 					} else if ($col != 'link'){
-						$value = html_to_text($value);
+						$value = html_to_text(clean($value));
 					}
 					if(self::isReportColumnEmail($value)){
 						if(logged_user()->hasMailAccounts()){

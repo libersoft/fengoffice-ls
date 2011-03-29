@@ -142,7 +142,7 @@
 	'field ProjectTasks title' => 'Titel',
 	'field ProjectTasks started_on' => 'Gestart op',
 	'field ProjectTasks priority' => 'Prioriteit',
-	'field ProjectTasks assigned_on' => 'Toegewezen aan',
+	'field ProjectTasks assigned_on' => 'Toegewezen op',
 	'field ProjectTasks time_estimate' => 'Tijd ingepland',
 	'field ProjectTasks is_template' => 'Is sjabloon',
 	'field ProjectTasks created_by_id' => 'Aangemaakt door',
@@ -225,4 +225,8 @@
 	'field ProjectWebpages archived_by_id' => 'Gearchiveerd door',
 	'field Projects archived_on' => 'Gearchiveerd op',
 	'field Projects archived_by_id' => 'Gearchiveerd door',
+	'field MailContents received_date' => 'Ontvangstdatum',
+	'field MailContents sync' => 'Gesynchroniseerd',
+	'field ProjectTasks object_subtype' => 'Object subtype',
+	'field Users type' => 'Type',
 ); ?>

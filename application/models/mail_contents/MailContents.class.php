@@ -11,7 +11,7 @@ class MailContents extends BaseMailContents {
 		$conversation_id = $mail->getConversationId();
 		if ($conversation_id == 0 || $mail->getIsDraft()) return array($mail);
 		return self::findAll(array(
-			"conditions" => "`conversation_id` = '$conversation_id' AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2",
+			"conditions" => "`conversation_id` = '$conversation_id' AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2 AND ". permissions_sql_for_listings(self::instance(), ACCESS_LEVEL_READ, logged_user()),
 			"order" => "`received_date` DESC"
 		));
 	}
@@ -57,34 +57,38 @@ class MailContents extends BaseMailContents {
 		if (!$mail instanceof MailContent || $mail->getConversationId() == 0) return 0;
 		$conversation_id = $mail->getConversationId();
 		$deleted = ' AND `is_deleted` = false';
-		if (!$include_trashed) $deleted .= ' AND `trashed_by_id` = 0';
-		$sql = "SELECT `id` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2";
+		if (!$include_trashed) $deleted .= ' AND `trashed_on` = ' . DB::escape(EMPTY_DATETIME);
+		$sql = "SELECT `id` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2 AND ".permissions_sql_for_listings(self::instance(), ACCESS_LEVEL_READ, logged_user());
 		$rows = DB::executeAll($sql);
 		return (is_array($rows) ? count($rows) : 0);
+		
+		
 	}
 	
 	public static function countUnreadMailsInConversation($mail = null, $include_trashed = false) {
 		if (!$mail instanceof MailContent || $mail->getConversationId() == 0) return 0;
 		$conversation_id = $mail->getConversationId();
+		$permissions = " AND " . permissions_sql_for_listings(self::instance(), ACCESS_LEVEL_READ, logged_user());
 		$unread_cond = "AND NOT `id` IN (SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1')";
 		$deleted = ' AND `is_deleted` = false';
-		if (!$include_trashed) $deleted .= ' AND `trashed_by_id` = 0';
-		$sql = "SELECT `id` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2 $unread_cond";
+		if (!$include_trashed) $deleted .= ' AND `trashed_on` = ' . DB::escape(EMPTY_DATETIME);
+		$sql = "SELECT `id` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2 $unread_cond".$permissions;
 		$rows = DB::executeAll($sql);
 		return (is_array($rows) ? count($rows) : 0);
 	}
 	
 	public static function conversationHasAttachments($mail = null, $include_trashed = false) {
 		if (!$mail instanceof MailContent || $mail->getConversationId() == 0) return false;
+		$permissions = " AND " . permissions_sql_for_listings(self::instance(), ACCESS_LEVEL_READ, logged_user());
 		$conversation_id = $mail->getConversationId();
 		$deleted = ' AND `is_deleted` = false';
-		if (!$include_trashed) $deleted .= ' AND `trashed_by_id` = 0';
-		$sql = "SELECT `has_attachments` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId();
+		if (!$include_trashed) $deleted .= ' AND `trashed_on` = ' . DB::escape(EMPTY_DATETIME);
+		$sql = "SELECT `has_attachments` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId().$permissions;
 		$rows = DB::executeAll($sql);
 		foreach ($rows as $row) {
 			if (array_var($row, 'has_attachments')) return true;
 		}
-		return false;;
+		return false;
 	}
 	
 	public static function getNextConversationId($account_id) {
@@ -252,7 +256,7 @@ class MailContents extends BaseMailContents {
 		
 		if (user_config_option('show_emails_as_conversations')) {
 			$archived_by_id = $archived ? "AND `mc`.`archived_by_id` != 0" : "AND `mc`.`archived_by_id` = 0";
-			$trashed_by_id = "AND `mc`.`trashed_by_id` = 0";
+			$trashed_by_id = "AND `mc`.`trashed_on` = " . DB::escape(EMPTY_DATETIME);
 			$conversation_cond = "AND IF(`conversation_id` = 0, $stateConditions, $state_conv_cond_1 NOT EXISTS (SELECT * FROM `".TABLE_PREFIX."mail_contents` `mc` WHERE `".TABLE_PREFIX."mail_contents`.`conversation_id` = `mc`.`conversation_id` AND `".TABLE_PREFIX."mail_contents`.`account_id` = `mc`.`account_id` AND `".TABLE_PREFIX."mail_contents`.`received_date` < `mc`.`received_date` $archived_by_id AND `mc`.`is_deleted` = 0 $trashed_by_id $subtagstr $subread $state_conv_cond_2))";
 			$box_cond = "AND IF(EXISTS(SELECT * FROM `".TABLE_PREFIX."mail_contents` `mc` WHERE `".TABLE_PREFIX."mail_contents`.`conversation_id` = `mc`.`conversation_id` AND `".TABLE_PREFIX."mail_contents`.`id` <> `mc`.`id` AND `".TABLE_PREFIX."mail_contents`.`account_id` = `mc`.`account_id` $archived_by_id AND `mc`.`is_deleted` = 0 $trashed_by_id AND $stateConditions), TRUE, $stateConditions)";
 		} else {
@@ -260,7 +264,7 @@ class MailContents extends BaseMailContents {
 			$box_cond = "AND $stateConditions";
 		}
 
-		$conditions = "`trashed_by_id` = 0 AND `is_deleted` = 0 $archived_cond $projectConditions $accountConditions $tagstr $classified $read $permissions $conversation_cond $box_cond";
+		$conditions = "`is_deleted` = 0 $archived_cond $projectConditions $accountConditions $tagstr $classified $read $permissions $conversation_cond $box_cond";
 
 		if ($count) {
 			return self::count($conditions);
@@ -269,7 +273,7 @@ class MailContents extends BaseMailContents {
 				return self::paginate(array('conditions' => $conditions, 'order' => "$order_by $dir"), config_option('files_per_page'), $start / $limit + 1);
 			} else {
 				/* COMPLEX WORKAROUND FOR PERFORMANCE */
-				$conditions = "`trashed_by_id` = 0 AND `is_deleted` = 0 $archived_cond $projectConditions $tagstr $classified $read $accountConditions";
+				$conditions = "`is_deleted` = 0 $archived_cond $projectConditions $tagstr $classified $read $accountConditions";
 				
 				$page = (integer) ($start / $limit) + 1;
 				$order = "$order_by $dir";

@@ -412,6 +412,7 @@ class FilesController extends ApplicationController {
 			} catch(Exception $e) {
 				DB::rollback();
 				flash_error($e->getMessage());
+				Logger::log($e->getMessage());
 				Logger::log("Error when uploading file:".$e->getTraceAsString());
 				ajx_current("empty");
 
@@ -445,7 +446,35 @@ class FilesController extends ApplicationController {
 			$skipSettings = false;
 			try {
 				DB::beginWork();
-				
+				if ($upload_option && $upload_option != -1){
+					$skipSettings = true;
+					$file = ProjectFiles::findById($upload_option);
+					$old_subs = $file->getSubscribers();
+					
+					// Mantain old subscribers
+					foreach($old_subs as $user) {
+						$value = "user_" . $user->getId();
+						if (is_array($_POST['subscribers'])) {
+							if (array_var($_POST['subscribers'], $value, null) != 'checked')
+								$_POST['subscribers'][$value] = 'checked';
+						}
+					}
+					
+					if ($file->isCheckedOut()){
+						if (!$file->canCheckin(logged_user())){
+							flash_error(lang('no access permissions'));
+							ajx_current("empty");
+							return;
+						}
+						$file->setCheckedOutById(0);
+					} else {  // Check for edit permissions
+						if (!$file->canEdit(logged_user())){
+							flash_error(lang('no access permissions'));
+							ajx_current("empty");
+							return;
+						}
+					}
+				} else {
 					$type = array_var($file_data, 'type');
 					$file->setType($type);
 					$file->setFilename(array_var($file_data, 'name'));
@@ -458,7 +487,7 @@ class FilesController extends ApplicationController {
 						$file->setAnonymousCommentsEnabled(false);
 					} // if
 					$file->setIsVisible(true);
-				
+				}
 				
 				$file->save();
 				if($file->getType() == ProjectFiles::TYPE_DOCUMENT){
@@ -2130,9 +2159,7 @@ class FilesController extends ApplicationController {
 			$filepath = ROOT.'/tmp/'.rand().'.zip';
 			$handle = fopen($filepath, 'wb');
 			fwrite($handle, $content);
-			fclose($handle);
-			
-			$encoder = EncodingConverter::instance();
+			fclose($handle);		
 
 			$file_count = 0;
 			$zip = new ZipArchive();
@@ -2249,8 +2276,8 @@ class FilesController extends ApplicationController {
 				fwrite($handle, $file_to_add->getLastRevision()->getFileContent(), $file_to_add->getLastRevision()->getFilesize());
 				fclose($handle);
 			}
-			$zip->addFile($file_to_add_path, $file_to_add->getFilename());
-			
+			$zip->addFile($file_to_add_path, utf8_safe($file_to_add->getFilename()));
+
 		}
 		$zip->close();
 		delete_dir($tmp_dir);

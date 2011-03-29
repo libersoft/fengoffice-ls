@@ -30,4 +30,5 @@
 	'report pdf vertical' => 'Hochformat',
 	'report pdf landscape' => 'Querformat',
 	'report font size' => 'Schriftgröße',
+	'columns' => 'Spalten',
 ); ?>

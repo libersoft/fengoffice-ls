@@ -178,4 +178,11 @@
 	'mail account smtp server description' => ' SMTP-tjener er tjeneren som skal benyttes for å sende e-post',
 	'mail account smtp use auth description' => ' Hvordan skal SMTP-tjeneren autentiseres. Vanligvis er "Bruk innkommende" det riktige alternativet.',
 	'mail account smtp port description' => 'Dette er porten tjeneren skal bruke for SMTP-tjenesten. Den vanligste verdien for portnummer er 25.',
+	'sent mails sync' => 'Synkronisering av sendte e-poster (kun IMAP)',
+	'connnection security' => 'Sikker oppkobling',
+	'select folder for outbox' => 'Velg utboks-katalog',
+	'sync complete' => 'Synkroniseringen er gjennomført',
+	'invalid sync settings' => 'Ugyldige synkronseringsinnstillinger. Kan ikke opprette en tilkobling mot tjeneren',
+	'cant find user' => 'Kan ikke finne den forespurte brukeren',
+	'cant find account' => 'Kan ikke finne den forespurte e-postkontoen',
 ); ?>

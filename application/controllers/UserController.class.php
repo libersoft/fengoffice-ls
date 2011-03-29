@@ -436,6 +436,11 @@ class UserController extends ApplicationController {
 					$option->setUserValue($new_value, logged_user()->getId());
 					$option->save();
 					evt_add("user preference changed", array('name' => $option->getName(), 'value' => $new_value));
+					
+					// update global cache if available
+					if (GlobalCache::isAvailable() && GlobalCache::key_exists('user_config_option_'.logged_user()->getId().'_'.$option->getName())) {
+						GlobalCache::update('user_config_option_'.logged_user()->getId().'_'.$option->getName(), $new_value);
+					}
 				} // foreach
 				DB::commit();
 				flash_success(lang('success update config value', $category->getDisplayName()));

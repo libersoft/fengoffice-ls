@@ -430,7 +430,7 @@ class ProjectTasks extends BaseProjectTasks {
 	} // paginateProjectTasks
 
 	function maxOrder($parentId = null, $milestoneId = null) {
-		$condition = "`trashed_by_id` = 0 AND `is_template` = false AND `archived_by_id` = 0";
+		$condition = "`trashed_on` = " . DB::escape(EMPTY_DATETIME) . " AND `is_template` = false AND `archived_by_id` = 0";
 		if (is_numeric($parentId)) {
 			$condition .= " AND ";
 			$condition .= " `parent_id` = " . DB::escape($parentId);

@@ -120,4 +120,6 @@
 	'mailAccount dnx' => 'Email account bestaat niet',
 	'error add contact from user' => 'Niet mogelijk contact van gebruiker toe te voegen',
 	'zip not supported' => 'Bestandscompressie wordt niet door de server ondersteunt',
+	'no tag specified' => 'Geen tag gespecificeerd',
+	'no mailAccount error' => 'Actie niet beschikbaar. U heeft geen email account tegevoegd.',
 ); ?>

@@ -145,4 +145,9 @@
 	'CAL_HOLIDAY_EXTRAOPTION' => 'Eller, siden denne forfaller den siste uken i måneden, huk av her for å at arrangementet skal havne på den siste uken',
 	'copy this url in your calendar client software' => 'Kopier denne adressen i din kalenders klientprogramvare, for å importere arrangement fra denne kalenderen',
 	'subws' => 'Sub ws.',
+	'also confirmed attendance' => 'Bekreft frammøte',
+	'awaiting confirmation' => 'Venter på bekreftelse',
+	'rejected invitation' => 'Vil ikke møte',
+	'who' => 'Hvem',
+	'what' => 'Hva',
 ); ?>
