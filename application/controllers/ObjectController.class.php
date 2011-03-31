@@ -1118,7 +1118,9 @@ class ObjectController extends ApplicationController {
 			if ($filterName!=''){
 				$fn = " AND title LIKE '%". $filterName ."%'";
 			}
-			$completed = ($trashed || $archived) ? '': 'AND `completed_on` = ' . DB::escape(EMPTY_DATETIME);
+			// $completed = ($trashed || $archived) ? '': 'AND `completed_on` = ' . DB::escape(EMPTY_DATETIME);
+			// Mostra tutti i Task, anche quelli completati
+			$completed = '';
 			$permissions = ' AND ( ' . permissions_sql_for_listings(ProjectTasks::instance(), ACCESS_LEVEL_READ, logged_user(), '`project_id`', '`co`') .')';
 			if ($filterManager == '' || $filterManager == "ProjectTasks")
 			$res['ProjectTasks'] = "SELECT  'ProjectTasks' AS `object_manager_value`, `id` AS `oid`, $order_crit_tasks AS `order_value` FROM `" .
