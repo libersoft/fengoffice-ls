@@ -19,8 +19,6 @@
     	if ($category_name)
     		$sql .= " AND opt.category_name = '" . $category_name . "'";
     	
-    	$result = DB::execute($sql);
-    	
     	$ret = 0;
 		$res = DB::execute($sql);
     	$rows=$res->fetchAll();

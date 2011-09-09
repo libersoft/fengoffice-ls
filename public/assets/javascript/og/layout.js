@@ -44,7 +44,7 @@ Ext.onReady(function(){
 		og.panels.notes = new og.ContentPanel({
 			title: lang('messages'),
 			id: 'messages-panel',
-			iconCls: 'ico-messages',
+			iconCls: 'ico-messages-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: 'url',
@@ -54,7 +54,7 @@ Ext.onReady(function(){
 		og.panels.email = new og.ContentPanel({
 			title: lang('email tab'),
 			id: 'mails-panel',
-			iconCls: 'ico-emails',
+			iconCls: 'ico-emails-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: 'url',
@@ -64,7 +64,7 @@ Ext.onReady(function(){
 		og.panels.contacts = new og.ContentPanel({
 			title: lang('contacts'),
 			id: 'contacts-panel',
-			iconCls: 'ico-contacts',
+			iconCls: 'ico-contacts-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: 'url',
@@ -74,7 +74,7 @@ Ext.onReady(function(){
 		og.panels.calendar = new og.ContentPanel({
 			title: lang('calendar'),
 			id: 'calendar-panel',
-			iconCls: 'ico-calendar',
+			iconCls: 'ico-calendar-layout',
 			refreshOnWorkspaceChange: true,
 			refreshOnTagChange: true,
 			defaultContent: {
@@ -85,7 +85,7 @@ Ext.onReady(function(){
 		og.panels.documents = new og.ContentPanel({
 			title: lang('documents'),
 			id: 'documents-panel',
-			iconCls: 'ico-documents',
+			iconCls: 'ico-documents-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: 'url',
@@ -95,7 +95,7 @@ Ext.onReady(function(){
 		og.panels.tasks = new og.ContentPanel({
 			title: lang('tasks'),
 			id: 'tasks-panel',
-			iconCls: 'ico-tasks',
+			iconCls: 'ico-tasks-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: "url",
@@ -105,7 +105,7 @@ Ext.onReady(function(){
 		og.panels.weblinks = new og.ContentPanel({
 			title: lang('web pages'),
 			id: 'webpages-panel',
-			iconCls: 'ico-webpages',
+			iconCls: 'ico-webpages-layout',
 			refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: 'url',
@@ -125,7 +125,7 @@ Ext.onReady(function(){
 		og.panels.reporting = new og.ContentPanel({
 			title: lang('reporting'),
 			id: 'reporting-panel',
-			iconCls: 'ico-reporting',
+			iconCls: 'ico-reporting-layout',
 			//refreshOnWorkspaceChange: true,
 			defaultContent: {
 				type: "url",

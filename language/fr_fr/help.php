@@ -30,4 +30,7 @@
 	'success enable all context help' => 'Tous les messages d\'aides ont été réactivés.',
 	'success enable context help' => 'L\'aide contextuelle est désormais affichée.',
 	'success disable context help' => 'L\'aide contextuelle est désormais cachée.',
+	'how to purchase' => 'comment acheter',
+	'add ticket' => 'Ajouter un nouveau ticket d\'assistance',
+	'add ticket desc' => 'Pour obtenir de l\'aide personnalisée de la part de Feng Office',
 ); ?>

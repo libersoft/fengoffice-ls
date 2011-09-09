@@ -17,7 +17,8 @@ INSERT INTO `<?php echo $table_prefix ?>config_options` (`category_name`, `name`
 	('general', 'use_owner_company_logo_at_header', '0', 'BoolConfigHandler', '0', '0', NULL),
 	('mailing', 'sent_mails_sync', '1', 'BoolConfigHandler', '0', '0', 'imap email accounts synchronization possibility'),
 	('mailing', 'check_spam_in_subject', '0', 'BoolConfigHandler', 0, 0, ''),
-	('passwords', 'block_login_after_x_tries', '0', 'BoolConfigHandler', '0', '20', NULL)
+	('passwords', 'block_login_after_x_tries', '0', 'BoolConfigHandler', '0', '20', NULL),
+	('general', 'external_users_see_other_users', '0', 'BoolConfigHandler', 0, 0, NULL)	
 ON DUPLICATE KEY UPDATE id=id;
 
 DELETE FROM `<?php echo $table_prefix ?>config_options` WHERE `category_name`='general' AND `name`='detect_mime_type_from_extension';
@@ -146,3 +147,9 @@ ALTER TABLE `<?php echo $table_prefix ?>comments` ADD INDEX `trashed_on` USING B
 ALTER TABLE `<?php echo $table_prefix ?>mail_contents` ADD INDEX `trashed_on` USING BTREE(`trashed_on`);
 ALTER TABLE `<?php echo $table_prefix ?>companies` ADD INDEX `trashed_on` USING BTREE(`trashed_on`);
 ALTER TABLE `<?php echo $table_prefix ?>contacts` ADD INDEX `trashed_on` USING BTREE(`trashed_on`);
+
+ALTER TABLE `<?php echo $table_prefix ?>custom_property_values` ADD INDEX ( `object_id` );
+ALTER TABLE `<?php echo $table_prefix ?>object_properties` ADD INDEX ( `rel_object_id` );
+ALTER TABLE `<?php echo $table_prefix ?>object_reminders` ADD INDEX ( `date` ); 
+ALTER TABLE `<?php echo $table_prefix ?>custom_property_values` ADD INDEX ( `custom_property_id` );
+ALTER TABLE `<?php echo $table_prefix ?>custom_properties` ADD INDEX ( `object_type` ); 

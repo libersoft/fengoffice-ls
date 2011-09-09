@@ -279,4 +279,5 @@ Objet:   {0}
 	'update unset billing values desc' => 'REMARQUE : Ceci appliquera les nouvelles valeurs de facturation aux intervalles de temps qui n\'en possèdent pas. Êtes vous sûr de vouloir continuer ?',
 	'urgent priority' => 'Urgent',
 	'apply assignee to subtasks' => 'Appliquer les assignations aux sous-tâches',
+	'attachment from email' => 'Attaché au courriel "{0}"',
 ); ?>

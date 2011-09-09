@@ -631,11 +631,13 @@ function remove_dir($dir) {
 }
 
 function new_personal_project_name($username = null) {
+	Localization::instance()->loadSettings(DEFAULT_LOCALIZATION, ROOT . '/language');
 	$wname = Localization::instance()->lang('personal workspace name');
 	if (is_null($wname)) {
-		$wname = "{0} Personal";
+		$wname = "{0}\'s Workspace";
 	}
 	if ($username != null) $wname = str_replace("{0}", $username, $wname);
+	if (logged_user() != null)Localization::instance()->loadSettings(logged_user()->getLocale(), ROOT . '/language');
 	return $wname;	
 }
 
@@ -797,7 +799,7 @@ function create_user($user_data, $permissionsString) {
 	}
 
 	/* create contact for this user*/
-	if (array_var($user_data, 'create_contact', 1)) {
+	if (array_var($user_data, 'create_contact') == 1) {
 		// if contact with same email exists take it, else create new
 		$contact = Contacts::getByEmail($user->getEmail(), true);
 		if (!$contact instanceof Contact) {
@@ -859,6 +861,7 @@ function create_user($user_data, $permissionsString) {
 			$project = new Project();
 			$wname = new_personal_project_name($user->getUsername());
 			$project->setName($wname);
+			$project->setColor(11);
 			
 			$wdesc = Localization::instance()->lang(lang('personal workspace description'));
 			if (!is_null($wdesc)) {

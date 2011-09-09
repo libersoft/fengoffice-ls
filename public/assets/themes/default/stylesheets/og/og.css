@@ -49,320 +49,315 @@
 }
 
 .ico-unknown {
-	background-image: url(../../images/16x16/types/unknown.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3871px !important;
 }
 
 .ico-arrowleft {
-	background-image: url(../../images/16x16/arrowleft.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -550px !important;
 }
 .ico-2arrowleft {
-	background-image: url(../../images/16x16/2arrowleft.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 0 !important;
 }
 .ico-arrowright {
-	background-image: url(../../images/16x16/arrowright.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -572px !important;
 }
 .ico-2arrowright {
-	background-image: url(../../images/16x16/2arrowright.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -22px !important;
 }
-
 .ico-archive-obj {
-	background: transparent url(../../images/16x16/archive_obj.png) no-repeat !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -528px !important;
 }
-
 .ico-unarchive-obj {
-	background: transparent url(../../images/16x16/unarchive_obj.png) no-repeat !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3805px !important;
 	padding-top:1px !important;
 }
-
 .ico-reporting {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -258px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3035px !important;
 }
-
+.ico-reporting-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3033px !important;
+}
 .ico-task-start {
-	background-image: url(../../images/16x16/task_start.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3519px !important;
 }
-
 .ico-task-end {
-	background-image: url(../../images/16x16/task_end.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3497px !important;
 }
-
 .ico-recurrent {
-	background-image: url(../../images/16x16/recurrent.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2904px !important;
 }
-
 .ico-template {
-	background-image: url(../../images/16x16/template.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3563px !important;
 }
-
 .ico-account {
-	background-image: url(../../images/16x16/account.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -43px !important;
 }
 .ico-add {
-	background-image: url(../../images/16x16/add.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -65px !important;
 }
 .ico-addtag {
-	background-image: url(../../images/16x16/tags.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3409px !important;;
 }
 .ico-administration {
-	background-image: url(../../images/16x16/administration.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -86px !important;
 }
 .ico-attachment {
-	background-image: url(../../images/16x16/attach.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -594px !important;
 }
 .ico-sent {
-	background-image: url(../../images/16x16/mail_send.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2288px !important;
 }
 .ico-reply {
-	background-image: url(../../images/16x16/mail_reply.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2244px !important;
 }
 .ico-back {
-	background-image: url(../../images/16x16/back.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -638px !important;
 }
 .ico-chart {
 	background-image: url(../../images/16x16/chart.png) !important;
 }
 .ico-checkin {
-	background-image: url(../../images/16x16/checkin.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -682px !important;
 }
 .ico-checkout {
-	background-image: url(../../images/16x16/checkout.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -704px !important;
 }
 .ico-classify {
-	background-image: url(../../images/16x16/classify.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -725px !important;
 }
 .ico-unclassify {
-	background-image: url(../../images/16x16/unclassify.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3827px !important;
 }
 .ico-complete {
-	background-image: url(../../images/16x16/complete.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1408px !important;
 }
 .ico-reopen {
-	background-image: url(../../images/16x16/reopen.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2991px !important;
 }
-.ico-contact {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -520px !important;
+.ico-overview {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2526px !important;	
 }
-.ico-company {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -540px !important;
+.ico-contacts-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1428px !important;
+}
+.ico-contact, .ico-contacts {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1430px !important;
+}
+.ico-companies-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1386px !important;
+}
+.ico-company, .ico-companies {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1386px !important;
 }
 .ico-dash-expanded {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -19px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1518px !important;
 }
 .ico-dash-collapsed {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -1155px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1496px !important;
 }
 .ico-delete {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -498px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1540px !important;
 }
 .ico-doc {
-	background-image: url(../../images/16x16/doc.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1606px !important;
 }
 .ico-download {
-	background-image: url(../../images/16x16/download.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1672px !important;
 }
 .ico-edit {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -378px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2420px !important;
 }
-.ico-email, .ico-emails {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -438px !important;
+.ico-emails-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1692px !important;
+}
+.ico-email, .ico-emails, .ico-email_menu {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1694px !important;
 }
 .ico-check_mails {
-	background-image: url(../../images/16x16/mail_receive.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2222px !important;
 }
 .ico-reply-all {
-	background-image: url(../../images/16x16/mail_replyall.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2266px !important;
 }
 .ico-forward {
-	background-image: url(../../images/16x16/mail_forward.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2112px !important;
 }
-.ico-mail-mark-unread {
-	background-image: url(../../images/16x16/mail_mark_unread.png) !important;
+.ico-mail-mark-unread, .ico-mark-as-unread {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2200px !important;
 }
-.ico-mail-mark-read {
-	background-image: url(../../images/16x16/mail_mark_read.png) !important;
-}
-.ico-mark-as-read {
-	background-image: url(../../images/16x16/mail_mark_read.png) !important;
-}
-.ico-mark-as-unread {
-	background-image: url(../../images/16x16/mail_mark_unread.png) !important;
+.ico-mail-mark-read, .ico-mark-as-read {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2156px !important;
 }
 .ico-mail-mark-spam {
-	background-image: url(../../images/16x16/mail_mark_spam.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2178px !important;
 }
 .ico-mail-mark-ham {
-	background-image: url(../../images/16x16/mail_mark_ham.png) !important;
-}
-.ico-email_menu {
-	background-image: url(../../images/16x16/email.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2134px !important;
 }
 .ico-select {
-	background-image: url(../../images/16x16/select.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3189px !important;
 }
 .ico-empty {
 	background-image: url(../../images/s.gif) !important;
 }
-.ico-event, .ico-events {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 2px !important;
+.ico-calendar-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -658px !important;
+}
+.ico-event, .ico-events, .ico-calendar {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -660px !important;
 }
 .ico-calendar-month {
-	background-image: url(../../images/16x16/view_calendar_month.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4091px !important;
 }
 .ico-calendar-week {
-	background-image: url(../../images/16x16/view_calendar_week.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4113px !important;
 }
 .ico-calendar-week5 {
-	background-image: url(../../images/16x16/view_calendar_week5.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4135px !important;
+}
+.ico-documents {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1628px !important;
+}
+.ico-documents-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1626px !important;
 }
 .ico-file_revision {
-	background-image: url(../../images/16x16/types/file.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1782px !important;
 }
 .ico-help {
-	background-image: url(../../images/16x16/help.png);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1892px !important;
 }
 .ico-hide_messages {
-	background-image: url(../../images/16x16/hide_messages.png) !important;
-}
-.ico-large-billing {
-	background-image: url(../../images/48x48/billing.png);
-}
-.ico-large-configuration {
-	background-image: url(../../images/48x48/configuration.png);
-}
-.ico-large-custom-properties {
-	background-image: url(../../images/48x48/custom_properties.png);
-}
-.ico-large-object-subtypes {
-	background-image: url(../../images/48x48/object_subtypes.png);
-}
-.ico-large-group {
-	background-image: url(../../images/48x48/groups.png);
-}
-.ico-large-tools {
-	background-image: url(../../images/48x48/tools.png);
-}
-.ico-large-upgrade {
-	background-image: url(../../images/48x48/upgrade.png);
-}
-.ico-large-cron {
-	background-image: url(../../images/48x48/cron.png);
-}
-.ico-large-workspace {
-	background-image: url(../../images/48x48/workspace.png);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1914px !important;
 }
 .ico-locked {
-	background-image: url(../../images/16x16/locked.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2046px !important;
 }
-.ico-projectmessage, .ico-message {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -420px !important;
+.ico-messages-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2308px !important;
+}
+.ico-projectmessage, .ico-message, .ico-messages {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2310px !important;
 }
 .ico-comment {
-	background-image: url(../../images/16x16/comment.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1342px !important;
 }
-.ico-projectmilestone, .ico-milestone, .ico-milestones {
-	background-image: url(../../images/16x16/milestone.png) !important;
+.ico-projectmilestone, .ico-milestone, .ico-milestones, .ico-template-milestone {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2332px !important;
 }
 .ico-urgent-milestone {
 	background-image: url(../../images/16x16/exclamation.png) !important;
 }
+.ico-webpages-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4199px !important;
+}
+.ico-webpages, .ico-webpage, .ico-weblink, .ico-weblinks {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4201px !important;
+}
+.ico-linkedobjects {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2002px !important;
+}
 .ico-more {
-	background-image: url(../../images/16x16/more.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2376px !important;
 }
 .ico-new {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -600px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -66px !important;
 }
 .ico-copy {
-	background-image: url(../../images/16x16/copy.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1474px !important;
 }
 .ico-password {
-	background-image: url(../../images/16x16/password.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2552px !important;
 }
 .ico-permissions {
-	background-image: url(../../images/16x16/permissions.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2596px !important;
 }
 .ico-picture {
-	background-image: url(../../images/16x16/picture.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2640px !important;
 }
 .ico-properties {
-	background-image: url(../../images/16x16/properties.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2816px !important;
 }
 .ico-prsn {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -320px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2838px !important;
 }
 .ico-refresh {
-	background-image: url(../../images/16x16/refresh.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2925px !important;
 }
 .ico-rename {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -280px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2969px !important;
 }
 .ico-restore {
-	background-image: url(../../images/16x16/undo.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3849px !important;
 }
 .ico-revisions {
-	background-image: url(../../images/16x16/revisions.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3057px !important;
 }
 .ico-search {
-	background-image: url(../../images/16x16/search.png);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3167px !important;
 }
 .ico-slideshow {
-	background-image: url(../../images/16x16/slideshow.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3233px !important;
 }
 .ico-sprd {
-	background-image: url(../../images/16x16/sprd.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3365px !important;
 }
-.ico-tag {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -219px !important;
+.ico-tag, .ico-tags {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3409px !important;
 }
-.ico-task {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -179px !important;
+.ico-tasks-layout {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3539px !important;
+}
+.ico-task, .ico-tasks, .ico-template-task {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3541px !important;
 }
 .ico-task-high-priority {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -199px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3431px !important;
 }
 .ico-task-low-priority {
-	background-image: url(../../images/16x16/task-low.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3453px !important;
 }
 .ico-time {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -160px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3651px !important;
 }
 .ico-time-layout {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -157px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3649px !important;
 }
 .ico-time-pause {
-	background-image: url(../../images/16x16/time_pause.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3673px !important;
 }
 .ico-time-play {
-	background-image: url(../../images/16x16/time_play.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3695px !important;
 }
 .ico-time-stop {
-	background-image: url(../../images/16x16/time_stop.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3717px !important;
 }
 .ico-trash {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -138px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3761px !important;
 }
 .ico-undo {
-	background-image: url(../../images/16x16/undo.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3849px !important;
 }
 .ico-unlocked {
-	background-image: url(../../images/16x16/unlocked.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3893px !important;
 }
 .ico-upload {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -120px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3937px !important;
 }
 .ico-view_options {
-	background-image: url(../../images/16x16/view.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4025px !important;
 }
 .ico-history {
-	background-image: url(../../images/16x16/history.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1936px !important;
 }
 .ico-view-as-dashboard {
-	background-image: url(../../images/16x16/view_as_db.png) !important; 
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2310px !important;
 }
 .ico-warning32 {
 	background-image: url(../../images/32x32/warning.png) !important; 
 }
 .ico-project, .ico-workspace {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -620px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4223px !important;
 }
 .ico-workspaces-expand {
 	background-image: url(../../images/12x12/expand.png) !important;
@@ -378,77 +373,101 @@
 	cursor:pointer;
 }
 .ico-today {
-	background-image: url(../../images/16x16/today.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3739px !important;
 }
 .ico-prevmonth {
-	background-image: url(../../images/16x16/prevmonth.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2772px !important;
 }
 .ico-nextmonth {
-	background-image: url(../../images/16x16/nextmonth.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2464px !important;
 }
 .ico-phone {
-	background-image: url(../../images/16x16/phone.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2618px !important;
 }
 .ico-fax {
-	background-image: url(../../images/16x16/fax.png) !important;
-}
-.ico-template-task {
-	background-image: url(../../images/16x16/tasks.png) !important;
-}
-.ico-template-milestone {
-	background-image: url(../../images/16x16/milestone.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1760px !important;
 }
 .ico-print {
-	background-image: url(../../images/16x16/print.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2794px !important;
 }
 .ico-sort-alphabetical {
-	background-image: url(../../images/16x16/sort_abc.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3277px !important;
 }
 .ico-sort-count {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -240px !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3255px !important;
 }
 .ico-sort-asc {
-	background-image: url(../../images/16x16/sort_asc.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3299px !important;
 }
 .ico-sort-desc {
-	background-image: url(../../images/16x16/sort_desc.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3321px !important;
 }
 .ico-colorremember {
-	background-image: url(../../images/16x16/remember.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2947px !important;
 }
 .ico-zip-extract {
-	background-image: url(../../images/16x16/zip-extract.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4267px !important;
 }
 .ico-zip-add {
-	background-image: url(../../images/16x16/zip-add.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4245px !important;
 }
 .ico-share {
-	background-image: url(../../images/16x16/share.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3211px !important;
 }
 .ico-up {
-	background-image: url(../../images/16x16/up.png);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3915px !important;
 }
 .ico-down {
-	background-image: url(../../images/16x16/down.png);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1650px !important;
 }
 .ico-rss {
-	background-image: url(../../images/16x16/rss.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3079px !important;
 }
 .ico-open-link {
-	background-image: url(../../images/16x16/openlink.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2508px !important;
 }
 .ico-expand {
-	background-image: url(../../images/16x16/expand.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1738px !important;
 }
 .ico-collapse {
-	background-image: url(../../images/16x16/collapse.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -748px !important;
 }
+
+
+
+.ico-large-billing {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1026px !important;
+}
+.ico-large-configuration {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1300px !important;
+}
+.ico-large-custom-properties {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1570px !important;
+}
+.ico-large-object-subtypes {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2650px !important;
+}
+.ico-large-group {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2164px !important;
+}
+.ico-large-tools {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3352px !important;
+}
+.ico-large-upgrade {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3514px !important;
+}
+.ico-large-cron {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1516px !important;
+}
+.ico-large-workspace {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3946px !important;
+}
+
 
 .link-ico {
 	height: 16px;
 	background-repeat: no-repeat;
 	padding-left:23px;
-	padding-top:2px;
 	padding-bottom:4px;
 }
 
@@ -832,10 +851,19 @@ select.select_milestone, select.select_task_list, select.select_message {
 }
 .checked-user
 {
-	background: #fea url(../../images/16x16/complete.png) no-repeat scroll 185px 10px;
+	background: #fea;
 	border:1px solid #f84;
 	cursor: pointer;
 }
+.checked-user-check
+{
+	background:  url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0px -1408px !important;
+	margin-left: 180px;
+	margin-top:-50px;
+	width: 16px;
+	height: 16px;
+}
+
 .rolling-over
 {
 	background-color:#d9d9Ff;
@@ -867,11 +895,11 @@ select.select_milestone, select.select_task_list, select.select_message {
 	margin: 15px;
 }
 .ico-read{
-	background: transparent url("../../images/16x16/read.png") no-repeat scroll 0px 5px;
+	background: transparent url("../../images/8x8/read.png") no-repeat scroll 0px 5px;
 	cursor: pointer;
 }
 .ico-unread{
-	background: transparent url("../../images/16x16/unread.png") no-repeat scroll 0px 5px;
+	background: transparent url("../../images/8x8/unread.png") no-repeat scroll 0px 5px;
 	cursor: pointer;
 }
 .outter-quick-add-file {
@@ -885,18 +913,18 @@ select.select_milestone, select.select_task_list, select.select_message {
 }
 .pagination-user{
 	height:20px;
-	 width:20px;
-	 float:left;
-	 padding-left:5px;
+	width:20px;
+	float:left;
+	padding-left:5px;
 	 
 }
 .pagination-user-active{
 	height:20px;
-	 width:20px;
-	 float:left;
-	 padding-left:5px;
-	 background: transparent url(../../images/16x16/user_pagination_active.png) no-repeat scroll 0px 8px ;
-	 font-weight:bold;
+	width:20px;
+	float:left;
+	padding-left:5px;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3981px !important;
+	font-weight:bold;
 }
 
 .og-double-list-sel {

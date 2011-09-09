@@ -62,7 +62,8 @@ INSERT INTO `<?php echo $table_prefix ?>config_options` (`category_name`, `name`
 	('general', 'checkout_for_editing_online', '0', 'BoolConfigHandler', '0', '0', NULL),
 	('general', 'show_feed_links', '0', 'BoolConfigHandler', '0', '0', NULL),
 	('general', 'use_owner_company_logo_at_header', '0', 'BoolConfigHandler', '0', '0', NULL),
-	('general', 'ask_administration_autentification', 0, 'BoolConfigHandler', 0, 0, NULL);
+	('general', 'ask_administration_autentification', 0, 'BoolConfigHandler', 0, 0, NULL),
+	('general', 'external_users_see_other_users', '0', 'BoolConfigHandler', 0, 0, NULL);
 
 INSERT INTO `<?php echo $table_prefix ?>file_types` (`extension`, `icon`, `is_searchable`, `is_image`) VALUES
 	('zip', 'archive.png', 0, 0),

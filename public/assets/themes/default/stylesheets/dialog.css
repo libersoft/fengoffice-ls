@@ -206,11 +206,11 @@ span.required {
 }
 
 /** Login dialog **/
-
+/**
 #loginUsernameDiv, #loginPasswordDiv {
   padding-top: 1px;
   height: 45px;
-}
+}**/
 
 #loginUsernameDiv {
   float: left;

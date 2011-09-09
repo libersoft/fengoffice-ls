@@ -109,6 +109,8 @@
     'config option name smtp_secure_connection' => '暗号化したSMTP接続を使用',
     'config option name user_email_fetch_count' => 'メールを取り出す限度',
     'config option desc user_email_fetch_count' => 'ユーザーが「メールを確認」のボタンをクリックして取り出すメールの数です。大きな値を指定すると、タイムアウトのエラーがユーザーに起きるかもしれません。0を指定すると制限しません。但し、この値はcronを通したメールの取り込みには適用されません。',
+	'config option name check_spam_in_subject' => '件名に"**SPAM**"の文字列を確認',
+'config option desc check_spam_in_subject' => '件名に"**SPAM**"という文字列がある電子メールを迷惑メールフォルダーに移動します。',
 
     // Passwords
     'config option name min_password_length' => 'パスワードの最小の長さ',
@@ -291,7 +293,7 @@
     'user ws config option name attach_docs_content' => 'ファイルの内容を添付',
     'user ws config option desc attach_docs_content' => 'このオプションを「はい」に設定すると通常のメールにファイルを添付します。「いいえ」にすると選択したファイルは、ファイルへのリンクとして送信します!。',
     'user ws config option name max_spam_level' => '許容する最大のspamレベル',
-    'user ws config option desc max_spam_level' => '電子メールを取り出すときに、この値より大きいspamの評価値のメッセージは"Junk"フォルダーに送ります。0にすると最大のフィルタリングを行い、10にすると行いません。このオプションはspamフィルターのツールがサーバーにインストールされているときだけ動作します。',
+    'user ws config option desc max_spam_level' => '電子メールを取り出すときに、この値より大きいspamの評価値のメッセージは迷惑メールフォルダーに送ります。0にすると最大のフィルタリングを行い、10にすると行いません。このオプションはspamフィルターのツールがサーバーにインストールされているときだけ動作します。',
 
     'user ws config option name hide_quoted_text_in_emails' => 'メールの表示時に引用部分を表示しない',
     'user ws config option desc hide_quoted_text_in_emails' => '有効にすると、メールを表示するときに引用されたテキストの部分を表示しません。メールを読んでいるときに表示するオプションが用意されています。',
@@ -339,8 +341,8 @@
   	'sync' => '同期',
   	'mails on imap acc already sync' => 'このアカウントに同期が必要な電子メールはありません。',
   	'cant sync account' => 'このアカウントと同期できません。IMAPの設定を確認してください。',
-  	'config option name sent_mails_sync' => 'Feng Officeから電子メールを送信時にIMAPの同期します。',
-	'config option name check_spam_in_subject' => '件名にspamの文字列(**spam**)の有無を確認します。',
+  	'config option name sent_mails_sync' => '電子メールの送信時のIMAPと同期',
+  	'config option desc sent_mails_sync' => '電子メールをFeng Officeから送信する時に、IMAPのフォルダーと同期します。',
 
   	'succes save object subtypes' => 'オブジェクトのサブタイプを保存しました。',
 

@@ -6,7 +6,7 @@
  * @author Carlos Palma <chonwil@gmail.com>
  */
 class MailController extends ApplicationController {
-
+	private $user_workspaces_ids;
 	/**
 	 * Construct the MailController
 	 *
@@ -68,7 +68,7 @@ class MailController extends ApplicationController {
 			if ($original_mail->getBodyHtml() != '') $type = 'html';
 			else $type = user_config_option('last_mail_format');
 			if (!$type) $type = 'plain';
-			
+			$original_mail->setIsRead(logged_user()->getId(), true);
 			$re_body = $original_mail->getBodyHtml() != '' && $type == 'html' ? $original_mail->getBodyHtml() : $original_mail->getBodyPlain();
 			if ($type == 'html') {
 				$pre_quote = '<blockquote type="cite" style="padding-left:10px; border-left: 1px solid #987ADD;">';
@@ -797,7 +797,8 @@ class MailController extends ApplicationController {
 							if (!$mail->addToStatus(1)) Logger::log("Swift could not send the email and the state could not be set to retry later.\nmail_id=".$mail->getId());
 						}
 					} catch (Exception $e) {
-						Logger::log("Exception marking email as sent: ".$e->getMessage()."\nmail_id=".$mail->getId());
+						$extra_exception_info = ($sentOK == true) ? '(but it has been sent)' : '(and it has NOT been sent)';
+						Logger::log("Exception marking email as sent ".$extra_exception_info.": ".$e->getMessage()."\nmail_id=".$mail->getId());
 						if ($sentOK) DB::rollback();
 					}
 						
@@ -830,6 +831,8 @@ class MailController extends ApplicationController {
 								FileRepository::deleteFile($mail->getContentFileId());
 								if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " deleted att list: ".$mail->getId() . "\n", FILE_APPEND);
 							}
+						}else{
+							if (defined('DEBUG') && DEBUG) file_put_contents(ROOT."/cache/log_mails.txt", gmdate("d-m-Y H:i:s") . " sentOK=false: ".$mail->getId() ." - Error when sending mail: SentOK = false \n", FILE_APPEND);							
 						}
 					} catch (Exception $e) {
 						Logger::log("Exception deleting tmp repository files (attachment list): ".$e->getMessage()."\nmail_id=".$mail->getId());
@@ -1025,7 +1028,8 @@ class MailController extends ApplicationController {
 			ajx_current("empty");
 			return;
 		}
-		if (!$email->canView(logged_user())) {
+		
+		if (!$email->canView(logged_user())) {			
 			flash_error(lang('no access permissions'));
 			ajx_current("empty");
 			return;
@@ -2142,7 +2146,7 @@ class MailController extends ApplicationController {
 
 		if(!is_array($mail_data)) {
 			$fwd_subject = str_starts_with(strtolower($original_mail->getSubject()),'fwd:') ? $original_mail->getSubject() : 'Fwd: ' . $original_mail->getSubject();
-			
+			$original_mail->setIsRead(logged_user()->getId(), true);
 			if ($original_mail->getBodyHtml() != '') $type = 'html';
 			else $type = user_config_option('last_mail_format');
 			if (!$type) $type = 'plain';
@@ -2196,6 +2200,7 @@ class MailController extends ApplicationController {
 				if (isset($parsedEmail['Attachments'])) $attachments = $parsedEmail['Attachments'];
 				foreach($attachments as $att) {
 					$fName = iconv_mime_decode($att["FileName"], 0, "UTF-8");
+					$fName = str_replace(':', ' ', $fName);				
 					$fileType = $att["content-type"];
 					$fid = gen_id();
 					$attachs[] = "FwdMailAttach:$fName:$fileType:$fid";
@@ -2298,7 +2303,7 @@ class MailController extends ApplicationController {
 		tpl_assign('mail', $original_mail);
 		tpl_assign('mail_data', $mail_data);
 		tpl_assign('mail_accounts', $mail_accounts);
-	}//forward_mail
+	}//edit_mail
 
 
 	/**
@@ -2399,22 +2404,26 @@ class MailController extends ApplicationController {
 		list($objects, $pagination) = MailContents::getEmails($tag, $account, $state, $read_filter, $classif_filter, $project, $start, $limit, $order_by, $dir);
 		$totalCount = $pagination->getTotalItems();
 
-		//if standed in "All" check if all workspaces related to the email have been archived.. and if so, dont show them		
+		//if standing in "All" check if all workspaces related to the email have been archived.. and if so, dont show them		
 		if (active_project()== null ){			
 			$aux = array();
-			foreach ($objects as $mail){							
-				$check = WorkspaceObjects::getWorkspacesByObject('MailContents', $mail->getId());				
+			$wss = array();
+			foreach ($objects as $mail){
+				//Seba						
+				$check = WorkspaceObjects::getWorkspacesByObject('MailContents', $mail->getId());//, null, $wss);				
 				$archived = true;
-				foreach ($check as $wsobject){					
+				foreach ($check as $wsobject){		
 					$ws = Projects::findById($wsobject->getId());
+					$wss["ws".$wsobject->getId()] = $ws;
 					if ($ws->getCompletedById() != '0') continue;					
 					$archived = false;						
 					break;														
 				}
+				
 				if (!$archived || $check == null){									
 					$aux[] = $mail;
 				}
-			}			
+			}		
 			return $aux;		
 		}		
 		return $objects;
@@ -2465,12 +2474,27 @@ class MailController extends ApplicationController {
 		if (strlen_utf($text) > 150) {
 			$text = substr_utf($text, 0, 150) . "...";
 		}
+
 		$show_as_conv = user_config_option('show_emails_as_conversations');
 		if ($show_as_conv) {
 			$conv_total = MailContents::countMailsInConversation($msg);
 			$conv_unread = MailContents::countUnreadMailsInConversation($msg);
 			$conv_hasatt = MailContents::conversationHasAttachments($msg);
 		}
+		//if the variable is not set, make the query and set it.
+		//seba
+		if(!isset($this->user_workspaces_ids)){
+			$sql = logged_user()->getWorkspacesQuery();
+			$rows = DB::executeAll($sql);
+			if (count($rows)== 0) $this->user_workspaces_ids = "0";
+			else{
+				foreach ($rows as $row){
+						if ($this->user_workspaces_ids != "") $this->user_workspaces_ids .= ",";
+						$this->user_workspaces_ids .= $row['project_id'];						
+				}
+			}
+		}
+
 		$properties = array(
 		    "id" => $msg->getId(),
 			"ix" => $i,
@@ -2479,7 +2503,7 @@ class MailController extends ApplicationController {
 			"hasAttachment" => $msg->getHasAttachments(),
 			"accountId" => $msg->getAccountId(),
 			"accountName" => ($msg->getAccount() instanceof MailAccount ? $msg->getAccount()->getName() : lang('n/a')),
-			"projectId" => $msg->getWorkspacesIdsCSV(logged_user()->getWorkspacesQuery()),
+			"projectId" => $msg->getWorkspacesIdsCSV($this->user_workspaces_ids),
 			"subject" => $msg->getSubject(),
 			"text" => $text,
 			"date" => $msg->getReceivedDate() instanceof DateTimeValue ? ($msg->getReceivedDate()->isToday() ? format_time($msg->getReceivedDate()) : format_datetime($msg->getReceivedDate())) : lang('n/a'),

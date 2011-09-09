@@ -91,7 +91,7 @@ if (isset($email)){
 	}
 </script>
 
-<?php if ($email instanceof MailContent) {?>
+<?php if (isset($email) && $email instanceof MailContent) {?>
 <div style="padding:7px">
 <div class="email">
 

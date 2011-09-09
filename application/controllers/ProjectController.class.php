@@ -293,8 +293,8 @@ class ProjectController extends ApplicationController {
 					$project->setParentWorkspace($parent);
 				}
 				$project->save();
-				
-				/* Billing */
+                
+                /* Billing */
 				$billings = array_var($project_data,'billing', null);
 				if ($billings){
 					foreach ($billings as $billing_id => $billing){
@@ -369,6 +369,14 @@ class ProjectController extends ApplicationController {
 
 				flash_success(lang('success add project', $project->getName()));
 				ajx_current("back");
+                
+                //Overview Wizard
+				if(isset($_REQUEST['wizard']))
+				{
+					$_SESSION['wizard'] = $_REQUEST['wizard'];
+					evt_add('select workspace', $project->getId());
+				}
+
 				return;
 
 			} catch(Exception $e) {
@@ -455,7 +463,12 @@ class ProjectController extends ApplicationController {
 					$project->setParentWorkspace($parent);
 				}
 				$project->save();
-				
+				if (GlobalCache::isAvailable()) {
+					GlobalCache::delete('user_copt_obj_lastAccessedWorkspace');
+					GlobalCache::delete('user_copt_obj_initialWorkspace');		
+					$project->deleteProjectFromGlobalCache();
+				}
+								
 				/* Billing */
 				WorkspaceBillings::clearByProject($project);
 				$billings = array_var($project_data,'billing', null);
@@ -552,7 +565,7 @@ class ProjectController extends ApplicationController {
 	 * @param void
 	 * @return null
 	 */
-	function delete() {
+	function delete() {		
 		if (logged_user()->isGuest()) {
 			flash_error(lang('no access permissions'));
 			ajx_current("empty");
@@ -595,7 +608,7 @@ class ProjectController extends ApplicationController {
 			$project->delete();
 			CompanyWebsite::instance()->setProject(null);
 			ApplicationLogs::createLog($project, null, ApplicationLogs::ACTION_DELETE);
-			DB::commit();
+			DB::commit();	
 
 			flash_success(lang('success delete project', $project->getName()));
 			evt_add("workspace deleted", array(

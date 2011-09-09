@@ -54,8 +54,15 @@ og.msg =  function(title, text, timeout, classname, sound) {
 		m.slideIn('t');
 	}
 	if (sound) {
-		og.systemSound.loadSound('public/assets/sounds/' + sound + '.mp3', true);
-		og.systemSound.start(0);
+		var sound_timeout = 0;
+		if (!og.systemSound) {
+			og.systemSound = new Sound();
+			sound_timeout = 1000;
+		}
+		setTimeout(function() {
+			og.systemSound.loadSound('public/assets/sounds/' + sound + '.mp3', true);
+			og.systemSound.start(0);
+		}, sound_timeout);
 	}
 };
 
@@ -977,6 +984,7 @@ og.getGooPlayerPanel = function(callback) {
 	if (gppanel) {
 		callback();
 	} else {
+		if (!og.musicSound) og.musicSound = new Sound();
 		og.loadScripts([
 				og.getScriptUrl('og/ObjectPicker.js'),
 				og.getScriptUrl('og/GooPlayer.js')
@@ -1314,16 +1322,20 @@ og.rollOut = function(div,isCompany)
 };
 og.checkUser = function (div){
 	var hiddy = document.getElementById(div.id.substring(3));
+	var check = document.getElementById(div.id+'check');
 	if (hiddy) {
 		if (hiddy.checked) {
 			hiddy.checked = false;
 			div.className = "container-div user-name";
+			check.style.display = "none";
 		} else {
 			hiddy.checked = true;
 			div.className = "container-div checked-user";
+			check.style.display = "block";
 		}
 	}
 };
+
 og.subscribeCompany = function (div){
 		var isChecked = Ext.fly(div).hasClass("checked");
 		var hids = div.parentNode.getElementsByTagName("input");

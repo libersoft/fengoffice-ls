@@ -4,7 +4,7 @@
 	
 	<?php echo lang('user created your account', $new_account->getCreatedByDisplayName()) ?>.<br><br>
 	
-	<?php echo lang('visit and login', ROOT_URL) ?>:<br><br>
+	<?php echo lang('visit and login', "<a href='". ROOT_URL ."' target='_blank' style='font-family: Verdana, Arial, sans-serif; font-size: 12px;'>". ROOT_URL ."</a>") ?>:<br><br>
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang('username') ?>: <?php echo $new_account->getUsername() ?><br><br>
 	

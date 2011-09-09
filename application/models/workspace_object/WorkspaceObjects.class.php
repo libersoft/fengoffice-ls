@@ -31,12 +31,13 @@ class WorkspaceObjects extends BaseWorkspaceObjects {
 	static function getWorkspacesByObject($object_manager, $object_id, $wsCSV = null){
 		$all = self::findAll(array('conditions' => "`object_manager` = '$object_manager' AND `object_id` = $object_id" . ($wsCSV ? " AND `workspace_id` IN ($wsCSV)":'')));//array('`object_manager` = ? AND `object_id` = ?', $object_manager, $object_id)));
 		if (!is_array($all) || count($all) == 0) return array();
-		$csv = "";
+		$wss = array();
 		foreach ($all as $w) {
-			if ($csv != "") $csv .= ",";
-			$csv .= $w->getWorkspaceId();
+			$ws = Projects::findById($w->getWorkspaceId());
+			if ($ws == null) continue;
+			$wss[] = $ws;		
 		}
-		return Projects::findByCSVIds($csv);
+		return $wss;				
 	}
 	/**
 	 * Returns true if an Object is in a Workspace

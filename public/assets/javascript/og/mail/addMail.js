@@ -190,9 +190,9 @@ og.addMailAttachment = function(container, obj) {
 		name += '&nbsp;<a target="_download" class="link-ico ico-download" href="' + og.getUrl('files', 'download_file', {'id': obj.object_id, 'download': 'true'}) + '">&nbsp;</a>';
  	}
  	if (obj.manager == 'ProjectFiles' || obj.manager == 'MailContents') {
- 	 	var id = Ext.id();
+ 	 	var id = Ext.id(); 	 	 	 	
  		name += "<input id=\"check" + id + "\" type=\"checkbox\" " + (og.attachContents ? 'checked="checked"' : '') + " style=\"margin-left: 30px; position: relative; top: 3px; width: 16px;\" name=\"attach_contents[" + count + "]\" />" +
-		"<label for=\"check" + id + "\" style=\"display: inline; margin-left: 5px;\">" + lang("attach contents") + "</label>";
+		"<label for=\"check" + id + "\" style=\"display: inline; margin-left: 5px;\">" + lang("attach contents") + "</label>"; 		
  	} else if (obj.manager == 'FwdMailAttach') {
  	 	name += "<input type=\"checkbox\" checked=\"checked\" style=\"margin-left: 30px; position: relative; top: 3px; width: 16px;\" disabled=\"disabled\" />" +
 		"<label style=\"display: inline; margin-left: 5px;\">" + lang("attach contents") + "</label>";
@@ -203,6 +203,7 @@ og.addMailAttachment = function(container, obj) {
 		name +
 		"</span>" +
 		"<a class=\"removeDiv\" onclick=\"og.removeMailAttachment(this.parentNode)\" href=\"#\">" + lang('remove') + "</a>";
+	if (obj.manager == 'ProjectFiles' || obj.manager == 'MailContents'){ html += "<input type=\"hidden\" value=\"check" + id  + "\" id=\"linked_objects[" + count + "]\"/>"; }
 	var div = document.createElement('div');
 	var icocls = obj.icocls ? obj.icocls : 'ico-file ' + (obj.mimeType ? "ico-" + obj.mimeType.replace(/\//g, "-").replace(/\./g, "_") : '');
 	div.className = 'og-add-template-object ' + icocls;

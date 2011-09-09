@@ -27,7 +27,7 @@ class ProjectTasks extends BaseProjectTasks {
 	 *
 	 * @param Project $project
 	 * @return array
-	 */
+	 */	
 	static function getPendingTasks(User $user, $project, $tag = null, $archived = false) {
 		if ($project instanceof Project) {
 			$project_ids = $project->getAllSubWorkspacesQuery(!$archived);
@@ -41,7 +41,7 @@ class ProjectTasks extends BaseProjectTasks {
 
 		$permissions = ' AND ( ' . permissions_sql_for_listings(ProjectTasks::instance(),ACCESS_LEVEL_READ, logged_user(), 'project_id') .')';
 		$tagStr = $tag? (" AND id in (SELECT rel_object_id from " . TABLE_PREFIX . "tags t WHERE tag='".$tag."' AND t.rel_object_manager='ProjectTasks')"):'';
-
+	
 		$objects = self::findAll(array(
 				'conditions' => array('((`assigned_to_user_id` = ? AND `assigned_to_company_id` = ? ) ' .
 					' OR (`assigned_to_user_id` = ? AND `assigned_to_company_id` = ?) ' .
@@ -53,8 +53,62 @@ class ProjectTasks extends BaseProjectTasks {
 					0, $user->getCompanyId(), 0, 0, EMPTY_DATETIME,0, EMPTY_DATETIME),
         			'order' => 'priority DESC, `created_on` DESC'
         			));
-        			return $objects;
+        return $objects;
 	} // getAllFilesByProject
+	
+	/**
+	 * Returns unworked pending tasks 
+	 *
+	 * @param Project $project
+	 * @return array
+	 */
+	static function getUnworkedPendingTasks(User $user, $project, $tag = null, $archived = false, $start_date = null, $end_date = null) {		
+		if ($project instanceof Project) {
+			$project_ids = $project->getAllSubWorkspacesQuery(!$archived);
+			$wsstring = ' AND ' . self::getWorkspaceString($project_ids);
+		} else {
+			$wsstring = "";
+		}
+		
+		$created_on_limit = (($start_date == null) || ($end_date ==null)) ? "" : " AND `created_on` >= ? AND `created_on` <= ? ";
+			
+		if ($archived) $archived_cond = " AND `archived_by_id` <> 0";
+		else $archived_cond = " AND `archived_by_id` = 0";
+
+		$permissions = ' AND ( ' . permissions_sql_for_listings(ProjectTasks::instance(),ACCESS_LEVEL_READ, logged_user(), 'project_id') .')';
+		$tagStr = $tag? (" AND id in (SELECT rel_object_id from " . TABLE_PREFIX . "tags t WHERE tag='".$tag."' AND t.rel_object_manager='ProjectTasks')"):'';
+
+		$only_unworked = "AND id in (SELECT DISTINCT `" . TABLE_PREFIX . "project_tasks`.`id` FROM `" . TABLE_PREFIX . "project_tasks`,  `" . TABLE_PREFIX . "timeslots` WHERE  `" . TABLE_PREFIX . "project_tasks`.`id` != `" . TABLE_PREFIX . "timeslots`.`object_id`)";
+		
+		if ($created_on_limit == ""){
+			$pendingTasks = self::findAll(array(
+					'conditions' => array('((`assigned_to_user_id` = ? AND `assigned_to_company_id` = ? ) ' .
+						' OR (`assigned_to_user_id` = ? AND `assigned_to_company_id` = ?) ' .
+						' OR (`assigned_to_user_id` = ? AND `assigned_to_company_id` = ?)) '.
+						' AND `completed_on` = ? AND parent_id = ? AND (due_date > DATE(CURRENT_TIMESTAMP) OR due_date = \'00:00:00 00-00-0000\')' .
+						' AND `is_template` = false ' .					
+						$wsstring .	$archived_cond . $permissions . $tagStr .$only_unworked, $user->getId(), $user->getCompanyId(),
+						0, $user->getCompanyId(), 0, 0, EMPTY_DATETIME,0),
+	        			'order' => 'priority DESC, `created_on` DESC'
+	        			));
+		}else{
+			$pendingTasks = self::findAll(array(
+				'conditions' => array('((`assigned_to_user_id` = ? AND `assigned_to_company_id` = ? ) ' .
+					' OR (`assigned_to_user_id` = ? AND `assigned_to_company_id` = ?) ' .
+					' OR (`assigned_to_user_id` = ? AND `assigned_to_company_id` = ?)) '.
+					' AND `completed_on` = ? AND parent_id = ? AND (due_date > DATE(CURRENT_TIMESTAMP) OR due_date = \'00:00:00 00-00-0000\')' .
+					' AND `is_template` = false ' .					
+					$wsstring .
+					$archived_cond . $permissions . $tagStr.
+					$created_on_limit.$only_unworked, $user->getId(), $user->getCompanyId(),
+					0, $user->getCompanyId(), 0, 0, EMPTY_DATETIME,0, $start_date, $end_date),
+        			'order' => 'priority DESC, `created_on` DESC'
+        			));
+			
+		}		
+        return $pendingTasks;
+	} 	
+	
 
 	/**
 	 * Return tasks on which the user has an open timeslot

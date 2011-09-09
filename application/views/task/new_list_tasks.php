@@ -110,7 +110,7 @@ og.noOfTasks = <?php echo user_config_option('noOfTasks') ?>;
 		subtypesHfId:'hfObjectSubtypes'
 		});
 
-	og.defaultTaskType = <?php echo config_option('default task co type', '0') ?>;
+	og.defaultTaskType = '<?php echo config_option('default task co type', '0') ?>';
 	
 	function resizeTasksPanel(e, id) {
 		var tpc = document.getElementById('tasksPanelContent');

@@ -396,6 +396,8 @@ addLangs({
 	'help': 'Ajuda',
 	'menu': 'Menu',
 	'back': 'Volta',
+	'add space': 'Criar novo espaço',
+	'edit space': 'Editar espaço selecionado',
 	'server could not be reached': 'Servidor inacessível',
 	'http error': 'Erro {0}: {1}',
 	'refesh desc': 'Atualizar vista',

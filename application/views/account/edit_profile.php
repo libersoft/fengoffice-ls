@@ -1,7 +1,7 @@
 <?php
 	$object = $user;
     set_page_title(lang('update profile'));
-
+ 	$now = DateTimeValueLib::now();
 	$genid = gen_id();
 ?>
 <form style="height:100%;background-color:white" class="internalForm" action="<?php echo $user->getEditProfileUrl($redirect_to) ?>" method="post">
@@ -13,7 +13,7 @@
   		<div class="adminTitle"><table style="width:535px"><tr><td>
   			<?php echo lang('update profile') ?>
   		</td><td style="text-align:right">
-  			<?php echo submit_button(lang('save changes'), 's', array('style'=>'margin-top:0px;margin-left:10px', 'tabindex' => '1100')) ?>
+  			<?php echo submit_button(lang('save changes'), 's', array('style'=>'margin-top:0px;margin-left:10px', 'tabindex' => '1100', 'onclick'=>'og.getTimezoneFromBrowser(new Date('.$now->getYear().','.($now->getMonth() - 1).','.$now->getDay().','.$now->getHour().','.$now->getMinute().','.$now->getSecond().'))')) ?>
   		</td></tr></table></div>
   	</div>
   
@@ -131,7 +131,7 @@
     <?php echo select_timezone_widget('user[timezone]', array_var($user_data, 'timezone'), 
     	array('id' => 'userFormTimezone', 'class' => 'long', 'tabindex' => '600' )) ?>
     </div>
-  
+      <input id="userFormTimezoneHidden" type="hidden" name="user[timezone]" />
 	  <script type="text/javascript">
 	  
 		og.showSelectTimezone = function(genid)	{
@@ -142,8 +142,21 @@
 			}else{
 				div.style.display= "";
 			}
-			
-		  };
+		};
+
+		og.getTimezoneFromBrowser = function(server){	
+			check = document.getElementById('userFormAutoDetectTimezoneYes');
+			div = document.getElementById('userFormTimezone');
+			hidden = document.getElementById('userFormTimezoneHidden');						
+			if (check.checked){				
+				var client = new Date();			
+				var diff = client.getTime() - server.getTime();			
+				diff = Math.round(diff*2/3600000);					
+				hidden.value = diff/2;		
+			}else{
+				hidden.value = div.value;
+			}					
+		};
 		  
 	  </script>
   </fieldset>
@@ -193,7 +206,7 @@
 		<?php echo render_object_custom_properties($user, 'Users', true) ?>
 	</div>
 	
-  <?php echo submit_button(lang('save changes'),'s',array('tabindex' => '3000')) ?>
+  <?php echo submit_button(lang('save changes'),'s',array('tabindex' => '3000', 'onclick'=>'og.getTimezoneFromBrowser(new Date('.$now->getYear().','.($now->getMonth() - 1).','.$now->getDay().','.$now->getHour().','.$now->getMinute().','.$now->getSecond().'))')) ?>
 
 </div>
 </div>

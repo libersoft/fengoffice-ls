@@ -164,6 +164,8 @@ addLangs({
 	'message': 'Note',
 	
 	'workspaces': 'Workspaces',
+	'add space': 'Add Workspace',
+	'edit space': 'Edit',		
 	'all': 'All',
 	'create a workspace': 'Create a new workspace',
 	'delete selected workspace': 'Delete the selected workspace',
@@ -434,6 +436,7 @@ addLangs({
 	'password': 'Password',
 	'remember me': 'Remember me',
 	'completed': 'Completed',
+	'open task status' : 'Open',
 	'notify': 'Notify',
 	'hours worked': 'Hours worked',
 	
@@ -805,4 +808,5 @@ addLangs({
     'object subtype deleted': 'Subtype deleted. {0}',
     'linked': 'Linked',
     'change status': 'Change status'
+    'warning create users automatically email': 'Warning: If you send this email without attaching all of the contents, and the receivers do not have an account in this Feng Office installation, an account will be automatically created for them. Keep in mind that this account will only have access to the documents and nowhere else. \n\n Do you wish to proceed?'
 });

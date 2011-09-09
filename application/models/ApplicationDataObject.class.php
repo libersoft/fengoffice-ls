@@ -149,6 +149,14 @@ abstract class ApplicationDataObject extends DataObject {
 	}
 	
 	/**
+	 * Deletes the object from Searchable Objects
+	 *
+	 */
+    function deleteFromSearchableObjects(){
+    	$this->clearSearchIndex();      	
+    }
+	
+	/**
 	 * This function deletes everything related to the object.
 	 * Child classes can call this method to clear everything
 	 * but not delete the object. 

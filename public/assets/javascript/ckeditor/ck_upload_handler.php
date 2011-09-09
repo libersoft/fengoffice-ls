@@ -4,12 +4,17 @@
 		strtoupper(substr(PHP_OS, 0, 3) == 'WIN') ? '\\' : '/'
 		) ;
 	}
+	
+	
+	$system_root = explode('public',  $_SERVER['SCRIPT_FILENAME']);
+	define('FILE_SYSTEM_PATH', $system_root[0]);
+	
 	define('CONSOLE_MODE', true);
-	define('APP_ROOT', realpath(dirname(__FILE__) . "/../../../../"));
-	define('TEMP_PATH', realpath(APP_ROOT . '/tmp/'));
+	define('APP_ROOT', dirname(__FILE__) . "/../../../../");
+	define('TEMP_PATH', FILE_SYSTEM_PATH . '/tmp/');
 	
 	// Include library
-	require_once APP_ROOT . '/index.php';
+	require_once FILE_SYSTEM_PATH . '/index.php';
 	
 	function my_log($msg) {
 		file_put_contents(dirname(__FILE__).'/log.txt', "$msg\n", FILE_APPEND);
@@ -22,7 +27,13 @@
 		$file_name = preg_replace("/[^a-zA-Z0-9.]/", "_", $file_name);
 		$file_url = ROOT_URL . "/tmp/" . $file_name;
 		
-		copy($file_info['tmp_name'], TEMP_PATH . DIRECTORY_SEPARATOR . $file_name);
+		//Exclude non image files.
+        $pattern = '/^.*\.(jpeg|JPEG|jpg|JPG|gif|GIF|png|PNG|bmp|BMP)$/';
+        preg_match($pattern, $file_name, $matches, PREG_OFFSET_CAPTURE);
+        if(count($matches) <= 0)
+        	die('Invalid File');
+                    
+        copy($file_info['tmp_name'], TEMP_PATH . DIRECTORY_SEPARATOR . $file_name);
 		unlink($file_info['tmp_name']);
 		
 		$err_msg = "";

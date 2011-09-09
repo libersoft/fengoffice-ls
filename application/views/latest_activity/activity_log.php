@@ -3,7 +3,7 @@
 if (is_array($logs) && count($logs)> 0) {	
 	$is_user = $logs[0]->getRelObjectManager() == 'Users' ? true : false;
 	if(!isset ($no_permissions)) $no_permissions = '';
-	if ($is_user)$no_permissions = (logged_user()->getId()!=$user_id && !logged_user()->isAdministrator()) ? true : false;			
+	if ($is_user)$no_permissions = ($user_id && logged_user()->getId()!=$user_id && !logged_user()->isAdministrator()) ? true : false;			
 	if (!$is_user || ($is_user && !$no_permissions)){	
 
 ?>

@@ -1,4 +1,4 @@
-locale = 'es_la';
+﻿locale = 'es_la';
 addLangs({
 	'check in': '<b>Devolver</b>',
 	'cannot check in': 'No es posible devolver',
@@ -354,6 +354,7 @@ addLangs({
 	'remove tags': 'Quitar etiquetas',
 	'more options': 'Más opciones',
 	'completed': 'Completado',
+	'open task status' : 'Abierta',
 	'notify': 'Notificar',
 	'hours worked': 'Horas trabajadas',
 	'login': 'Ingreso',
@@ -492,8 +493,8 @@ addLangs({
 	'trash emptied periodically': 'Los objetos mantenidos en la papelera por más de {0} días serán eliminados.',
 	'remove': 'Quitar',
 	'object type not supported': 'Este tipo de objetos no puede ser usado para plantillas',
-	'view slideshow': 'View slideshow',
-	'no images match the specified filter': 'No images match the specified filter',
+	'view slideshow': 'Ver presentación de diapositivas',
+	'no images match the specified filter': 'Ninguna imagen coincide con el filtro especificado',
 	'confirm delete permanently': '¿Está seguro que desea eliminar este objeto?',
 	'download selected file': 'Descargar el archivo seleccionado',
 	'edit selected file properties': 'Editar las propiedades del archivo seleccionado',
@@ -699,6 +700,9 @@ addLangs({
     'add object subtype' : 'Agregar tipo de objeto',
     'delete object subtype' : 'Eliminar tipo de objeto',
     'delete object subtype warning' : 'Si elimina este tipo de objeto éste será removido de todos los objetos a los cuales ha sido asignado. ¿Está seguro que lo quiere eliminar?',
-    'object subtype deleted' : 'Subtype deleted. {0}',
-    'change status': 'Cambiar estado'
+    'object subtype deleted' : 'Subtipo eliminado. {0}',
+    'change status': 'Cambiar estado',
+    'add space': 'Crear Espacio',
+	'edit space': 'Editar',
+	'warning create users automatically email': 'Advertencia: Si envía este correo sin adjuntar todos los contenidos adjuntos, y los receptores no tienen una cuenta en esta instalación de Feng Office, automáticamente se les creará una cuenta para ellos. Tenga en consideración que con esta cuenta sólo podrían acceder a los documentos y a ningún otro lado. \n\n ¿Desea proceder?'
 });

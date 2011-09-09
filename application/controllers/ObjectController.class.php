@@ -1274,7 +1274,7 @@ class ObjectController extends ApplicationController {
 		}
 		elseif($objects_per_page)
 			$query .= " LIMIT " . $objects_per_page;
-
+			
 		$res = DB::execute($query);
 		$objects = array();
 		if(!$res)  return $objects;
@@ -1301,7 +1301,7 @@ class ObjectController extends ApplicationController {
 		}
 		return $dash_objects;
 	}//getDashboardobjects
-
+		
 	/**
 	 * Counts dashboard objects
 	 *
@@ -1376,227 +1376,235 @@ class ObjectController extends ApplicationController {
 		$objid = array_var($_GET,'linkedobject');
 		$mangr = array_var($_GET,'linkedmanager');
 		$filterManager = array_var($_GET,'filtermanager','');
-		if ($mangr != null && $objid != null){
-			$linkedObject = get_object_by_manager_and_id($objid,$mangr);
-		}else{
-			$linkedObject = null;
-		}
-			
+		$show_all_linked_objects = ($objid && $objid != 0 && $mangr && $mangr != '') ? true : false; //if we want to show linked objects		
+					
 		$user = array_var($_GET,'user');
 		$trashed = array_var($_GET, 'trashed', false);
 		$archived = array_var($_GET, 'archived', false);
 
 		/* if there's an action to execute, do so */
-		if (array_var($_GET, 'action') == 'delete') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_delete_objects($ids);
-			if ($err > 0) {
-				flash_error(lang('error delete objects', $err));
-			} else {
-				flash_success(lang('success delete objects', $succ));
-			}
-		} else if (array_var($_GET, 'action') == 'delete_permanently') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_delete_objects($ids, null, true);
-			if ($err > 0) {
-				flash_error(lang('error delete objects', $err));
-			}
-			if ($succ > 0) {
-				flash_success(lang('success delete objects', $succ));
-			}
-		}else if (array_var($_GET, 'action') == 'markasread') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_mark_as_read_unread_objects($ids, true);
-			
-		}else if (array_var($_GET, 'action') == 'markasunread') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_mark_as_read_unread_objects($ids, false);
-			
-		}else if (array_var($_GET, 'action') == 'empty_trash_can') {
-
-			$Allitems = $this->getDashboardObjects(null,null,null,null,null,null,active_project(),true);
-			
-			$ids = array();
-			for ($i=0;$i<count($Allitems);$i++){
-				$id = $Allitems[$i]['object_id'];
-				$manager = $Allitems[$i]['manager'];
-				$ids[]= $manager.':'.$id;
-			}
-			list($succ, $err) = $this->do_delete_objects($ids, null, true);		
-			if ($err > 0) {
-				flash_error(lang('error delete objects', $err));
-			}
-			if ($succ > 0) {
-				flash_success(lang('success delete objects', $succ));
-			}
-		} else if (array_var($_GET, 'action') == 'archive') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_archive_unarchive_objects($ids, null, 'archive');
-			if ($err > 0) {
-				flash_error(lang('error archive objects', $err));
-			} else {
-				flash_success(lang('success archive objects', $succ));
-			}
-		} else if (array_var($_GET, 'action') == 'unarchive') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_archive_unarchive_objects($ids, null, 'unarchive');
-			if ($err > 0) {
-				flash_error(lang('error unarchive objects', $err));
-			} else {
-				flash_success(lang('success unarchive objects', $succ));
-			}
-		}
-		else if (array_var($_GET, 'action') == 'unclassify') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			$err = 0;
-			$succ = 0;
-			foreach ($ids as $id) {
-				$split = explode(":", $id);
-				$type = $split[0];
-				if ($type == 'MailContents') {
-					$email = MailContents::findById($split[1]);
-					if (isset($email) && !$email->isDeleted() && $email->canEdit(logged_user())){
-						if (MailController::do_unclassify($email)) $succ++;
-						else $err++;
-					} else $err++;
-				}
-			}
-			if ($err > 0) {
-				flash_error(lang('error unclassify emails', $err));
-			} else {
-				flash_success(lang('success unclassify emails', $succ));
-			}
-		}
-		else if (array_var($_GET, 'action') == 'tag') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			$tagTag = array_var($_GET, 'tagTag');
-			list($succ, $err) = $this->do_tag_object($tagTag, $ids);
-			if ($err > 0) {
-				flash_error(lang('error tag objects', $err));
-			} else {
-				flash_success(lang('success tag objects', $succ));
-			}
-		}
-		else if (array_var($_GET, 'action') == 'untag') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			list($succ, $err) = $this->do_untag_object(array_var($_GET, 'tagTag'), $ids);
-			if ($err > 0) {
-				flash_error(lang('error untag objects', $err));
-			} else {
-				flash_success(lang('success untag objects', $succ));
-			}
-		} else if (array_var($_GET, 'action') == 'restore') {
-			$ids = explode(',', array_var($_GET, 'objects'));
-			$success = 0; $error = 0;
-			foreach ($ids as $id) {
-				$split = explode(":", $id);
-				$obj = get_object_by_manager_and_id($split[1], $split[0]);
-				if ($obj->canDelete(logged_user())) {
-					try {
-						$obj->untrash();
-						ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
-						if ($obj->getObjectManagerName() == 'ProjectTasks'){							
-							$subtasks = $obj->getAllSubtasks();
-							foreach ($subtasks as $st){
-								ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
-								$success++;
-							}							
-						}
-						$success++;
-					} catch (Exception $e) {
-						$error++;
-					}
-				} else {
-					$error++;
-				}
-			}
-			if ($success > 0) {
-				flash_success(lang("success untrash objects", $success));
-			}
-			if ($error > 0) {
-				flash_error(lang("error untrash objects", $error));
-			}
-		} else if (array_var($_GET, 'action') == 'move') {
-			$wsid = array_var($_GET, "moveTo");
-			$destination = Projects::findById($wsid);
-			if (!$destination instanceof Project) {
-				$resultMessage = lang('project dnx');
-				$resultCode = 1;
-			} else if (!can_add(logged_user(), $destination, 'ProjectMessages')) {
-				$resultMessage = lang('no access permissions');
-				$resultCode = 1;
-			} else {
+		if (!$show_all_linked_objects){
+			$linkedObject = null;
+			if (array_var($_GET, 'action') == 'delete') {
 				$ids = explode(',', array_var($_GET, 'objects'));
-				$count = 0;
-				DB::beginWork();
+				list($succ, $err) = $this->do_delete_objects($ids);
+				if ($err > 0) {
+					flash_error(lang('error delete objects', $err));
+				} else {
+					flash_success(lang('success delete objects', $succ));
+				}
+			} else if (array_var($_GET, 'action') == 'delete_permanently') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_delete_objects($ids, null, true);
+				if ($err > 0) {
+					flash_error(lang('error delete objects', $err));
+				}
+				if ($succ > 0) {
+					flash_success(lang('success delete objects', $succ));
+				}
+			}else if (array_var($_GET, 'action') == 'markasread') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_mark_as_read_unread_objects($ids, true);
+				
+			}else if (array_var($_GET, 'action') == 'markasunread') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_mark_as_read_unread_objects($ids, false);
+				
+			}else if (array_var($_GET, 'action') == 'empty_trash_can') {
+	
+				$Allitems = $this->getDashboardObjects(null,null,null,null,null,null,active_project(),true);
+				
+				$ids = array();
+				for ($i=0;$i<count($Allitems);$i++){
+					$id = $Allitems[$i]['object_id'];
+					$manager = $Allitems[$i]['manager'];
+					$ids[]= $manager.':'.$id;
+				}
+				list($succ, $err) = $this->do_delete_objects($ids, null, true);		
+				if ($err > 0) {
+					flash_error(lang('error delete objects', $err));
+				}
+				if ($succ > 0) {
+					flash_success(lang('success delete objects', $succ));
+				}
+			} else if (array_var($_GET, 'action') == 'archive') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_archive_unarchive_objects($ids, null, 'archive');
+				if ($err > 0) {
+					flash_error(lang('error archive objects', $err));
+				} else {
+					flash_success(lang('success archive objects', $succ));
+				}
+			} else if (array_var($_GET, 'action') == 'unarchive') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_archive_unarchive_objects($ids, null, 'unarchive');
+				if ($err > 0) {
+					flash_error(lang('error unarchive objects', $err));
+				} else {
+					flash_success(lang('success unarchive objects', $succ));
+				}
+			}
+			else if (array_var($_GET, 'action') == 'unclassify') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				$err = 0;
+				$succ = 0;
 				foreach ($ids as $id) {
 					$split = explode(":", $id);
 					$type = $split[0];
-					$obj = get_object_by_manager_and_id($split[1], $type);
-					$mantainWs = array_var($_GET, "mantainWs");
-					if ($type != 'Projects' && $obj->canEdit(logged_user())) {
-						if ($type == 'MailContents') {
-							$email = MailContents::findById($split[1]);
-							$conversation = MailContents::getMailsFromConversation($email);
-							foreach ($conversation as $conv_email) {
-								$count += MailController::addEmailToWorkspace($conv_email->getId(), $destination, $mantainWs);
-								if (array_var($_GET, 'classify_atts') && $conv_email->getHasAttachments()) {
-									MailUtilities::parseMail($conv_email->getContent(), $decoded, $parsedEmail, $warnings);
-									$classification_data = array();
-									for ($j=0; $j < count(array_var($parsedEmail, "Attachments", array())); $j++) {
-										$classification_data["att_".$j] = true;		
-									}
-									$tags = implode(",", $conv_email->getTagNames());
-									MailController::classifyFile($classification_data, $conv_email, $parsedEmail, array($destination), $mantainWs, $tags);
-								}								
-							}
-							$count++;
-						} else {
-							if (!$mantainWs || $type == 'ProjectTasks' || $type == 'ProjectMilestones') {
-								$removed = "";
-								$ws = $obj->getWorkspaces();
-								foreach ($ws as $w) {
-									if (can_add(logged_user(), $w, $type)) {
-										$obj->removeFromWorkspace($w);
-										$removed .= $w->getId() . ",";
-									}
-								}
-								$removed = substr($removed, 0, -1);
-								$log_action = ApplicationLogs::ACTION_MOVE;
-								$log_data = ($removed == "" ? "" : "from:$removed;") . "to:$wsid";
-							} else {
-								$log_action = ApplicationLogs::ACTION_COPY;
-								$log_data = "to:$wsid";
-							}
-							$obj->addToWorkspace($destination);
-							ApplicationLogs::createLog($obj, $obj->getWorkspaces(), $log_action, false, null, true, $log_data);
-							$count++;
-						}
+					if ($type == 'MailContents') {
+						$email = MailContents::findById($split[1]);
+						if (isset($email) && !$email->isDeleted() && $email->canEdit(logged_user())){
+							if (MailController::do_unclassify($email)) $succ++;
+							else $err++;
+						} else $err++;
 					}
 				}
-				if ($count > 0) {
-					$reload = true;
-					DB::commit();
-					flash_success(lang("success move objects", $count));
+				if ($err > 0) {
+					flash_error(lang('error unclassify emails', $err));
 				} else {
-					DB::rollback();
+					flash_success(lang('success unclassify emails', $succ));
 				}
 			}
+			else if (array_var($_GET, 'action') == 'tag') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				$tagTag = array_var($_GET, 'tagTag');
+				list($succ, $err) = $this->do_tag_object($tagTag, $ids);
+				if ($err > 0) {
+					flash_error(lang('error tag objects', $err));
+				} else {
+					flash_success(lang('success tag objects', $succ));
+				}
+			}
+			else if (array_var($_GET, 'action') == 'untag') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				list($succ, $err) = $this->do_untag_object(array_var($_GET, 'tagTag'), $ids);
+				if ($err > 0) {
+					flash_error(lang('error untag objects', $err));
+				} else {
+					flash_success(lang('success untag objects', $succ));
+				}
+			} else if (array_var($_GET, 'action') == 'restore') {
+				$ids = explode(',', array_var($_GET, 'objects'));
+				$success = 0; $error = 0;
+				foreach ($ids as $id) {
+					$split = explode(":", $id);
+					$obj = get_object_by_manager_and_id($split[1], $split[0]);
+					if ($obj->canDelete(logged_user())) {
+						try {
+							$obj->untrash();
+							ApplicationLogs::createLog($obj, $obj->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
+							if ($obj->getObjectManagerName() == 'ProjectTasks'){							
+								$subtasks = $obj->getAllSubtasks();
+								foreach ($subtasks as $st){
+									ApplicationLogs::createLog($st, $st->getWorkspaces(), ApplicationLogs::ACTION_UNTRASH);
+									$success++;
+								}							
+							}
+							$success++;
+						} catch (Exception $e) {
+							$error++;
+						}
+					} else {
+						$error++;
+					}
+				}
+				if ($success > 0) {
+					flash_success(lang("success untrash objects", $success));
+				}
+				if ($error > 0) {
+					flash_error(lang("error untrash objects", $error));
+				}
+			} else if (array_var($_GET, 'action') == 'move') {
+				$wsid = array_var($_GET, "moveTo");
+				$destination = Projects::findById($wsid);
+				if (!$destination instanceof Project) {
+					$resultMessage = lang('project dnx');
+					$resultCode = 1;
+				} else if (!can_add(logged_user(), $destination, 'ProjectMessages')) {
+					$resultMessage = lang('no access permissions');
+					$resultCode = 1;
+				} else {
+					$ids = explode(',', array_var($_GET, 'objects'));
+					$count = 0;
+					DB::beginWork();
+					foreach ($ids as $id) {
+						$split = explode(":", $id);
+						$type = $split[0];
+						$obj = get_object_by_manager_and_id($split[1], $type);
+						$mantainWs = array_var($_GET, "mantainWs");
+						if ($type != 'Projects' && $obj->canEdit(logged_user())) {
+							if ($type == 'MailContents') {
+								$email = MailContents::findById($split[1]);
+								$conversation = MailContents::getMailsFromConversation($email);
+								foreach ($conversation as $conv_email) {
+									$count += MailController::addEmailToWorkspace($conv_email->getId(), $destination, $mantainWs);
+									if (array_var($_GET, 'classify_atts') && $conv_email->getHasAttachments()) {
+										MailUtilities::parseMail($conv_email->getContent(), $decoded, $parsedEmail, $warnings);
+										$classification_data = array();
+										for ($j=0; $j < count(array_var($parsedEmail, "Attachments", array())); $j++) {
+											$classification_data["att_".$j] = true;		
+										}
+										$tags = implode(",", $conv_email->getTagNames());
+										MailController::classifyFile($classification_data, $conv_email, $parsedEmail, array($destination), $mantainWs, $tags);
+									}								
+								}
+								$count++;
+							} else {
+								if (!$mantainWs || $type == 'ProjectTasks' || $type == 'ProjectMilestones') {
+									$removed = "";
+									$ws = $obj->getWorkspaces();
+									foreach ($ws as $w) {
+										if (can_add(logged_user(), $w, $type)) {
+											$obj->removeFromWorkspace($w);
+											$removed .= $w->getId() . ",";
+										}
+									}
+									$removed = substr($removed, 0, -1);
+									$log_action = ApplicationLogs::ACTION_MOVE;
+									$log_data = ($removed == "" ? "" : "from:$removed;") . "to:$wsid";
+								} else {
+									$log_action = ApplicationLogs::ACTION_COPY;
+									$log_data = "to:$wsid";
+								}
+								$obj->addToWorkspace($destination);
+								ApplicationLogs::createLog($obj, $obj->getWorkspaces(), $log_action, false, null, true, $log_data);
+								$count++;
+							}
+						}
+					}
+					if ($count > 0) {
+						$reload = true;
+						DB::commit();
+						flash_success(lang("success move objects", $count));
+					} else {
+						DB::rollback();
+					}
+				}
+			}
+		}else{
+			$linkedObject = get_object_by_manager_and_id($objid,$mangr);				
 		}
 		$filterName = array_var($_GET,'name');
 		$result = null;
 		
 		/* perform queries according to type*/
 		$project = active_project();
-		$total_items = $this->countDashboardObjects($tag, $types, $project, $trashed, $linkedObject, $filterName, $archived, $filterManager);
+		if (!$show_all_linked_objects){
+			$total_items = $this->countDashboardObjects($tag, $types, $project, $trashed, $linkedObject, $filterName, $archived, $filterManager);
+		}else{
+			$total_items = (defined('INFINITE_PAGING') && INFINITE_PAGING) ? 10000000 : count($linkedObject->getAllLinkedObjects());			
+		}
 		if ($total_items < ($page - 1) * $limit){
 			$page = 1;
 			$start = 0;
 		}
-		$result = $this->getDashboardObjects($page, $filesPerPage, $tag, $order, $orderdir, $types, $project, $trashed, $linkedObject, $filterName, $archived, $filterManager);
-		if(!$result)
-		$result = array();
-
+		if (!$show_all_linked_objects){
+			$result = $this->getDashboardObjects($page, $filesPerPage, $tag, $order, $orderdir, $types, $project, $trashed, $linkedObject, $filterName, $archived, $filterManager);
+		}else{
+			$result = LinkedObjects::getLinkedObjectsWithPaging($page, $order, $orderdir, $objid,$mangr, $filesPerPage);
+		}
+		if(!$result) $result = array();
+				
 		/* prepare response object */
 		$listing = array(
 			"totalCount" => $total_items,
@@ -1983,6 +1991,7 @@ class ObjectController extends ApplicationController {
 		$logs = ApplicationLogs::getObjectLogs($obj);
 		$logs_read = ApplicationReadLogs::getObjectLogs($obj);
 		
+		tpl_assign('user_id', get_id());
 		tpl_assign('object',$obj);
 		tpl_assign('logs',$logs);
 		tpl_assign('logs_read',$logs_read);
@@ -2360,8 +2369,8 @@ class ObjectController extends ApplicationController {
 		if ($object instanceof ApplicationDataObject && $object->canEdit(logged_user())) {
 			try {
 				DB::beginWork();
-				if ($obj->getObjectManagerName()== 'ProjectTasks') {
-					$subtasks = $obj->getAllSubtasks();						
+				if ($object->getObjectManagerName()== 'ProjectTasks') {
+					$subtasks = $object->getAllSubtasks();						
 				}				
 				$object->unarchive();
 				$ws = $object->getWorkspaces();				

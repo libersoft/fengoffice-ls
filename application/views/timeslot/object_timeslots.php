@@ -60,7 +60,7 @@
 			
 			<?php if ($timeslot->getDescription() != '') {?>
 				<tr class="timeslot <?php echo $counter % 2 ? 'even' : 'odd'; echo $timeslot->isOpen() ? ' openTimeslot' : '' ?>" ><td></td>
-				<td colspan=6 style="color:#666666"><?php echo clean($timeslot->getDescription()) ?></td></tr>
+				<td colspan=6 style="color:#666666"><?php echo nl2br(clean($timeslot->getDescription())) ?></td></tr>
 			<?php } //if ?>
 		<?php } //if 
 		} // foreach ?>

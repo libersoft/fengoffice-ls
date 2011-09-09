@@ -1362,11 +1362,16 @@ class User extends BaseUser {
 	 * @param void
 	 * @return boolean
 	 */
-	function delete() {
+	function delete() {	
 		if($this->isAccountOwner()) {
 			return false;
 		} // if
-
+				
+		// Delete old global cache 
+		if (GlobalCache::isAvailable()) {			
+			$this->deleteUserFromGlobalCache($this->getId());			
+		}
+		
 		$this->deleteAvatar();
 		//$this->deletePersonalProject();
 		MailAccountUsers::deleteByUser($this);
@@ -1379,6 +1384,26 @@ class User extends BaseUser {
 		UserPasswords::clearByUser($this);
 		return parent::delete();
 	} // delete
+	
+	/**
+	 * Deletes all of the users cached values from the Global Cache
+	 *
+	 * @param id = user_id
+	 * @return boolean
+	 */
+	function deleteUserFromGlobalCache($id) {
+		if (GlobalCache::isAvailable()) {						
+				GlobalCache::delete('logged_user_'.$this->getId());
+				GlobalCache::delete('active_ws_'.$this->getId());
+				GlobalCache::delete('user_copt_obj_lastAccessedWorkspace');
+				GlobalCache::delete('user_copt_obj_initialWorkspace');
+				$opts = UserWsConfigOptions::findAll();				
+				foreach($opts as $opt){
+					$name = $opt->getName();
+					GlobalCache::delete('user_config_option_'.$id.'_'.$name);					
+				}
+		}	
+	}
 
 	// ---------------------------------------------------
 	//  ApplicationDataObject implementation

@@ -31,9 +31,10 @@
 		?>
 		<table style="width:400px;border:1px solid #CCC;<?php echo $display ?>" id="<?php echo $genid . $manager?>_table">
 			<tr><th><?php echo lang('name') ?></th><th></th></tr>
-		<?php foreach ($man_co_types as $co_type) { ?>
-			<?php echo "<script>og.addObjectSubtype('$genid', {$co_type->getId()}, '{$co_type->getName()}', '$manager', true);</script>" ?>
-		<?php } ?>
+		<?php foreach ($man_co_types as $co_type) : ?>
+			<?php // echo "<script>og.addObjectSubtype('$genid', {$co_type->getId()}, '{$co_type->getName()}', '$manager', true);</script>" ?>
+			<script>og.addObjectSubtype('<?php echo $genid ?>', <?php echo $co_type->getId()?>, '<?php echo htmlentities($co_type->getName(), ENT_QUOTES) ?>', '<?php echo $manager?>', true)</script>
+		<?php endforeach ?>
 		</table>
 		<div id="<?php echo $genid ?>actions">
 			<a href="#" class="link-ico ico-add" onclick="og.addObjectSubtype('<?php echo $genid ?>', 0, '', '<?php echo $manager ?>', false);"><?php echo lang('add object subtype')?></a>

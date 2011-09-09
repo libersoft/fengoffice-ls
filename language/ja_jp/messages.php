@@ -250,6 +250,7 @@
     'success update billing values' => '時間帯課金の値を更新しました: {0}個の項目を修正しました。',
 
     // Failures
+    'error forgot password' => '新しいパスワードを送信できませんでした。Feng Officeの管理者に連絡してください。',
     'error edit timeslot' => '時間枠の保存できませんでした。',
     'error delete timeslot' => '選択した時間枠を削除できませんでした。',
     'error add timeslot' => '時間枠の追加できませんでした。',
@@ -703,6 +704,9 @@
     'ie browser outdated' => 'ご利用のブラウザは公式にはサポートしていません。より良いFeng Officeを体験するには、ブラウザを更新してください。',
   	'outbox mail not sent' => 'まだ送信されていない電子メールが送信箱に{0}通あります。',
   	'outbox mails not sent' => 'まだ送信されていない電子メールが送信箱に{0}通あります。',
+    'mail not sent' => "この電子メール、または送信箱のフォルダーにある他の電子メールを送信できていません。原因は電子メールのアカウントの設定か、メールサーバーに問題があると考えられます。エラーメッセージです:",
+    'mail not sent, wrong settings/receiver' => "この電子メール、または送信箱のフォルダーにある他の電子メールを送信できていません。原因は電子メールのアカウントの設定か、宛先が正しくないと考えられます。エラーメッセージです:",
+
 
     'short search query warning' => '検索の文字列が短すぎます。"<b>{0}</b>"で始まる単語でしたら、"<b>{0}*</b>"と指定することで検索できます。',
     'no attachments found for email' => '電子メールに添付ファイルはありません。',

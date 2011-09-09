@@ -71,6 +71,9 @@
 	'config option name ask_administration_autentification' => 'Authenticate administration',
     'config option desc ask_administration_autentification' => 'If "Yes" is chosen, a password authentication dialog will be displayed when accessing the administration panel',
   
+  	'config option name external_users_see_other_users' => 'Allow external users see other users', 
+  	'config option desc external_users_see_other_users' => "If 'Yes' is chosen, users that belong to other companies may see which users have permissions in the workspace they are standing at, as regular users do",
+  
   	'config option name enable_notes_module' => 'Enable Notes Module',
   	'config option name enable_email_module' => 'Enable Email Module',
   	'config option name enable_contacts_module' => 'Enable Contacts Module',
@@ -338,7 +341,9 @@
   	'sync' => 'Sync',
   	'mails on imap acc already sync' => 'There are no emails left to be synchronized in this account',
   	'cant sync account' => 'This account cannot be synchronized. Check IMAP settings',
-  	'config option name sent_mails_sync' => 'Enable IMAP synchronization when sending emails from Feng Office',
+  
+  	'config option name sent_mails_sync' => 'Enable IMAP synchronization', 
+    'config option desc sent_mails_sync' => 'This option enables the synchronization when sending emails from Feng Office with the mail server through IMAP',
   
   	'succes save object subtypes' => 'Object subtypes saved sucessfully',
   

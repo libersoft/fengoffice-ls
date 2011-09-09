@@ -227,7 +227,7 @@ og.objectPropertyChanged = function(obj_id, manager, count, value){
 				propValueTD.innerHTML = '';
 				return;
 			}
-			propSel = document.getElementById('objectProperties[' + manager + ':' + obj_id + '][' + ++id + ']');
+			propSel = document.getElementById('objectProperties[' + manager + ':' + obj_id + '][' + (++id) + ']');
 		}
 		if(prop.className == 'STRING'){
 			propValueTD.innerHTML = '= <input id="propValues[' + manager + ':' + obj_id + '][' + prop.value + ']" name="propValues[' + manager + ':' + obj_id + '][' + prop.value + ']" value="' + value + '" />&nbsp;' +

@@ -39,17 +39,20 @@ class UserController extends ApplicationController {
 	 * @return null
 	 */
 	function add() {
-		if (logged_user()->isGuest()) {
+		
+        if (logged_user()->isGuest()) {
 			flash_error(lang('no access permissions'));
 			ajx_current("empty");
 			return;
 		}
+        
    		$max_users = config_option('max_users');
 		if ($max_users && (Users::count() >= $max_users)) {
 			flash_error(lang('maximum number of users reached error'));
 			ajx_current("empty");
 			return;
 		}
+        
 		$this->setTemplate('add_user');
 
 		$company = Companies::findById(get_id('company_id'));
@@ -63,9 +66,9 @@ class UserController extends ApplicationController {
 			return;
 		} // if
 
-		$user = new User();
-		
 		$user_data = array_var($_POST, 'user');
+		$user = new User();
+
 		if (!is_array($user_data)) {
 			//if it is a new user
 			$contact_id = get_id('contact_id');
@@ -74,7 +77,7 @@ class UserController extends ApplicationController {
 				//if it will be created from a contact
 				$user_data = array(
 					'username' => $this->generateUserNameFromContact($contact),
-					'display_name' => $contact->getFirstname() . $contact->getLastname(),
+					'display_name' => $contact->getFirstname() ." ". $contact->getLastname(),
 					'email' => $contact->getEmail(),
 					'contact_id' => $contact->getId(),
 					'password_generator' => 'random',
@@ -106,24 +109,43 @@ class UserController extends ApplicationController {
 		tpl_assign('permissions', $permissions);
 		tpl_assign('user_data', $user_data);
 		tpl_assign('billing_categories', BillingCategories::findAll());
-
+		
+		//Refresh Tasks
+		$refresh = array_var($_REQUEST, 'refresh_assignees');
+		if($refresh)
+		{
+			$_SESSION['refresh_assignnes'] = true;			
+		}
+		
 		if (is_array(array_var($_POST, 'user'))) {
 			if (!array_var($user_data, 'createPersonalProject')) {
 				$user_data['personal_project'] = 0;
 			}
 			try {
+				
 				DB::beginWork();
 				$user = $this->createUser($user_data, array_var($_POST,'permissions'));
 			
 				$object_controller = new ObjectController();
 				$object_controller->add_custom_properties($user);
-				DB::commit();	
+				DB::commit();
+				
+				if (isset($_SESSION['refresh_assignnes']))
+				{
+					evt_add('refresh_assignees', $company->getId() . ':' . $user->getId());
+					unset($_SESSION['refresh_assignnes']);	
+				}				
+				
 				flash_success(lang('success add user', $user->getDisplayName()));
 				ajx_current("back");
+			
 			} catch(Exception $e) {
+				
 				DB::rollback();
+				if($user)$user->deleteFromSearchableObjects();
 				ajx_current("empty");
 				flash_error($e->getMessage());
+			
 			} // try
 
 		} // if
@@ -321,8 +343,8 @@ class UserController extends ApplicationController {
 		if (logged_user()->isAdministrator() || logged_user()->getId() ==  get_id()){						
 			$logs = ApplicationLogs::getOverallLogs(false, false, $pids, 15, 0, get_id());
 			tpl_assign('logs', $logs);
-			tpl_assign('user_id', get_id());
 		}
+		tpl_assign('user_id', get_id());
 		tpl_assign('user', $user);
 		ajx_set_no_toolbar(true);
 		ajx_extra_data(array("title" => $user->getDisplayName(), 'icon'=>'ico-user'));

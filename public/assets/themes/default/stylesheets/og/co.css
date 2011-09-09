@@ -173,15 +173,15 @@
 }
 
 .ico-large-message {
-	background-image: url(../../images/48x48/note.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2488px !important;
 }
 
 .ico-large-message-trashed {
-	background-image: url(../../images/48x48/note_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2596px !important;
 }
 
 .ico-large-message-archived {
-	background-image: url(../../images/48x48/note_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2542px !important;
 }
 
 /* ----- Template ----- */
@@ -206,15 +206,15 @@
 }
 
 .ico-large-template {
-	background-image: url(../../images/48x48/template.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3028px !important;
 }
 
 .ico-large-template-trashed {
-	background-image: url(../../images/48x48/template_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3136px !important;
 }
 
 .ico-large-template-archived {
-	background-image: url(../../images/48x48/template_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3082px !important;
 }
 
 
@@ -247,15 +247,15 @@
 }
 
 .ico-large-email {
-	background-image: url(../../images/48x48/email.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1624px !important;
 }
 
 .ico-large-email-trashed {
-	background-image: url(../../images/48x48/email_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1732px !important;
 }
 
 .ico-large-email-archived {
-	background-image: url(../../images/48x48/email_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1678px !important;
 }
 
 
@@ -282,7 +282,7 @@
 }
 
 .ico-large-chart {
-	background-image: url(../../images/48x48/chart.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1080px !important;
 }
 
 
@@ -319,16 +319,15 @@
 }
 
 .ico-large-contact {
-	background-image: url(../../images/48x48/contact.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1354px !important;
 }
 
 .ico-large-contact-trashed {
-	background-image: url(../../images/48x48/contact_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1462px !important;
 }
 
-
 .ico-large-contact-archived {
-	background-image: url(../../images/48x48/contact_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1408px !important;
 }
 
 
@@ -355,15 +354,15 @@
 }
 
 .ico-large-company {
-	background-image: url(../../images/48x48/company.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1134px !important;
 }
 
 .ico-large-company-trashed {
-	background-image: url(../../images/48x48/company_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1246px !important;
 }
 
 .ico-large-company-archived {
-	background-image: url(../../images/48x48/company_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1190px !important;
 }
 
 
@@ -390,7 +389,7 @@
 }
 
 .ico-large-user {
-	background-image: url(../../images/48x48/user.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3568px !important;
 }
 
 
@@ -427,15 +426,15 @@
 }
 
 .ico-large-files {
-	background-image: url(../../images/48x48/files.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1948px !important;
 }
 
 .ico-large-files-trashed {
-	background-image: url(../../images/48x48/files_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2056px !important;
 }
 
 .ico-large-files-archived {
-	background-image: url(../../images/48x48/files_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2002px !important;
 }
 
 
@@ -468,15 +467,15 @@
 }
 
 .ico-large-tasks {
-	background-image: url(../../images/48x48/tasks.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2866px !important;
 }
 
 .ico-large-tasks-trashed {
-	background-image: url(../../images/48x48/tasks_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2974px !important;
 }
 
 .ico-large-tasks-archived {
-	background-image: url(../../images/48x48/tasks_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2920px !important;
 }
 
 
@@ -509,15 +508,15 @@
 }
 
 .ico-large-milestone {
-	background-image: url(../../images/48x48/milestone.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2326px !important;
 }
 
 .ico-large-milestone-trashed {
-	background-image: url(../../images/48x48/milestone_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2434px !important;
 }
 
 .ico-large-milestone-archived {
-	background-image: url(../../images/48x48/milestone_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2380px !important;
 }
 
 /* ----- Events ----- */
@@ -549,15 +548,15 @@
 }
 
 .ico-large-event {
-	background-image: url(../../images/48x48/view_calendar_day.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3676px !important;
 }
 
 .ico-large-event-trashed {
-	background-image: url(../../images/48x48/event_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1840px !important;
 }
 
 .ico-large-event-archived {
-	background-image: url(../../images/48x48/event_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1786px !important;
 }
 
 
@@ -625,7 +624,7 @@
 }
 
 .ico-large-report {
-	background-image: url(../../images/48x48/report.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2758px !important;
 }
 
 
@@ -652,15 +651,15 @@
 }
 
 .ico-large-weblink {
-	background-image: url(../../images/48x48/weblink.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3784px !important;
 }
 
 .ico-large-weblink-archived {
-	background-image: url(../../images/48x48/weblink_archived.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3838px !important;
 }
 
 .ico-large-weblink-trashed {
-	background-image: url(../../images/48x48/weblink_trashed.png);
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3892px !important;
 }
 
 

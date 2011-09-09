@@ -5,7 +5,7 @@
 	'old password' => 'Ancien mot-de-passe',
 	'remember me' => 'Rester connecté pendant 2 semaines',
 	'email address' => 'Adresse de messagerie ',
-	'display name' => ' Nom affiché',
+	'display name' => 'Nom affiché',
 	'overview' => 'Aperçu',
 	'search' => 'Recherche',
 	'search results' => 'Résultats de recherche',
@@ -218,4 +218,9 @@
 	'latest activity' => 'Dernières activités',
 	'view all activity' => 'Voir toutes les activités...',
 	'advanced' => 'Avancé',
+	'the' => 'le',
+	'email or username' => 'E-mail / Nom d\'utilisateur',
+	'assigned to description' => 'Pour choisir le propriétaire du compte de messagerie électronique',
+	'workspace and tags' => 'Contextes et Étiquettes',
+	'direct url' => 'URL directe',
 ); ?>

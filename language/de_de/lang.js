@@ -700,5 +700,6 @@ addLangs({
 	'add object subtype': 'Objekt-Untertyp hinzufügen',
 	'delete object subtype': 'Objekt-Untertyp löschen',
 	'object subtype deleted': 'Der Untertyp {0} wurde erfolgreich gelöscht!',
-	'delete object subtype warning': 'Wenn Sie diesen Untertyp löschen, so wird es von allen genutzten Objekten entfernt. Sind Sie wirklich sicher, diesen Untertyp zu löschen?'
+	'delete object subtype warning': 'Wenn Sie diesen Untertyp löschen, so wird es von allen genutzten Objekten entfernt. Sind Sie wirklich sicher, diesen Untertyp zu löschen?',
+	'change status': 'Status bearbeiten'
 });

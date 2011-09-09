@@ -8,9 +8,7 @@
 	} else {
 		$form_action = $company->getEditUrl();
 	}
-	$all = true;
-	if (active_project()!= null)
-		$all = false;
+	$all = active_project()!= null ? false : true;
 ?>
 <form style="height:100%;background-color:white" class="internalForm" action="<?php echo $form_action ?>" method="post">
 
@@ -35,7 +33,7 @@
   	
   	<div style="padding-top:5px">
 		<?php if ($all) { ?>
-			<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_contact_select_workspace_div',this)"><?php echo lang('workspace') ?></a> - 
+			<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_company_select_workspace_div',this)"><?php echo lang('workspace') ?></a> - 
 		<?php } else {?>
 			<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_company_select_workspace_div',this)"><?php echo lang('workspace') ?></a> -
 		<?php }?> 

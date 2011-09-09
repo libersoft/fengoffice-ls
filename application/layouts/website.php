@@ -2,6 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
 <head>
+	
+	<?php
+	// Todo: We are telling IE9 to use IE8 engine for Feng application 
+	// This header should be removed when SEncha team releases EXT JS compatibility for IE9 
+	echo meta_tag('X-UA-Compatible', 'IE=8', true) ?>
+
 	<!-- script src="http://www.savethedevelopers.org/say.no.to.ie.6.js"></script -->
 	<title><?php echo clean(CompanyWebsite::instance()->getCompany()->getName()) . ' - ' . PRODUCT_NAME ?></title>
 	<?php echo link_tag(with_slash(ROOT_URL)."favicon.ico", "rel", "shortcut icon") ?>
@@ -200,8 +206,6 @@ og.preferences = {
 };
 
 Ext.Ajax.timeout = <?php echo get_max_execution_time()*1100 // give a 10% margin to PHP's timeout ?>;
-og.musicSound = new Sound();
-og.systemSound = og.musicSound;//new Sound();
 
 var quickAdd = new og.QuickAdd({renderTo:'quickAdd'});
 var searchbutton = new Ext.Button({renderTo:'searchboxButton', text: lang('search'), type:'submit', handler:function(){document.getElementById('searchButtonReal').click()} });

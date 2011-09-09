@@ -200,6 +200,7 @@ CREATE TABLE `<?php echo $table_prefix ?>object_reminders` (
   `minutes_before` int(10) default NULL,
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
+  INDEX ( `date` ),
   KEY `type_date` (`type`,`date`),
   KEY `object` USING BTREE (`object_manager`,`object_id`,`date`)
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
@@ -1097,7 +1098,8 @@ CREATE TABLE `<?php echo $table_prefix ?>custom_properties` (
   `is_multiple_values` tinyint(1) NOT NULL,
   `property_order` int(10) NOT NULL,
   `visible_by_default` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX ( `object_type` )
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE IF NOT EXISTS `<?php echo $table_prefix ?>custom_property_values` (
@@ -1105,7 +1107,9 @@ CREATE TABLE IF NOT EXISTS `<?php echo $table_prefix ?>custom_property_values` (
   `object_id` int(10) NOT NULL,
   `custom_property_id` int(10) NOT NULL,
   `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX ( `object_id` ),
+  INDEX ( `custom_property_id` )
 ) ENGINE=<?php echo $engine ?> <?php echo $default_charset ?>;
 
 CREATE TABLE `<?php echo $table_prefix ?>queued_emails` (

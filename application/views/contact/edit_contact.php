@@ -2,9 +2,7 @@
 	require_javascript("og/modules/addContactForm.js");
 	$genid = gen_id();
 	$object = $contact;
-	$all = true;
-	if (active_project()!= null)
-		$all = false;		
+	$all = active_project()!= null ? false : true;
 ?>
 
 <form id="<?php echo $genid ?>submit-edit-form" style='height:100%;background-color:white' class="internalForm" action="<?php echo $contact->isNew() ? $contact->getAddUrl() : $contact->getEditUrl() ?>" method="post">
@@ -51,7 +49,7 @@
 		<?php }?>
 		<?php if (isset($isAddProject) && $isAddProject) { ?>
 			<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_contact_role_div', this)"><?php echo lang('role') ?></a> - 
-		<?php } ?>		
+		<?php } ?>
 		<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_contact_add_tags_div', this)"><?php echo lang('tags') ?></a> -
 		<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_contact_work', this)"><?php echo lang('work') ?></a> - 
 		<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_contact_email_and_im', this)"><?php echo lang('email and instant messaging') ?></a> - 

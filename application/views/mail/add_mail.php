@@ -107,13 +107,13 @@ sig.actualHtmlSignature = '';
 <div class="mail" id="<?php echo $genid ?>mail_div" style="height:100%;">
 <div class="coInputHeader" id="<?php echo $genid ?>header_div">
 	<div class="coInputHeaderUpperRow">
-  		<div class="coInputTitle"><table style="width:535px"><tr><td>
+  		<div class="coInputTitle"><table style="width:auto"><tr><td>
   			<?php echo lang('send mail') ?>
   		</td><td>
   			<input type="image" src="s.gif" style="width:1px;height:1px;border:0;background:transparent;cursor:default" /><!-- Opera and IE seem to use first submit button when pressing enter on a form field. If this button is not present the first submit button would be the "Send" button and so the email would be sent -->
   		</td><td style="text-align:right">
   			<?php echo submit_button(lang('send mail'), '', 
-  			array('style'=>'margin-top:0px;margin-left:10px','onclick'=>"og.setHfValue('$genid', 'isDraft', 'false');og.stopAutosave('$genid');"))?>
+  			array('style'=>'margin-top:0px;margin-left:10px','onclick'=>"og.setHfValue('$genid', 'isDraft', 'false');og.stopAutosave('$genid'); return og.attachmentConfirmationAdded('$genid');"))?>
   		</td>
   		<td style="text-align:right">
   			<?php echo submit_button(lang('save')." ".lang('draft'), '', 
@@ -272,7 +272,7 @@ sig.actualHtmlSignature = '';
   
 </div>
 <div class="coInputSeparator"></div>
-<div id="<?php echo $genid ?>mail_body_container" style="height: 105%; overflow-y: auto">
+<div id="<?php echo $genid ?>mail_body_container" style="height: 100%;">
     <?php 
     $display = ($type == 'html') ? 'none' : 'block';
     $display_fck = ($type == 'html') ? 'block' : 'none';
@@ -294,7 +294,7 @@ sig.actualHtmlSignature = '';
     	'style' => "display:$display;width:97%;height:94%;margin-left:1%;margin-right:1%;margin-top:1%; min-height:250px;", 
     	'onkeypress' => "if (!og.thisDraftHasChanges) og.checkMailBodyChanges();", 'autocomplete' => 'off')) ?>
 
-    <div id="<?php echo $genid ?>ck_editor" style="display:<?php echo $display_fck ?>; width:100%; height:100%; padding:0px; margin:0px; min-height:265px;overflow: hidden">
+    <div id="<?php echo $genid ?>ck_editor" style="display:<?php echo $display_fck ?>; width:100%; height:100%; padding:0px; margin:0px; min-height:265px;">
 		<textarea style="display:none;" id="<?php echo $genid ?>ckeditor" tabindex="51"><?php echo clean($html_body) ?></textarea>
 	</div>
 </div>
@@ -388,6 +388,33 @@ og.eventManager.addListener("email saved", function(obj) {
 		Ext.getCmp(p.id).setPreventClose(false);
 	}
 }, null, {replace:true});
+
+og.attachmentConfirmationAdded = function (genid){
+	 var need_confirmation = true;	 
+	 var container = document.getElementById(genid + "attachments");
+	 var max = container.getElementsByTagName('span').length;	 
+	 if (max > 0){
+		 var i = 0;
+		 while (i < max && need_confirmation == true){			
+			 var hidden = document.getElementById('linked_objects['+i+']');
+			 var check_id = hidden.value;		 
+			 check = document.getElementById(check_id);			
+			 if (!check.checked){ 
+				 need_confirmation = false;
+			 }
+			 i++;		 	
+		}
+		if (need_confirmation == false){		
+			var answer = confirm(lang('warning create users automatically email'));
+			if (answer){
+				return true;
+			}else{
+				return false;
+			}
+		}		
+	 }
+	 return true;
+}
 
 og.resizeMailDiv = function() {
 	maindiv = document.getElementById('<?php echo $genid ?>main_div');
