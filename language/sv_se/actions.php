@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Systemspråk FengOffice
+ * SystemsprÃ¥k FengOffice
  *
- * Svenska SE (Stockholm 2011-01-10)
+ * Svenska SE (Trelleborg 2011-03-10)
  *
  * @version 2.0 -2011
- * @author Mattias Norgren <mattias@svenskanat.se>
- * @Copyright by Svenska Nätverk 2011
+ * @author Richard <Richard@lanslaget.se>
+ * @Copyright by Lanslaget 2011
  */
 
 // Return langs

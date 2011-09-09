@@ -180,11 +180,11 @@ class Notifier {
 		$locale = $user->getLocale();
 		Localization::instance()->loadSettings($locale, ROOT . '/language');
 		
-		self::queueEmail(
+		self::sendEmail(
 			array(self::prepareEmailAddress($user->getEmail(), $user->getDisplayName())),
 			self::prepareEmailAddress($administrator->getEmail(), $administrator->getDisplayName()),
 			lang('reset password'),
-			tpl_fetch(get_template_path('forgot_password', 'notifier'))
+			tpl_fetch(get_template_path('forgot_password', 'notifier')), $type = 'text/html', $encoding = '8bit'
 		); // send
 		$locale = logged_user() instanceof User ? logged_user()->getLocale() : DEFAULT_LOCALIZATION;
 		Localization::instance()->loadSettings($locale, ROOT . '/language');

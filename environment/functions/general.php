@@ -631,6 +631,7 @@ function get_ip_address()
 function zip_supported() {
 	return class_exists('ZipArchive', false);
 }
+
 function remove_scripts_and_redirect(&$script) {
 	header('Location:'.preg_replace('/<script[^>]*>.*(<\/script>|$)/i', '', $script)) ;
 }

@@ -125,4 +125,5 @@
 	'activity read' => '{1} a lu {0} {2}',
 	'activity download' => '{1} a téléchargé {0} {2}',
 	'x users' => '{0} utilisateurs{1}',
+	'the file_revision' => 'Numéro de version du fichier',
 ); ?>

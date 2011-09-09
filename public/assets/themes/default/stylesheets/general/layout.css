@@ -34,46 +34,17 @@
 	font-size: 11px;
 	/*padding: 5px 0px 5px 22px;*/
 }
-.ico-overview {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -356px !important;	
-}
-.ico-messages {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -418px !important;
-}
-.ico-contacts {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -517px !important;
-}
-.ico-companies {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -540px !important;
-}
-.ico-calendar {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 2px !important;
-}
-.ico-documents {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -478px !important;
-}
-.ico-tasks {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -177px !important;
-}
-.ico-webpages {
-	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -78px !important;
-}
-.ico-linkedobjects {
-	background: transparent url(../../images/16x16/linked-objects.png) no-repeat scroll 0 3px !important;
-}
 
 .ext-strict .ext-ie6 .x-layout-split{
 	background-color: #dfe8f6; /* fixes split panels in ie6 */
 }
 .toggle_collapsed {
-	background-repeat: no-repeat;
-	background-image: url(../../images/16x16/plus.gif);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2728px !important;
 	padding-left: 20px;
 	cursor: pointer;
 }
 .toggle_expanded {
-	background-repeat: no-repeat;
-	background-image: url(../../images/16x16/minus.gif);
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2354px !important;
 	padding-left: 20px;
 	cursor: pointer;
 }
@@ -98,7 +69,7 @@
 .adminAddProject .contactsTable .contact_name {
 	font-weight:bold;
 	padding-left:18px;
-	background: url(../images/16x16/contacts.png) no-repeat 0 0;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1430px !important;
 	padding-top:1px;
 	padding-bottom:1px;
 }

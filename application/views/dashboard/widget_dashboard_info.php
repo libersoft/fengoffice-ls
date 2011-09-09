@@ -30,7 +30,7 @@
 			</div>
 <?php }//}
 
-	if (logged_user()->isMemberOfOwnerCompany()){
+	if (logged_user()->isMemberOfOwnerCompany() || (config_option('external_users_see_other_users'))){
 		$users = $project->getUsers(false); 
 		if (count($users) > 1){
 			?><div class='endSeparatorDiv' id='workspaceUsersDiv'>

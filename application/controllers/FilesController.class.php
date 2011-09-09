@@ -8,17 +8,24 @@
  */
 class FilesController extends ApplicationController {
 
-	/**
+	private $protocol;
+    
+    /**
 	 * Construct the FilesController
 	 *
 	 * @access public
 	 * @param void
 	 * @return FilesController
 	 */
-	function __construct() {
+	function __construct() 
+    {
 		parent::__construct();
-		prepare_company_website_controller($this, 'website');
-	} // __construct
+        
+        $protocol = (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS')) ? 'https' : 'http';
+		
+        prepare_company_website_controller($this, 'website');
+	
+    } // __construct
 
 	function init() {
 		require_javascript("og/FileManager.js");
@@ -364,7 +371,7 @@ class FilesController extends ApplicationController {
 				} else if ($file->getType() == ProjectFiles::TYPE_WEBLINK) {
 					$url = array_var($file_data, 'url', '');
 					if ($url && strpos($url, ':') === false) {
-						$url = "http://" . $url;
+						$url = $this->protocol . $url;
 						$file->setUrl($url);
 						$file->save();
 					}
@@ -500,7 +507,7 @@ class FilesController extends ApplicationController {
 				} else if ($file->getType() == ProjectFiles::TYPE_WEBLINK) {
 					$url = array_var($file_data, 'url', '');
 					if ($url && strpos($url, ':') === false) {
-						$url = "http://" . $url;
+						$url = $this->protocol . $url;
 						$file->setUrl($url);
 						$file->save();
 					}
@@ -1650,7 +1657,7 @@ class FilesController extends ApplicationController {
 				if ($file->getType() == ProjectFiles::TYPE_WEBLINK) {
 					$url = array_var($file_data, 'url', '');
 					if ($url && strpos($url, ':') === false) {
-						$url = "http://" . $url;
+						$url = $this->protocol . $url;
 					}
 					$file->setUrl($url);
 					$revision = $file->getLastRevision();

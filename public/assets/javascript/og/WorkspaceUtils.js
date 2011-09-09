@@ -326,6 +326,8 @@ og.drawWorkspaceSelector = function(renderTo, workspaceId, name, allowNone, extr
 	
 		var extra = Ext.util.JSON.encode(extraWS);
 		var wss = Ext.util.JSON.encode(workspaces);
+		wss = wss.replace(/\'/g, "&#8217;");
+
 		var html = "<input type='hidden' id='" + renderTo + "Value' name='" + name + "' value='" + ws.id + "'/>";
 		html +="<div class='x-form-field-wrap'><table><tr><td><div id='" + renderTo + "Header' class='og-ws-selector-header'>";
 		var path = og.getFullWorkspacePath(ws.id,true);
@@ -333,6 +335,7 @@ og.drawWorkspaceSelector = function(renderTo, workspaceId, name, allowNone, extr
 			path = ws.id == 0 && allowNone || !ws.name ? lang('none') : ws.name;
 		html += "<div class='coViewAction ico-color" + ws.color + " og-ws-selector-input' onclick='og.ShowWorkspaceSelector(\"" + renderTo + "\",\"" + ws.id + "\", " + (allowNone? 'true':'false') + ", " + extra + ", " + wss + ")' title='" + path + "'>" + path + "</div>";
 		html +="</div></td><td><img class='x-form-trigger x-form-arrow-trigger og-ws-selector-arrow' onclick='og.ShowWorkspaceSelector(\"" + renderTo + "\",\"" + ws.id + "\", " + (allowNone? 'true':'false') + ", " + extra + ", " + wss + ")' src='s.gif'/></td></tr></table><div id='" + renderTo + "Panel'></div></div>";
+		
 		container.innerHTML = html;
 	}
 }

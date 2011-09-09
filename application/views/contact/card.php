@@ -18,7 +18,7 @@
 	if (!$contact->isTrashed()) {
 		if (can_manage_security(logged_user())) {
 			if (! $contact->getUserId() || $contact->getUserId() == 0){
-				add_page_action(lang('create user from contact'), $contact->getCreateUserUrl() , 'ico-user');
+				add_page_action(lang('create user from contact'), $contact->getCreateUserUrl() , 'ico-user-old');
 			}
 		}
 		if ($contact->canEdit(logged_user())) {

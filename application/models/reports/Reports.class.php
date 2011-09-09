@@ -216,7 +216,7 @@ class Reports extends BaseReports {
 							$value = $condField->getValue();
 						}
 						if ($value == '' && $condField->getIsParametrizable()) $skip_condition = true;
-						if (!$skip_condition) {
+						if (!$skip_condition) {							
 							if($condField->getCondition() == 'like' || $condField->getCondition() == 'not like'){
 								$value = '%'.$value.'%';
 							}
@@ -225,10 +225,15 @@ class Reports extends BaseReports {
 								$value = $dtValue->format('Y-m-d');
 							}
 							if($condField->getCondition() != '%'){
-								if ($col_type == DATA_TYPE_INTEGER || $col_type == DATA_TYPE_FLOAT) {
-									$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' '.mysql_real_escape_string($value);
+								if ($col_type == DATA_TYPE_INTEGER || $col_type == DATA_TYPE_FLOAT) {									
+									if ($condField->getFieldName() != 'state'){
+										$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' '.mysql_real_escape_string($value);
+									}else{
+										$state_condition = ($value == '1') ? '> 0' : '= 0';  										
+										$allConditions .= '`completed_by_id` '.$state_condition;
+									}
 								}else{
-									if ($condField->getCondition()=='=' || $condField->getCondition()=='<=' || $condField->getCondition()=='>='){
+									if ($condField->getCondition()=='=' || $condField->getCondition()=='<=' || $condField->getCondition()=='>='){										
 										$equal = 'datediff(\''.mysql_real_escape_string($value).'\', `'.$condField->getFieldName().'`)=0';
 										switch($condField->getCondition()){
 											case '=':
@@ -240,7 +245,7 @@ class Reports extends BaseReports {
 												break;
 										}
 									}
-									else{
+									else{										
 										$allConditions .= '`'.$condField->getFieldName().'` '.$condField->getCondition().' \''.mysql_real_escape_string($value).'\'';
 									}
 								}
@@ -327,8 +332,12 @@ class Reports extends BaseReports {
 				foreach($allColumns as $column){
 					if ($column->getCustomPropertyId() == 0) {
 						$field = $column->getFieldName();
-						if ($managerInstance->columnExists($field)) {
-							$selectCols .= ', t.'.$field;
+						if ($managerInstance->columnExists($field)) {							
+							if ($field != 'state'){
+								$selectCols .= ', t.'.$field;
+							}else{
+								$selectCols .= ', t.completed_by_id as "t.state"';
+							}
 							$results['columns'][] = lang('field '.$report->getObjectType().' '.$field);
 							$results['db_columns'][lang('field '.$report->getObjectType().' '.$field)] = $field;
 							$first = false;
@@ -377,7 +386,7 @@ class Reports extends BaseReports {
 			else $limit_str = ' LIMIT ' . $offset . ',' . $limit;
 			
 			$sql = 'SELECT '.$selectCols.' FROM ('.$openPar.$selectFROM.') '.$selectWHERE.' GROUP BY id '.$order_by . $limit_str;
-			$rows = DB::executeAll($sql);
+			$rows = DB::executeAll($sql);			
 			if (is_null($rows)) $rows = array();
 			$rows = Reports::removeDuplicateRows($rows);
 			$reportObjTitleCols = array();
@@ -434,8 +443,7 @@ class Reports extends BaseReports {
 				}
 			}
 			$results['rows'] = $rows;
-		}
-
+		}		
 		return $results;
 	} //  executeReport
 	

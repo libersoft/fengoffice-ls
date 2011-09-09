@@ -106,14 +106,23 @@ class Timeslots extends BaseTimeslots {
 			$postFrom .= ") LEFT OUTER JOIN `".TABLE_PREFIX."projects` AS `ws" . $i . "` ON `pr`.`p" . ($wsDepth + $i + 1) . "` = `ws" . $i . "`.`id`";
 		
 		$commonConditions = "";
-		if ($start_date)
+		$commonConditions2 = "";
+		if ($start_date){
 			$commonConditions .= DB::prepareString(' AND `ts`.`start_time` >= ? ', array($start_date));
-		if ($end_date)
-			$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` < ? ', array($end_date)); 
-			//$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` > 0 AND `ts`.`end_time` < ? ', array($end_date));  -- another fix reported by a user, but we have to test it yet
-			
+			$commonConditions2 .= $commonConditions;
+		}
+		if ($end_date){
+			if ($timeslot_type == '1' || $timeslot_type == '2'){//this is for the General timeslots queries only
+				$commonConditions2 .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0 ) AND `ts`.`start_time` < ? ' , array($end_date)); //this is for the General timeslots queries only
+			}
+			$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` < ? ', array($end_date));
+			//$commonConditions .= DB::prepareString(' AND (`ts`.`paused_on` <> 0 OR `ts`.`end_time` <> 0) AND `ts`.`end_time` > 0 AND `ts`.`end_time` < ? ', array($end_date));  -- another fix reported by a user, but we have to test it yet		
+		}
+		
 		//User condition
-		$commonConditions .= $user? ' AND `ts`.`user_id` = '. $user->getId() : '';
+		$user_condition = $user? ' AND `ts`.`user_id` = '. $user->getId() : '';
+		$commonConditions .= $user_condition;
+		$commonConditions2 .= $user_condition;
 		
 		//Object condition
 		$commonConditions .= $object_id > 0 ? ' AND `ts`.`object_manager` = "ProjectTasks" AND `ts`.`object_id` = ' . $object_id : ''; //Only applies to tasks
@@ -183,7 +192,7 @@ class Timeslots extends BaseTimeslots {
 				$conditions = " WHERE `ts`.`object_manager` = 'Projects'";
 				$conditions .= $workspacesCSV ? ' AND `ts`.`object_id` IN (' . $workspacesCSV . ") AND `ts`.`object_id` = `pr`.`id`" : " AND `ts`.`object_id` = `pr`.`id`";
 
-				$sql = $select . $preFrom . $from . $postFrom . $conditions . $commonConditions;
+				$sql = $select . $preFrom . $from . $postFrom . $conditions . $commonConditions2;
 				break;
 			case 2: //All timeslots
 				$from1 = "`" . TABLE_PREFIX . "timeslots` AS `ts`, `" . TABLE_PREFIX . "project_tasks` AS `pt`, `" . TABLE_PREFIX ."projects` AS `pr`, `" . TABLE_PREFIX ."workspace_objects` AS `wo`";
@@ -197,7 +206,7 @@ class Timeslots extends BaseTimeslots {
 				$conditions2 = " WHERE `object_manager` = 'Projects'";
 				$conditions2 .= $workspacesCSV ? ' AND `ts`.`object_id` IN (' . $workspacesCSV . ") AND `ts`.`object_id` = `pr`.`id`" : " AND `ts`.`object_id` = `pr`.`id`";
 
-				$sql = $select . $preFrom . $from1 . $postFrom . $conditions1 . $commonConditions . $custom_cond . ' UNION ' . $select . $preFrom . $from2 . $postFrom . $conditions2 . $commonConditions;
+				$sql = $select . $preFrom . $from1 . $postFrom . $conditions1 . $commonConditions . $custom_cond . ' UNION ' . $select . $preFrom . $from2 . $postFrom . $conditions2 . $commonConditions2;
 				break;
 			default:
 				throw new Error("Timeslot type not recognised: " . $timeslot_type);

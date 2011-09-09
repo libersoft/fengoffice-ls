@@ -627,4 +627,5 @@
 	'confirm delete client' => 'Er du sikker på at du ønsker å slette valgt klientforetak og alle dets brukere?\\nDenne handlingen vil også slette brukerenes personlige arbeidsområder.',
 	'confirm delete user' => 'Er du sikker på at du vil slette denne brukerkontoen?\\nDenne handlingen vil også slette det personlige arbeidsområdet.',
 	'confirm subscribe' => 'Er du sikker på at du vil abonnere på dette objektet?\\nDu vil motta e-postvarsel hver gang noen (uten deg selv) legger til en kommentar på objektet.',
+	'success add handis' => 'Har blitt oppdatert',
 ); ?>

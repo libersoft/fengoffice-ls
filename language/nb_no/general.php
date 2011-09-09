@@ -37,7 +37,7 @@
 	'today' => 'I dag',
 	'yesterday' => 'I går',
 	'tomorrow' => 'I morgen',
-	'n/a' => 'ikke tilgjengelig',
+	'n/a' => 'Ikke tilgjengelig',
 	'anyone' => 'Alle',
 	'nobody' => 'Ingen',
 	'none' => '-- Ingen --',
@@ -109,7 +109,7 @@
 	'Event' => 'Hendelse',
 	'Events' => 'Hendelser',
 	'project calendar' => '{0} kalender',
-	'user calendar' => '{0}s kalender',
+	'user calendar' => '{0}\'s kalender',
 	'month 1' => 'Januar',
 	'month 2' => 'Februar',
 	'month 3' => 'Mars',
@@ -222,4 +222,5 @@
 	'view all activity' => 'Vis all aktivitet...',
 	'advanced' => 'Avansert',
 	'direct url' => 'Direktelenke',
+	'the' => 'Det',
 ); ?>

@@ -529,6 +529,7 @@ class AccessController extends ApplicationController {
 				$project = new Project();
 				$project->setId(1);
 				$project->setP1(1);
+				$project->setColor(11);
 				$project->setName(new_personal_project_name($administrator->getUsername()));
 				$project->setDescription(lang('files'));
 				$project->setCreatedById($administrator->getId());
@@ -557,6 +558,8 @@ class AccessController extends ApplicationController {
 				$this->redirectTo('access', 'login');
 			} catch(Exception $e) {
 				tpl_assign('error', $e);
+				if($administrator)$administrator->deleteFromSearchableObjects();
+				if($project)$project->deleteFromSearchableObjects();
 				DB::rollback();
 			} // try
 		} // if
@@ -632,6 +635,10 @@ class AccessController extends ApplicationController {
 		tpl_assign('user', $user);
 		$new_password = array_var($_POST, 'new_password');
 		if ($new_password) {
+			//update global cache if available			
+			if (GlobalCache::isAvailable()) {							
+				GlobalCache::delete('logged_user_'.$user->getId());
+			}
 			$repeat_password = array_var($_POST, 'repeat_password');
 			if ($new_password != $repeat_password) {
 				flash_error(lang('passwords dont match'));

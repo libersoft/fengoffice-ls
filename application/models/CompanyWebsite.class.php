@@ -96,16 +96,18 @@ final class CompanyWebsite {
 		if (empty($project_id)) {
 			$this->setProject(null);
 		} else {
+			$user = logged_user();
+			if (!($user instanceof User)) return;
 			$do_find = true;
 			// check the cache for the option value
-			if (GlobalCache::isAvailable()) {
-				$active_ws = GlobalCache::get('active_ws_'.logged_user()->getId(), $success);
-				if ($success) $do_find = ($active_ws->getId() != $project_id);
+			if (GlobalCache::isAvailable() && GlobalCache::key_exists('active_ws_'.$user->getId())) {					
+				$active_ws = GlobalCache::get('active_ws_'.$user->getId(), $success);							
+				if ($success && $active_ws != null) $do_find = ($active_ws->getId() != $project_id);				
 			}
 			if ($do_find) {
 				$project = Projects::findById($project_id);
 				if (GlobalCache::isAvailable()) {
-					GlobalCache::update('active_ws_'.logged_user()->getId(), $project);
+					GlobalCache::update('active_ws_'.$user->getId(), $project);
 				}
 			} else $project = $active_ws;
 			$this->setProject($project);
@@ -151,8 +153,8 @@ final class CompanyWebsite {
 		if(!$user->isValidToken($twisted_token)) {
 			return false; // failed to validate token
 		} // if
-		if(!($cn == md5(array_var($_SERVER, 'REMOTE_ADDR', "")))) {
-			return false; // failed to check ip address
+		if(!($cn == md5(array_var($_SERVER, 'HTTP_USER_AGENT', "")))) {
+			return false; // failed to check user agent
 		} // if
 		
 		$last_act = $user->getLastActivity();
@@ -276,8 +278,7 @@ final class CompanyWebsite {
 	
 			Cookie::setValue('id', $user->getId(), $expiration);
 			Cookie::setValue('token', $user->getTwistedToken(), $expiration);
-			Cookie::setValue('cn', md5(array_var($_SERVER, 'REMOTE_ADDR', "")));
-	
+			Cookie::setValue('cn', md5(array_var($_SERVER, 'HTTP_USER_AGENT', "")), $expiration);
 			if($remember) {
 				Cookie::setValue('remember', 1, $expiration);
 			} else {

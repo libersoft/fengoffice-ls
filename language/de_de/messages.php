@@ -628,4 +628,7 @@
 	'log subscribe projectmessages data' => '„{0}“ abonniert',
 	'outbox mail not sent' => 'Sie haben noch {0} E-Mail in Ihren Postausgang, die noch nicht verschickt wurde!',
 	'outbox mails not sent' => 'Sie haben noch {0} E-Mails in Ihren Postausgang, die noch nicht verschickt wurden!',
+	'error forgot password' => 'Das neue Passwort kann nicht gesendet werden! Bitte an den Feng Office-Administrator wenden.',
+	'mail not sent' => 'Diese E-Mail oder eine andere im Postausgangsordner konnte nicht gesendet werden. Wahrscheinlich gibt es ein Problem mit den E-Mail-Einstellungen oder dem E-Mail-Server selbst. Die Fehlermeldung lautet:',
+	'mail not sent, wrong settings/receiver' => 'Diese E-Mail oder eine andere im Postausgangsordner konnte nicht gesendet werden. Entweder es gibt Probleme mit den E-Mail-Einstellungen oder der Empfänger ist nicht gültig. Die Fehlermeldung lautet:',
 ); ?>

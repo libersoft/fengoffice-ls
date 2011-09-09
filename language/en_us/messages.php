@@ -707,6 +707,7 @@
   	'mail not sent' => "This email, or another one located in your 'Outbox' folder, has not been sent because there seems to be a problem with your email account settings or email server. The error message is:",
    	'mail not sent, wrong settings/receiver' => "This email, or another one located in your 'Outbox' folder, has not been sent because there either is a problem in your email account settings or the receiver is not valid. The error message is:",
   
+  	'success save object subtypes' => 'Object subtype saved successfully',
   
     'short search query warning' => 'You search query is too short. You can try searching for "<b>{0}*</b>" to find words starting with "<b>{0}</b>".',
   	'no attachments found for email' => 'No attachments found for email',

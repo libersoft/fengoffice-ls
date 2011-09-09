@@ -38,9 +38,9 @@ if (active_project()!= null)
 
 <div style="padding-top: 5px">
 <?php if ($all) { ?>
-	<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_webpage_select_workspace_div',this)"><?php echo lang('workspace') ?></a> - 
+	<a href="#" class="option" style="font-weight:bold" onclick="og.toggleAndBolden('<?php echo $genid ?>add_webpage_select_workspace_div',this)"><?php echo lang('workspace') ?></a>
 <?php } else {?>
-	<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_webpage_select_workspace_div',this)"><?php echo lang('workspace') ?></a> -
+	<a href="#" class="option" onclick="og.toggleAndBolden('<?php echo $genid ?>add_webpage_select_workspace_div',this)"><?php echo lang('workspace') ?></a>
 <?php }?>
 - <a href="#" class="option" tabindex=0 onclick="og.toggleAndBolden('<?php echo $genid?>add_webpage_tags_div', this)"><?php echo lang('tags') ?></a>
 - <a href="#" class="option" tabindex=0 onclick="og.toggleAndBolden('<?php echo $genid?>add_webpage_description_div', this)"><?php echo lang('description') ?></a>

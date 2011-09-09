@@ -63,7 +63,7 @@ fieldset legend {
   font-weight: bolder;
 }
 
-input { width: 200px; }
+input { width: 400px; }
 input.short { width: 50px; }
 input.medium { width: 150px; }
 input.long { width: 97%; /*99%;*/ }

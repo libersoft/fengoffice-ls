@@ -62,7 +62,8 @@ require_javascript('og/modules/addMessageForm.js');
 						<br>
 						<span style="color:#888888;font-size:90%;font-weight:normal;"> <?php echo $user->getEmail()  ?> </span>
 					</label>
-					
+					<div id="div<?php echo $genid ?>inviteUser<?php echo $user->getId() ?>check" class="container-div checked-user-check" <?php echo $checked==true? '':"style='display:none'" ?>>
+					</div>
 					<br/>
 				</div>
 			

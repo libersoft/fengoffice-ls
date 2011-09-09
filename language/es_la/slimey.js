@@ -8,13 +8,13 @@ addLangs({
 	"double click to edit content": "Haga doble clic para editar el contenido",
 	
 	// actions.js
-	"some text": "AlgÃºn Texto",
+	"some text": "Algún Texto",
 	
 	// navigation.js
-	"new slide text": "EdÃ­teme!",
+	"new slide text": "Edíteme!",
 	"slide {0}": "Diapositiva {0}",
 	"no slide to delete": "No hay diapositiva que borrar!",
-	"click top left button to add a slide": "Haga clic en el botÃ³n superior izquierdo para agregar una diapositiva",
+	"click top left button to add a slide": "Haga clic en el botón superior izquierdo para agregar una diapositiva",
 	"no slide to move": "No hay diapositiva que mover",
 	"click to insert a new slide": "Haga clic para insertar una diapositiva",
 	
@@ -22,41 +22,41 @@ addLangs({
 	"bold text": "Texto en negrita",
 	"underline text": "Texto subrayado",
 	"italic text": "Texto en cursiva",
-	"unsaved changes will be lost.": "Los cambios no guardados se perderÃ¡n.",
+	"unsaved changes will be lost.": "Los cambios no guardados se perderán.",
 	"align text to the left": "Alinear texto a la izquierda",
 	"align text to the center": "Alinear texto al centro",
 	"align text to the right": "Alinear texto a la derecha",
 	
 	// tools.js
-	"generic tool": "Herramienta genÃ©rica",
+	"generic tool": "Herramienta genérica",
 	"insert an element": "Insertar un elemento",
-	"what element do you wish to insert?": "Â¿QuÃ© elemento desea insertar?",
+	"what element do you wish to insert?": "¿Qué elemento desea insertar?",
 	"insert text": "Insertar texto",
 	"insert image": "Insertar una imagen",
 	"insert ordered list": "Insertar lista numerada",
 	"insert unordered list": "Insertar lista no numerada",
 	"edit the elements content": "Editar el contenido del elemento",
 	"change font color": "Cambiar el color de fuente",
-	"change font size": "Cambiar el tamaÃ±o de la fuente",
+	"change font size": "Cambiar el tamaño de la fuente",
 	"size": "Size",
 	"font family": "Tipo de fuente",
-	"generic fonts": "Fuentes genÃ©ricas",
-	"specific fonts": "Fuentes especÃ­ficas",
+	"generic fonts": "Fuentes genéricas",
+	"specific fonts": "Fuentes específicas",
 	"delete element": "Borrar un elemento",
 	"redo": "Rehacer",
 	"undo": "Deshacer",
 	"send element to the back": "Enviar elemento al fondo",
 	"bring element to the front": "Traer elemento al frente",
-	"view source code": "Ver cÃ³digo fuente",
-	"save slideshow": "Guardar presentaciÃ³n",
-	"preview slideshow": "Previsualizar presentaciÃ³n",
+	"view source code": "Ver código fuente",
+	"save slideshow": "Guardar presentación",
+	"preview slideshow": "Previsualizar presentación",
 	"add a new slide after the selected one": "Agregar una nueva diapositiva luego de la seleccionada",
 	"delete the selected slide": "Borrar la diapositiva seleccionada",
 	"move the selected slide down one place": "Mover la diapositiva seleccionada un lugar hacia abajo",
 	"move the selected slide up one place": "Mover la diapositiva seleccionada un lugar hacia arriba",
 	
 	// slimey.html
-	"new slideshow": "Nueva presentaciÃ³n",
+	"new slideshow": "Nueva presentación",
 	"second slide": "Segunda diapositiva"
 });
 

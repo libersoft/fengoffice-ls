@@ -1958,7 +1958,7 @@ class Project extends BaseProject {
 	 * @param void
 	 * @return boolean
 	 */
-	function delete() {
+	function delete() {		
 		$wsIds = $this->getAllSubWorkspacesQuery();
 		if ($wsIds) {
 			$ws = $this->getSubWorkspaces();
@@ -2010,8 +2010,8 @@ class Project extends BaseProject {
 				}
 				
 				foreach ($wsToDelete as $w)
-					$w->deleteSingle();
-				
+					$w->deleteSingle();	
+								
 				if (isset($moves))
 					foreach ($moves as $move){
 						$move[0]->setParentWorkspace($move[1]);
@@ -2019,7 +2019,11 @@ class Project extends BaseProject {
 					}
 			}
 		}
-		
+		// Delete ws from old global cache 
+		if (GlobalCache::isAvailable()) {			
+			GlobalCache::delete('user_copt_obj_lastAccessedWorkspace');
+			GlobalCache::delete('user_copt_obj_initialWorkspace');
+		}	
 		return $this->deleteSingle();
 	} // delete
 	
@@ -2031,6 +2035,11 @@ class Project extends BaseProject {
 	 */
 	protected function deleteSingle() {
 		@set_time_limit(0);
+		
+		if (GlobalCache::isAvailable()) {			
+			$this->deleteProjectFromGlobalCache();			
+		}
+		
 		$this->clearMessages();
 		$this->clearTasks();
 		$this->clearMilestones();
@@ -2046,6 +2055,24 @@ class Project extends BaseProject {
 		$this->clearTimeslots();
 		return parent::delete();
 	} // delete
+	
+	/**
+	 * Deletes all of the workspace/project cached values from the Global Cache
+	 *
+	 * @param void
+	 * @return boolean
+	 */
+	function deleteProjectFromGlobalCache() {
+		if (GlobalCache::isAvailable()) {					
+				$users = Users::getAll();				
+				foreach($users as $user){
+					$id = $user->getId();			
+					GlobalCache::delete('user_config_option_'.$id.'_lastAccessedWorkspace');
+					GlobalCache::delete('user_config_option_'.$id.'_initialWorkspace');			
+					GlobalCache::delete('active_ws_'.$id);				
+				}
+		}	
+	}
 
 	/**
 	 * Clear all project webpages

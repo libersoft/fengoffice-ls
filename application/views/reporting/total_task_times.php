@@ -118,8 +118,8 @@
 	$date_format = user_config_option('date_format');
 	
 ?>
-<?php if ($start_time) { ?><span style="font-weight:bold"><?php echo lang('from')?></span>:&nbsp;<?php echo format_datetime($start_time, $date_format) ?><?php } // if ?>
-<?php if ($end_time) { ?><span style="font-weight:bold; padding-left:10px"><?php echo lang('to')?></span>:&nbsp;<?php echo format_datetime($end_time, $date_format) ?><?php } // if ?>
+<?php if ($start_time) { ?><span style="font-weight:bold"><?php echo lang('from date')?></span>:&nbsp;<?php echo format_datetime($start_time, $date_format) ?><?php } // if ?>
+<?php if ($end_time) { ?><span style="font-weight:bold; padding-left:10px"><?php echo lang('to date')?></span>:&nbsp;<?php echo format_datetime(($date_type == '6' ? $end_time->add('d',-1) : $end_time), $date_format) ?><?php } // if ?>
 
 <?php if(!isset($task_title)) 
 	$task_title = null;

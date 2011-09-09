@@ -54,7 +54,7 @@ var editor = CKEDITOR.replace('<?php echo $genid ?>ckeditor', {
 	language: '<?php echo $loc ?>',
 	customConfig: '',
 	toolbar: [
-				['Source','-','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt','-',
+				['Source','-','PasteText','PasteFromWord','-','Print', 'Scayt','-',//, 'SpellChecker', 'Scayt','-',
 				'Undo','Redo','-','Find','Replace','-','SelectAll', '-',
 				'Format','Font','FontSize'],
 				'/',

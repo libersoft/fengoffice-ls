@@ -35,8 +35,8 @@
 					$name = clean($cp->getName());
 				  }else{
 				  	if ($condition->getFieldName()!= 'workspace' && $condition->getFieldName()!= 'tag'){
-				  	    $name = lang('field ' . $model . ' ' . $condition->getFieldName());
-				  	}else{
+				  	    $name = lang('field ' . $model . ' ' . $condition->getFieldName());				  	    
+				  	}else{				  		
 				  		$name = lang($condition->getFieldName());
 				  	}	
 				  } 
@@ -67,12 +67,12 @@
 				</td>
 			<?php }else{ ?>
 				<td align='left'>
-				<?php 
-				if($condition->getFieldName() != 'workspace' && $condition->getFieldName() != 'tag'){
+				<?php				
+				if($condition->getFieldName() != 'workspace' && $condition->getFieldName() != 'tag' && $condition->getFieldName() != 'state'){
 					$model_instance = new $model();
-					$col_type = $model_instance->getColumnType($condition->getFieldName());
+					$col_type = $model_instance->getColumnType($condition->getFieldName());					
 					$externalCols = $model_instance->getExternalColumns();
-					if(in_array($condition->getFieldName(), $externalCols)){ ?>
+					if(in_array($condition->getFieldName(), $externalCols)){ ?>					
 						<select id="<?php echo $condId; ?>" name="params[<?php echo $condition->getId() ?>]" />
 					<?php foreach($external_fields[$condition->getFieldName()] as $value){ ?>
 							<option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
@@ -93,9 +93,15 @@
 				$val=$condition->getValue();
 				if($condition->getFieldName() == 'workspace'){
 					echo select_project2('params[workspace]',isset($val)?$val:0, $genid , true);
-				}
-				if($condition->getFieldName() == 'tag'){					
+				}else if($condition->getFieldName() == 'tag'){					
 					echo autocomplete_tags_field("params[tag]", null, null, 40);
+				}else if ($condition->getFieldName() == 'state'){					
+					?>
+					    <select id="<?php echo $condId; ?>" name="params[<?php echo $condition->getId() ?>]" tabindex=<?php echo $tiCount?>>
+							<option value="1" > <?php echo lang('completed task') ?>  </option>
+							<option value="0" > <?php echo lang('open task') ?> </option>
+						</select>
+					<?php
 				}
 			 } ?>
 			</tr>

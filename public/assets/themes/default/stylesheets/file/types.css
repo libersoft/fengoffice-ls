@@ -1,3 +1,4 @@
+/*
 .ico-project, .ico-workspace {
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -620px !important;
 }
@@ -34,9 +35,6 @@
 .ico-projectmessage, .ico-message {
 	background: transparent url(../../images/16x16/all_16_16_vertical.png) no-repeat scroll 0 -420px !important;
 }
-.ico-message-rfc822 {
-	background-image: url(../../images/16x16/types/message.png) !important;
-}
 .ico-projectfile, .ico-file {
 	background-image: url(../../images/16x16/types/file.png) !important;
 }
@@ -46,253 +44,186 @@
 .ico-group, .ico-groups {
 	background-image: url(../../images/16x16/types/group.png) !important;
 }
-
+*/
+.ico-group, .ico-groups {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1870px !important;
+}
+.ico-user-old {
+	background-image: url(../../images/16x16/types/user.png) !important;
+}
+.ico-user, .ico-users {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3959px !important;
+}
+.ico-emailunclassified {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -726px !important;
+}
+.ico-message-rfc822 {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -2310px !important;
+}
 .ico-application {
-	background-image: url(../../images/16x16/types/application.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -506px !important;
 }
 .ico-application-pdf {
-	background-image: url(../../images/16x16/types/application-pdf.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -110px !important;
 }
 .ico-application-vnd_ms-excel, .sprd {
-	background-image: url(../../images/16x16/types/application-vnd.ms-excel.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -132px !important;
 }
 .ico-application-vnd_ms-powerpoint, .prsn {
-	background-image: url(../../images/16x16/types/application-vnd.ms-powerpoint.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -154px !important;
 }
 .ico-application-vnd_ms-word, .ico-application-msword, .txt {
-	background-image: url(../../images/16x16/types/application-vnd.ms-word.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -176px !important;
 }
 .ico-application-xspf-xml {
-	background-image: url(../../images/16x16/types/application-xspf-xml.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -462px !important;
 }
 .ico-application-vnd_oasis_opendocument_chart {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.chart.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -198px !important;
 }
 .ico-application-vnd_oasis_opendocument_database {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.database.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -220px !important;
 }
 .ico-application-vnd_oasis_opendocument_formula {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.formula.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -242px !important;
 }
 .ico-application-vnd_oasis_opendocument_graphics {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.graphics.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -264px !important;
 }
 .ico-application-vnd_oasis_opendocument_image {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.image.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -286px !important;
 }
 .ico-application-vnd_oasis_opendocument_presentation {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.presentation.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -330px !important;
 }
 .ico-application-vnd_oasis_opendocument_presentation-template {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.presentation-template.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -308px !important;
 }
 .ico-application-vnd_oasis_opendocument_spreadsheet {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.spreadsheet.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -374px !important;
 }
 .ico-application-vnd_oasis_opendocument_spreadsheet-template {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.spreadsheet-template.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -352px !important;
 }
 .ico-application-vnd_oasis_opendocument_text {
-	background-image: url(../../images/16x16/types/application-vnd.oasis.opendocument.text.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -396px !important;
 }
 .ico-application-vnd_openxmlformats-officedocument_spreadsheetml_sheet {
-	background-image: url(../../images/16x16/types/application-vnd.openxmlformats-officedocument.spreadsheetml.sheet.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -418px !important;
 }
 .ico-application-vnd_openxmlformats-officedocument_wordprocessingml_document {
-	background-image: url(../../images/16x16/types/application-vnd.openxmlformats-officedocument.wordprocessingml.document.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -440px !important;
 }
 .ico-application-vnd_rn-realmedia {
-	background-image: url(../../images/16x16/types/video.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4003px !important;
 }
-.ico-application-x-compressed {
-	background-image: url(../../images/16x16/types/application-zip.png) !important;
+.ico-application-x-compressed, .ico-application-x-zip-compressed, .ico-application-zip {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -484px !important;
 }
-.ico-application-x-zip-compressed {
-	background-image: url(../../images/16x16/types/application-zip.png) !important;
+.ico-audio, .ico-audio-mpeg {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -616px !important;
 }
-.ico-application-zip {
-	background-image: url(../../images/16x16/types/application-zip.png) !important;
+.ico-image, .ico-image-jpg, .ico-image-jpeg, .ico-image-bmp, .ico-image-gif {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -1980px !important;
 }
-.ico-audio {
-	background-image: url(../../images/16x16/types/audio.png) !important;
-}
-.ico-audio-mpeg {
-	background-image: url(../../images/16x16/types/audio.png) !important;
-}
-.ico-image {
-	background-image: url(../../images/16x16/types/image.png) !important;
-}
-.ico-image-jpg {
-	background-image: url(../../images/16x16/types/image.png) !important;
-}
-.ico-image-jpeg {
-	background-image: url(../../images/16x16/types/image.png) !important;
-}
-.ico-image-bmp {
-	background-image: url(../../images/16x16/types/image.png) !important;
-}
-.ico-image-gif {
-	background-image: url(../../images/16x16/types/image.png) !important;
-}
-.ico-text {
-	background-image: url(../../images/16x16/types/text.png) !important;
-}
-.ico-text-plain {
-	background-image: url(../../images/16x16/types/text.png) !important;
-}
-.ico-txt {
-	background-image: url(../../images/16x16/types/text.png) !important;
+.ico-text, .ico-txt, .ico-text-plain {
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3629px !important;
 }
 .ico-text-html {
-	background-image: url(../../images/16x16/types/text-html.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3585px !important;
 }
 .ico-text-xml {
-	background-image: url(../../images/16x16/types/text-xml.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -3607px !important;
 }
 .ico-video {
-	background-image: url(../../images/16x16/types/video.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4003px !important;
 }
 .ico-webfile {
-	background-image: url(../../images/16x16/types/webfile.png) !important;
+	background: transparent url(../../images/16x16/all_16_16_sprite.png) no-repeat scroll 0 -4157px !important;
 }
 
 
 .ico-large-unknown {
-	background-image: url(../../images/48x48/types/unknown.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3460px !important;
 }
-/*.ico-large-milestone {
-	background-image: url(../../images/48x48/types/milestone.png) !important;
-}
-.ico-large-email {
-	background-image: url(../../images/48x48/types/email.png) !important;
-}
-.ico-large-emailunclassified {
-	background-image: url(../../images/48x48/types/classify.png) !important;
-}
-.ico-large-weblink, .ico-large-webpage {
-	background-image: url(../../images/48x48/types/webpage.png) !important;
-}
-.ico-large-task {
-	background-image: url(../../images/48x48/types/task.png) !important;
-}
-.ico-large-event {
-	background-image: url(../../images/48x48/types/event.png) !important;
-}
-.ico-large-contact {
-	background-image: url(../../images/48x48/types/contact.png) !important;
-}
-.ico-large-company {
-	background-image: url(../../images/48x48/types/company.png) !important;
-}
-.ico-large-message {
-	background-image: url(../../images/48x48/types/message.png) !important;
-}
-.ico-large-file {
-	background-image: url(../../images/48x48/types/file.png) !important;
-}
-.ico-large-user {
-	background-image: url(../../images/48x48/types/user.png) !important;
-}*/
-
 .ico-large-application {
-	background-image: url(../../images/48x48/types/application.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -1894px !important;
 }
 .ico-large-application-pdf {
-	background-image: url(../../images/48x48/types/application-pdf.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 0 !important;
 }
 .ico-large-application-vnd_ms-excel, .sprd {
-	background-image: url(../../images/48x48/types/application-vnd.ms-excel.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -54px !important;
 }
 .ico-large-application-vnd_ms-powerpoint, .prsn {
-	background-image: url(../../images/48x48/types/application-vnd.ms-powerpoint.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -108px !important;
 }
 .ico-large-application-vnd_ms-word, .ico-large-application-msword, .txt {
-	background-image: url(../../images/48x48/types/application-vnd.ms-word.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -162px !important;
 }
 .ico-large-application-xspf+xml {
-	background-image: url(../../images/48x48/types/application-xspf+xml.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -864px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_chart {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.chart.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -216px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_database {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.database.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -270px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_formula {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.formula.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -324px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_graphics {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.graphics.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -378px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_image {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.image.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -432px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_presentation {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.presentation.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -540px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_presentation-template {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.presentation-template.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -486px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_spreadsheet {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.spreadsheet.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -468px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_spreadsheet-template {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.spreadsheet-template.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -594px !important;
 }
 .ico-large-application-vnd_oasis_opendocument_text {
-	background-image: url(../../images/48x48/types/application-vnd.oasis.opendocument.text.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -702px !important;
 }
 .ico-large-application-vnd_openxmlformats-officedocument_spreadsheetml_sheet {
-	background-image: url(../../images/48x48/types/application-vnd.openxmlformats-officedocument.spreadsheetml.sheet.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -756px !important;
 }
 .ico-large-application-vnd_openxmlformats-officedocument_wordprocessingml_document {
-	background-image: url(../../images/48x48/types/application-vnd.openxmlformats-officedocument.wordprocessingml.document.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -810px !important;
 }
 .ico-large-application-vnd_rn-realmedia {
-	background-image: url(../../images/48x48/types/video.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3622px !important;
 }
-.ico-large-application-x-zip-compressed {
-	background-image: url(../../images/48x48/types/application-zip.png) !important;
-}
-.ico-large-application-zip {
-	background-image: url(../../images/48x48/types/application-zip.png) !important;
+.ico-large-application-zip, .ico-large-application-x-zip-compressed {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -918px !important;
 }
 .ico-large-audio {
-	background-image: url(../../images/48x48/types/audio.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -972px !important;
 }
-.ico-large-image {
-	background-image: url(../../images/48x48/types/image.png) !important;
+.ico-large-image, .ico-large-image-jpg, .ico-large-image-jpeg, .ico-large-image-bmp, .ico-large-image-gif {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -2218px !important;
 }
-.ico-large-image-jpg {
-	background-image: url(../../images/48x48/types/image.png) !important;
-}
-.ico-large-image-jpeg {
-	background-image: url(../../images/48x48/types/image.png) !important;
-}
-.ico-large-image-bmp {
-	background-image: url(../../images/48x48/types/image.png) !important;
-}
-.ico-large-image-gif {
-	background-image: url(../../images/48x48/types/image.png) !important;
-}
-.ico-large-text {
-	background-image: url(../../images/48x48/types/text.png) !important;
-}
-.ico-large-text-plain {
-	background-image: url(../../images/48x48/types/text.png) !important;
-}
-.ico-large-txt {
-	background-image: url(../../images/48x48/types/text.png) !important;
+.ico-large-text, .ico-large-text-plain, .ico-large-txt {
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3298px !important;
 }
 .ico-large-text-html {
-	background-image: url(../../images/48x48/types/text-html.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3190px !important;
 }
 .ico-large-text-xml {
-	background-image: url(../../images/48x48/types/text-xml.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3244px !important;
 }
 .ico-large-video {
-	background-image: url(../../images/48x48/types/video.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3622px !important;
 }
 .ico-large-webfile {
-	background-image: url(../../images/48x48/types/webfile.png) !important;
+	background: transparent url(../../images/48x48/all_48_48_sprite.png) no-repeat scroll 0 -3730px !important;
 }

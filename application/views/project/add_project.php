@@ -34,6 +34,7 @@
     <?php echo label_tag(lang('name'), 'projectFormName', true) ?>
     <?php echo text_field('project[name]', array_var($project_data, 'name'), 
     	array('class' => 'title', 'id' => 'projectFormName', 'tabindex' => '1')) ?>
+    	<input type="hidden" name="wizard" value="<?php if(isset($_REQUEST['wizard'])) echo $_REQUEST['wizard'] ?>" />
     </div>
   
   	<?php $categories = array(); Hook::fire('object_edit_categories', $object, $categories); ?>
@@ -126,7 +127,6 @@
 			echo text_field('project[billing][' . $billing_row['category']->getId() . '][value]', $billing_row['value'], array('style'=>'width:100px'));
 	} else {?>
 		<span id="<?php echo $genid . $billing_row['category']->getId() ?>bv">
-		<a href='#' onclick='og.billingEditValue("<?php echo $genid . $billing_row['category']->getId() ?>");return false;'>
 		$<?php echo $billing_row['value'] ?>&nbsp;&nbsp;(<?php echo lang('edit') ?>)</a></span>
 		<span id="<?php echo $genid . $billing_row['category']->getId() ?>bvedit" style="display:none">
 			<?php echo text_field('project[billing][' . $billing_row['category']->getId() . '][value]', $billing_row['value'], 

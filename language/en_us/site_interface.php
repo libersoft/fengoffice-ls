@@ -665,7 +665,8 @@ return array(
 
   'hide options' => 'Hide options',
 
-  'personal workspace name' => '{0} Personal',
+  //'personal workspace name' => '{0} Personal',
+  'personal workspace name' => '{0}\'s Workspace',
   'personal workspace description' => 'Personal workspace',
 
   'wiki help link' => 'http://fengoffice.com/web/wiki',

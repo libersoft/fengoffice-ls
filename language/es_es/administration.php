@@ -278,6 +278,10 @@
 	'sync' => 'Sincronizar',
   	'mails on imap acc already sync' => 'No hay más emails para sincronizar en esta cuenta',
   	'cant sync account' => 'Esta cuenta no puede ser sincronizada. Revise ajustes de IMAP',
-	'config option name sent_mails_sync' => 'Sincronización vía IMAP al enviar correos electrónicos desde Feng Office',
+	'config option name sent_mails_sync' => 'Habilitar sincronización IMAP', 
+    'config option desc sent_mails_sync' => 'Esta opción habilita la sincronización al enviar correos desde Feng Office con el servidor de correo, a través de IMAP',
 	'succes save object subtypes' => 'Subtipos de objeto guardados exitosamente',
+	'config option name external_users_see_other_users' => 'Permitir a usuarios externos ver otros usuarios', 
+  	'config option desc external_users_see_other_users' => "Si se elige 'Si', los usuarios pertenecientes a otras empresas pueden ver a los usuarios que tienen permisos, en los espacios de trabajo en el que están, como un usuario normal",
+  
 ); ?>

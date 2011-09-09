@@ -619,7 +619,7 @@
 	'log comment contacts data' => 'Comentario en \'{0}\'',
 	'log comment companies data' => 'Comentario en \'{0}\'',
 	'log comment mailcontents data' => 'Comentario en \'{0}\'',
-	
+	'success save object subtypes' => 'Tipo de objeto guardado exitosamente',
 	'object is deleted' => ' (este objeto ha sido eliminado)',  	
     'the Users' => 'el usuario',
   	'the Comments' => 'el comentario',

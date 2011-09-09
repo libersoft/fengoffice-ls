@@ -231,4 +231,5 @@
 	'field MailContents sync' => 'Synchronisiert',
 	'field MailContents body' => 'Body',
 	'field ProjectFileRevisions filecontent' => 'Dateiinhalt',
+	'field ProjectTasks state' => 'Status',
 ); ?>

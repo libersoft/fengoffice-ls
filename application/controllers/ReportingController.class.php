@@ -331,7 +331,10 @@ class ReportingController extends ApplicationController {
 
 		$st = DateTimeValueLib::now();
 		$et = DateTimeValueLib::now();
-		switch (array_var($report_data, 'date_type')){
+		
+		$date_type = array_var($report_data, 'date_type');
+		
+		switch ($date_type){
 			case 1: //Today
 				$now = DateTimeValueLib::now();
 				$st = DateTimeValueLib::make(0,0,0,$now->getMonth(),$now->getDay(),$now->getYear());
@@ -384,7 +387,7 @@ class ReportingController extends ApplicationController {
 		$timeslotsArray = Timeslots::getTaskTimeslots($workspace, $user, $workspacesCSV, $st, $et, array_var($report_data, 'task_id', 0), $group_by,null,0,0,$timeslotType, $conditions, $object_subtype);
 		$unworkedTasks = null;
 		if (array_var($report_data, 'include_unworked') == 'checked') {
-			$unworkedTasks = ProjectTasks::getPendingTasks(logged_user(), $workspace);
+			$unworkedTasks = ProjectTasks::getUnworkedPendingTasks(logged_user(), $workspace, null, null, $st, $et);
 			tpl_assign('unworkedTasks', $unworkedTasks);
 		}
 
@@ -403,6 +406,7 @@ class ReportingController extends ApplicationController {
 			tpl_assign('start_time', $st);
 			tpl_assign('end_time', $et);
 			tpl_assign('user', $user);
+			tpl_assign('date_type', $date_type);
 			$report_data['conditions'] = $conditions;
 			$report_data['columns'] = $columns;
 			tpl_assign('post', $report_data);
@@ -874,7 +878,7 @@ class ReportingController extends ApplicationController {
 		}
 	}
 
-	function view_custom_report_print(){
+	function view_custom_report_print(){		
 		$this->setLayout("html");
 
 		$params = json_decode(str_replace("'",'"', array_var($_POST, 'post')),true);
@@ -929,6 +933,8 @@ class ReportingController extends ApplicationController {
 				$type = '';
 				if($k == 'link'){
 					$value = strip_tags($value);
+				}else if ($k == 't.state'){
+					$value = ($value != '') ? lang('completed') : lang('open task status');
 				}else{
 					$type = $types[$k];
 				}
@@ -964,6 +970,9 @@ class ReportingController extends ApplicationController {
 			$i = 0;			
 			foreach($row as $k => $value){	
 				if(!isset($maxValue[$i])) $maxValue[$i] = '';
+				if ($k == 't.state'){
+					$value = ($value != '') ? lang('completed') : lang('open task status');
+				}				
 				if(strlen(strip_tags($value)) > strlen($maxValue[$i])){
 					$maxValue[$i] = strip_tags($value);
 				}
@@ -971,10 +980,11 @@ class ReportingController extends ApplicationController {
 			}
     	}
     	$k=0;
-    	foreach ($maxValue as $str) {
+    	foreach ($maxValue as $str) {    		    	
     		$col_title_len = $pdf->GetStringWidth($results['columns'][$k]);
+    		//file_put_contents('log.txt', ' tit:'.$results['columns'][$k], FILE_APPEND);    		
     		$colMaxTextSize = max($pdf->GetStringWidth($str), $col_title_len);
-    		$db_col = $results['columns'][$k];
+    		$db_col = $results['columns'][$k];    		
     		$colType = array_var($types, array_var($results['db_columns'], $db_col, ''), '');
     		if($colType == DATA_TYPE_DATETIME && !($report->getObjectType() == 'ProjectEvents' && $results['db_columns'][$db_col] == 'start')){
     			$colMaxTextSize = $colMaxTextSize / 2;
@@ -1012,7 +1022,9 @@ class ReportingController extends ApplicationController {
 				}else{
 					$cell = $this->format_value_to_print($k, $value, $types[$k], $report->getObjectType());	
 				}
-							
+				if($report->getObjectType() == 'ProjectTasks' && $k == 't.state'){
+					$cell = ($cell != '--') ? lang('completed') : lang('open task status');
+				}							
 				$cell = iconv(mb_internal_encoding(), "ISO-8859-1", html_entity_decode($cell, ENT_COMPAT));
 				
 				$splitted = self::split_column_value($cell, $max_char_len[$i]);
@@ -1355,10 +1367,14 @@ class ReportingController extends ApplicationController {
 				}
 				$fields[] = array('id' => $name, 'name' => lang('field ' . $object_type . ' ' .$name), 'type' => $type);
 			}
+			
+			//to add the 'Status' parameter
+			if ($object_type == 'ProjectsTasks'){				
+				$fields[] = array('id' => 'status', 'name' => lang('field ' . $object_type . ' status'), 'type' => 'boolean');
+			}			
 	
 			$externalFields = $managerInstance->getExternalColumns();
-			foreach($externalFields as $extField){
-				
+			foreach($externalFields as $extField){				
 				$fields[] = array('id' => $extField, 'name' => lang('field ' . $object_type . ' '.$extField), 'type' => 'external', 'multiple' => 0);
 			}
 			// Workspace and Tags

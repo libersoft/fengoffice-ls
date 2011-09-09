@@ -206,6 +206,7 @@ return array(
     'field ProjectTasks repeat_y' => 'Repeat year',
     'field ProjectTasks object_subtype' => 'Object subtype',
 	'field ProjectTasks state' => 'Status',
+	'field ProjectTasks status' => 'Status',
 
 	// User fields
     'field Users username' => 'Username', 

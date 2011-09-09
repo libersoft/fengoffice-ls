@@ -401,9 +401,7 @@ abstract class Swift_Transport_AbstractSmtpTransport
     }
     
     if (!$valid)
-    {
-      //if there is an error when sending the email, let the user know about it    
-      flash_error(lang('mail not sent, wrong settings/receiver')." '".$response."'");      
+    {    
       $this->_throwException(
         new Swift_TransportException(
           'Expected response code ' . implode('/', $wanted) . ' but got code ' .

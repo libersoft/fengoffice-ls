@@ -306,7 +306,7 @@ class ApplicationLogs extends BaseApplicationLogs {
 			} else {
 				$conditions = array('`is_private` <= ? AND `is_silent` <= ?' . $userCond, $private_filter, $silent_filter);
 			} // if
-			return self::findAll(array(
+			$logs =  self::findAll(array(
 				'conditions' => $conditions,
 				'order' => '`created_on` DESC',
 				'limit' => $limit,
@@ -333,7 +333,18 @@ class ApplicationLogs extends BaseApplicationLogs {
 						$removed++;
 						unset($logs[$k]);
 					}
+				}else{
+					$lobj=get_object_by_manager_and_id($log->getRelObjectId(), $log->getRelObjectManager());
+					if (!$lobj instanceof ApplicationDataObject || !can_access(logged_user(), $lobj, ACCESS_LEVEL_READ)) {
+						$removed++;
+						unset($logs[$k]);
+					}
+					
 				}
+			}
+			
+			foreach ($logs as $k => $log) {
+				
 			}
 			// Get more objects to substitute the removed ones
 			if ($limit && $removed > 0) {

@@ -205,6 +205,14 @@ class TaskController extends ApplicationController {
 				}
 				ajx_extra_data(array("task" => $task->getArrayInfo()));
 				flash_success(lang('success add task', $task->getTitle()));
+				
+				//Addition for goback action (Wizard) 
+				if(isset($_SESSION['wizard_task']))
+				{
+					evt_add("back_to_wizard");
+					unset($_SESSION['wizard_task']);
+				}
+				
 			} catch(Exception $e) {
 				DB::rollback();
 				flash_error($e->getMessage());
@@ -508,10 +516,10 @@ class TaskController extends ApplicationController {
 			set_user_config_option('task panel status', $status, logged_user()->getId());
 		}
 
-		$previous_filter = user_config_option('task panel filter','assigned_to');
+		$previous_filter = user_config_option('task panel filter','no_filter');
 		$filter = array_var($_GET,'filter');
 		if (is_null($filter) || $filter == '') {
-			$filter = user_config_option('task panel filter','assigned_to');
+			$filter = user_config_option('task panel filter','no_filter');
 		} else
 		if (user_config_option('task panel filter') != $filter) {
 			set_user_config_option('task panel filter', $filter, logged_user()->getId());
@@ -854,12 +862,13 @@ class TaskController extends ApplicationController {
 
 		$task = new ProjectTask();
 		$task_data = array_var($_POST, 'task');
+		$default_assigned_to = logged_user()->getId().":".logged_user()->getCompanyId();
 		if(!is_array($task_data)) {
 			$task_data = array(
 				'milestone_id' => array_var($_POST, 'milestone_id',0),
 				'project_id' => array_var($_POST, 'project_id',active_or_personal_project()->getId()),
 				'title' => array_var($_POST, 'title', ''),
-				'assigned_to' => array_var($_POST, 'assigned_to', '0:0'),
+				'assigned_to' => array_var($_POST, 'assigned_to', $default_assigned_to),
 				'parent_id' => array_var($_POST, 'parent_id', 0),
 				'priority' => array_var($_POST, 'priority', ProjectTasks::PRIORITY_NORMAL),
 				'text' => array_var($_POST, 'text', ''),

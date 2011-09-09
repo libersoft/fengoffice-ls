@@ -4,6 +4,7 @@ addLangs({
 	'cannot check in': 'チェックインできません',
 	'add as new revision to': '新しいリビジョンとして追加',
 	'error loading content': 'コンテンツの読み込みをできませんでした。しばらくしてもう一度実行してください。\nそれでも問題が続く場合は、管理者に連絡してください。',
+	'http error': 'エラー {0}: {1}',
 	'projects': 'ワークスペース',
 	'administration': '管理',
 	'open link': 'リンクを開く',
@@ -791,5 +792,6 @@ addLangs({
 	'add object subtype': 'オブジェクトのサブタイプを追加',
 	'delete object subtype': 'オブジェクトのサブタイプを削除',
 	'delete object subtype warning': 'このサブタイプを削除すると、設定したすべてのオブジェクトから削除されます。このサブタイプを本当に削除しますか?',
-	'object subtype deleted': 'サブタイプを削除しました。{0}'
+	'object subtype deleted': 'サブタイプを削除しました。{0}',
+	'change status': '変更の状態'
 });

@@ -12,7 +12,6 @@ og.eventManager.addListener('tag changed',
 );
 og.eventManager.addListener('workspace changed', 
  	function (ws){ 
-
  	}
 );
 
@@ -90,4 +89,24 @@ og.eventManager.addListener('user preference changed',
 		og.preferences[option.name] = option.value;
 	}
 );
+
+og.eventManager.addListener('select workspace', 
+    function (ws){ 
+        Ext.getCmp('workspace-panel').select(ws);
+    }
+);
+
+og.eventManager.addListener('back_to_wizard', 
+	    function (ws){ 
+			Ext.getCmp('tabs-panel').setActiveTab(og.panels.overview);
+	    }
+);
+
+og.eventManager.addListener('refresh_assignees', 
+	    function (assign){
+			assigned_user = assign; 
+			og.openLink(og.getUrl('task', 'allowed_users_to_assign', {ws_id:wsVal}), {callback:og.drawUserLists});
+	    }
+);
+
 </script>

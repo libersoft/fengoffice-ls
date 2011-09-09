@@ -1,4 +1,4 @@
-locale = 'es_es';
+﻿locale = 'es_es';
 addLangs({
 	'check in': '<b>Devolver</b>',
 	'cannot check in': 'No es posible devolver',
@@ -15,8 +15,8 @@ addLangs({
 	'help': 'Ayuda',
 	'menu': 'Menú',
 	'back': 'Volver',
-	'mark as read': 'Marcar como leido',
-	'mark as unread': 'Marcar como no leido',
+	'mark as read': 'Marcar como leído',
+	'mark as unread': 'Marcar como no leído',
 	'server could not be reached': 'No se pudo establecer una conexión con el servidor',
 	'http error': 'Error {0}: {1}',
 	'refesh desc': 'Actualizar',
@@ -151,6 +151,8 @@ addLangs({
 	'webpage': 'Enlace web',
 	'message': 'Nota',
 	'workspaces': 'Áreas de trabajo',
+	'add space': 'Crear Espacio',
+	'edit space': 'Editar',	
 	'all': 'Todo',
 	'create a workspace': 'Crear nueva área de trabajo',
 	'delete selected workspace': 'Eliminar el área de trabajo seleccionado',
@@ -361,6 +363,7 @@ addLangs({
 	'remove tags': 'Quitar etiquetas',
 	'more options': 'Más opciones',
 	'completed': 'Completado',
+	'open task status' : 'Abierta',
 	'notify': 'Notificar',
 	'hours worked': 'Horas trabajadas',
 	'login': 'Ingreso',
@@ -699,7 +702,8 @@ addLangs({
     'add object subtype' : 'Agregar tipo de objeto',
     'delete object subtype' : 'Eliminar tipo de objeto',
     'delete object subtype warning' : 'Si elimina este tipo de objeto éste será removido de todos los objetos a los cuales ha sido asignado. ¿Está seguro que lo quiere eliminar?',
-    'object subtype deleted' : 'Subtype deleted. {0}',
-    'change status': 'Cambiar estado'
+    'object subtype deleted' : 'Subtipo eliminado. {0}',
+    'change status': 'Cambiar estado',
+    'warning create users automatically email': 'Advertencia: Si envía este correo sin adjuntar todos los contenidos adjuntos, y los receptores no tienen una cuenta en esta instalación de Feng Office, automáticamente se les creará una cuenta para ellos. Tenga en consideración que con esta cuenta sólo podrían acceder a los documentos y a ningún otro lado. \n\n ¿Desea proceder?'
     
 });

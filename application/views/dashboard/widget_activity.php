@@ -90,8 +90,9 @@
 		}
 		
 		$object_ws = null;
-		$break = false;
-		foreach ($obj_wss as $obj_ws) {
+		$break = false;		
+		foreach ($obj_wss as $obj_ws) {	
+			if ($obj_ws == null)continue;		
 			if (in_array($obj_ws->getId(), $sub_wss_csv)) {
 				$object_ws = $obj_ws;
 				$break = true;

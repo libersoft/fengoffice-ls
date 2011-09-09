@@ -7,6 +7,7 @@ og.WorkspacePanel = function(config) {
 	if (!og.loggedUser.isGuest) {
 		tbar.push({
 			iconCls: 'ico-workspace-add',
+			text: lang('add space'),
 			tooltip: lang('create a workspace'),
 			handler: function() {
 				this.tree.newWS();
@@ -17,6 +18,7 @@ og.WorkspacePanel = function(config) {
 			id: 'edit',
 			iconCls: 'ico-workspace-edit',
 			tooltip: lang('edit workspace'),
+			text: lang('edit space'),
 			disabled: true,
 			handler: function() {
 				this.tree.editWS();
@@ -32,7 +34,7 @@ og.WorkspacePanel = function(config) {
 			og.updateWsCrumbs({id: 0, name: lang('all')});
 		},
 		scope: this
-	});
+	});	
 	
 	Ext.applyIf(config, {
 		iconCls: 'ico-workspaces',

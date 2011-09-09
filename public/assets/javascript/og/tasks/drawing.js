@@ -761,7 +761,7 @@ ogTasks.drawTaskRow = function(task, drawOptions, displayCriteria, group_id, lev
 	if (task.subtasks.length > 0){
 		sb.append("<td width='16px' style='padding-top:3px'><div id='ogTasksPanelFixedExpander" + tgId + "' class='og-task-expander " + ((task.isExpanded)?'toggle_expanded':'toggle_collapsed') + "' onclick='ogTasks.toggleSubtasks(" + task.id +", \"" + group_id + "\")'></div></td>");
 	}else{
-		sb.append("<td width='16px'><div id='ogTasksPanelExpander" + tgId + "' style='visibility:hidden' class='og-task-expander ico-add ogTasksIcon' onClick='ogTasks.drawAddNewTaskForm(\"" + group_id + "\", " + task.id + "," + level +")' title='" + lang('add subtask') + "'></div></td>");
+		sb.append("<td width='16px'><div id='ogTasksPanelExpander" + tgId + "' style='visibility:hidden;margin-top:2px;' class='og-task-expander ico-add ogTasksIcon' onClick='ogTasks.drawAddNewTaskForm(\"" + group_id + "\", " + task.id + "," + level +")' title='" + lang('add subtask') + "'></div></td>");
 	}
 
 	if (task.isRead){
@@ -1000,8 +1000,9 @@ ogTasks.UpdateTask = function(task_id){
 		var div = document.getElementById(containerName);
 		if (div){
 			div.innerHTML = this.drawTaskRow(task, task.divInfo[i].drawOptions, task.divInfo[i].displayCriteria, task.divInfo[i].group_id, task.divInfo[i].level);
-			if (task.divInfo[i].displayCriteria.group_by == 'milestone') { //Update milestone complete bar
-				var div2 = document.getElementById('ogTasksPanelCompleteBar' + task.divInfo[i].group_id);
+			var div2 = document.getElementById('ogTasksPanelCompleteBar' + task.divInfo[i].group_id);
+			if (task.divInfo[i].displayCriteria.group_by == 'milestone' && div2) { //Update milestone complete bar
+				//var div2 = document.getElementById('ogTasksPanelCompleteBar' + task.divInfo[i].group_id);
 				div2.innerHTML = this.drawMilestoneCompleteBar(this.getGroup(task.divInfo[i].group_id));
 			}
 			og.showWsPaths(containerName);

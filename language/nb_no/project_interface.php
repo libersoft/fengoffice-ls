@@ -8,7 +8,7 @@
 	'edit this file' => 'Rediger denne filen',
 	'file contents' => 'Filinnhold',
 	'revision comment' => 'Endringskommentar',
-	'edit revision comment' => 'Rediger endringskommentarq',
+	'edit revision comment' => 'Rediger endringskommentar',
 	'initial versions' => '-- Oppbrinnelig versjon --',
 	'file details' => 'Fildetaljer',
 	'view file details' => 'Vis fildetaljer',

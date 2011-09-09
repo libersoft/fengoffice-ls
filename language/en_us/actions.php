@@ -21,8 +21,20 @@
     'edit client' => 'Edit client',
     'delete client' => 'Delete client',
     
-    // Users
+    // Persons
     'add user' => 'Add user',
+	'add user role' => 'Role',  
+  	'add user action' => 'Add a person to use your Feng Office',
+  	'add user button' => 'Add Person',
+  	'add user hide settings' => 'Hide all user settings',
+  	'add user show settings' => 'See all user settings',
+    'add user show settings text' => 'As this person will be using your Feng Office, you may want to set specific details like access permissions<br /> (restricted by default), timezone, password, billing category, etc.',  
+  	'add user essential' => 'Essential Information',
+  	'add user essential text' => 'This is the only mandatory information on this form. After you click "Add person"<br /> the e-mail address will receive an invitation to join your Feng Office.',
+	'add user what does' => 'What this people does',
+	'add user what does text' => 'You tell a lot about a person by setting the Role and at which Company.<br />When you select a user Role you define how the person will basically use your Feng Office.',
+	'add user others' => 'Access and Other Settings',
+	'add user others text' => 'Set what projects will this person be able to access. Set passwords, language, timezone, and other system configuration options.',
     'edit user' => 'Edit user',
     'delete user' => 'Delete user',
     'create user from contact' => 'Create user from contact',

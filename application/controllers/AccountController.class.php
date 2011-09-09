@@ -35,8 +35,9 @@ class AccountController extends ApplicationController {
 		$this->setTemplate("card");
 		$this->setControllerName("user");
 		tpl_assign('user', logged_user());
-		ajx_set_no_toolbar(true);
+		tpl_assign('user_id', get_id());
 		
+		ajx_set_no_toolbar(true);		
 		$pids = null;
 		if (active_project() instanceof Project) {
 			$pids = active_project()->getAllSubWorkspacesQuery();
@@ -138,7 +139,7 @@ class AccountController extends ApplicationController {
 				}
 
 				$user->save();
-				
+							
 				$autotimezone = array_var($user_data, 'autodetect_time_zone', null);
 				if ($autotimezone !== null) {
 					set_user_config_option('autodetect_time_zone', $autotimezone, $user->getId());
@@ -159,6 +160,10 @@ class AccountController extends ApplicationController {
 					} else {
 						$user->setAsAdministrator(false);
 					}
+				}
+								
+				if (GlobalCache::isAvailable()) {	
+					GlobalCache::delete('logged_user_'.$user->getId());
 				}
 				
 				DB::commit();
@@ -236,6 +241,10 @@ class AccountController extends ApplicationController {
 				$user->setPassword($new_password);
 				$user->setUpdatedOn(DateTimeValueLib::now());
 				$user->save();
+											
+				if (GlobalCache::isAvailable()) {	
+					GlobalCache::delete('logged_user_'.$user->getId());
+				}
 				
 				if ($user->getId() == logged_user()->getId()) {
 					CompanyWebsite::instance()->logUserIn($user, Cookie::getValue("remember", 0));
@@ -370,6 +379,11 @@ class AccountController extends ApplicationController {
 				$user->setUpdatedOn(DateTimeValueLib::now());
 				$user->save();
 				DB::commit();
+				
+				// Delete old global cache so the new permissions are taken into account next time
+				if (GlobalCache::isAvailable()) {
+					GlobalCache::delete('logged_user_'.$user->getId());
+				}				
 	
 				flash_success(lang('success user permissions updated'));
 				ajx_current("back");

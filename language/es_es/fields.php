@@ -149,6 +149,7 @@
 	'field ProjectTasks archived_on' => 'Archivado',
 	'field ProjectTasks archived_by_id' => 'Archivado por',
 	'field ProjectTasks object_subtype' => 'Tipo de objeto',
+	'field ProjectTasks status' => 'Estado',
 	'field Users username' => 'Nombre de usuario',
 	'field Users email' => 'Correo electrónico',
 	'field Users display_name' => 'Nombre desplegado',

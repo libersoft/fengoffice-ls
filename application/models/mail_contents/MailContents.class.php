@@ -6,7 +6,7 @@
  * @author Carlos Palma <chonwil@gmail.com>
  */
 class MailContents extends BaseMailContents {
-	
+	private static $rel_object_id;
 	public static function getMailsFromConversation(MailContent $mail) {
 		$conversation_id = $mail->getConversationId();
 		if ($conversation_id == 0 || $mail->getIsDraft()) return array($mail);
@@ -69,7 +69,21 @@ class MailContents extends BaseMailContents {
 		if (!$mail instanceof MailContent || $mail->getConversationId() == 0) return 0;
 		$conversation_id = $mail->getConversationId();
 		$permissions = " AND " . permissions_sql_for_listings(self::instance(), ACCESS_LEVEL_READ, logged_user());
-		$unread_cond = "AND NOT `id` IN (SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1')";
+		//if the variable is not set, make the query and set it
+		//seba
+		if( !isset(self::$rel_object_id)){
+			$sql = "SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1'";
+			$rows = DB::executeAll($sql);
+			if (count($rows)== 0) self::$rel_object_id = "0";
+			else{
+				foreach ($rows as $row){
+						if (self::$rel_object_id != "") self::$rel_object_id .= ",";
+						self::$rel_object_id .= $row['rel_object_id'];						
+				}
+			}
+		}
+		//$unread_cond = "AND NOT `id` IN (SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1')";
+		$unread_cond = "AND NOT `id` IN (".self::$rel_object_id.")";
 		$deleted = ' AND `is_deleted` = false';
 		if (!$include_trashed) $deleted .= ' AND `trashed_on` = ' . DB::escape(EMPTY_DATETIME);
 		$sql = "SELECT `id` FROM `". TABLE_PREFIX ."mail_contents` WHERE `conversation_id` = '$conversation_id' $deleted AND `account_id` = " . $mail->getAccountId() . " AND `state` <> 2 $unread_cond".$permissions;
@@ -217,7 +231,21 @@ class MailContents extends BaseMailContents {
 				$read = "AND ";
 				$subread = "AND `mc`."; 
 			}
-			$read2 = "`id` IN (SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1')";
+			//if the variable is not set, make the query and set it
+			if( !isset(self::$rel_object_id)){
+				$sql = "SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1'";
+				$rows = DB::executeAll($sql);
+				if (count($rows)== 0) self::$rel_object_id = "0";
+				else{
+					foreach ($rows as $row){
+							if (self::$rel_object_id != "") self::$rel_object_id .= ",";
+							self::$rel_object_id .= $row['rel_object_id'];						
+					}
+				}
+			}
+		
+			//$read2 = "`id` IN (SELECT `rel_object_id` FROM `" . TABLE_PREFIX . "read_objects` `t` WHERE `user_id` = " . logged_user()->getId() . " AND `t`.`rel_object_manager` = 'MailContents' AND `t`.`is_read` = '1')";
+			$read2 = "`id` IN (".self::$rel_object_id.")";
 			$read .= $read2;
 			$subread .= $read2;
 		} else {

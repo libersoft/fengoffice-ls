@@ -827,8 +827,12 @@ function render_page_head() {
  * @param string $rel
  * @return string
  */
-function get_public_url($rel) {
-	$base = trim(PUBLIC_FOLDER) == '' ? with_slash(ROOT_URL) : with_slash(with_slash(ROOT_URL) . PUBLIC_FOLDER);
+function get_public_url($rel, $is_ajax = false) {
+	if (!$is_ajax && defined('STATIC_CONTENT_ROOT_URL') && STATIC_CONTENT_ROOT_URL) {
+		$base = trim(PUBLIC_FOLDER) == '' ? with_slash(STATIC_CONTENT_ROOT_URL) : with_slash(with_slash(STATIC_CONTENT_ROOT_URL) . PUBLIC_FOLDER);
+	} else {
+		$base = trim(PUBLIC_FOLDER) == '' ? with_slash(ROOT_URL) : with_slash(with_slash(ROOT_URL) . PUBLIC_FOLDER);
+	}
 	return $base . $rel;
 } // get_public_url
 
@@ -845,7 +849,7 @@ function get_file_url($file_name) {
 function get_assets_prefix() {
 	if (defined('VERSIONED_ASSETS') && VERSIONED_ASSETS) {
 		$version = include 'version.php';
-		if (is_dir(PUBLIC_FOLDER . "/assets/$version")) {
+		if (is_dir(PUBLIC_FOLDER . "/assets/$version") || (defined('STATIC_CONTENT_ROOT_URL') && STATIC_CONTENT_ROOT_URL)) {
 			$prefix = "$version/";
 		} else {
 			$prefix = "";
@@ -862,9 +866,9 @@ function get_assets_prefix() {
  * @param string $file_name
  * @return string
  */
-function get_javascript_url($file_name) {
+function get_javascript_url($file_name, $is_ajax = false) {
 	$prefix = get_assets_prefix();
-	return get_public_url("assets/{$prefix}javascript/$file_name");
+	return get_public_url("assets/{$prefix}javascript/$file_name", $is_ajax);
 } // get_javascript_url
 
 function get_flash_url($file_name) {

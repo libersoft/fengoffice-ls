@@ -169,11 +169,12 @@ og.undoDeleteCondition = function(id, genid){
 	}
 };
 
-og.fieldChanged = function(id, condition, value){
+og.fieldChanged = function(id, condition, value){	
 	var fields = document.getElementById('conditions[' + id + '][custom_property_id]');
-	var selField = fields.selectedIndex;
+	var selField = fields.selectedIndex;	
 	if(selField != -1){
-		var fieldType = fields[selField].className;
+		var fieldType = fields[selField].className;	
+		if (fields[selField].value == 'state') fieldType = 'boolean';
 		var type_and_name = '<input type="hidden" name="conditions[' + id + '][field_name]" value="' + fields[selField].value + '"/>' +
 		'<input type="hidden" name="conditions[' + id + '][field_type]" value="' + fieldType + '"/>'; 
 		var conditions = '<b>' + lang('condition') + '</b>:<br/><select class="reportConditionDD" id="conditions[' + id + '][condition]" name="conditions[' + id + '][condition]">';
@@ -204,8 +205,16 @@ og.fieldChanged = function(id, condition, value){
 			document.getElementById('tdConditions' + id).innerHTML = conditions;
 		}else if(fieldType == "boolean"){
 			var values = '<b>' + lang('value') + '</b>:<br/><select class="reportConditionDD" id="conditions[' + id + '][value]" name="conditions[' + id + '][value]">';
-			values += '<option value="1" ' + (value != "" && value == true ? "selected" : "") + '>' + lang('true') + '</option>';
-			values += '<option value="0"' + (value == false ? "selected" : "") + '>' + lang('false') + '</option>';
+			if (fields[selField].value != 'state'){
+				var true_text = lang('true');
+				var false_text = lang('false');
+			}else{
+				var true_text = lang('completed');
+				var false_text = lang('open task status');
+			}
+			
+			values += '<option value="1" ' + (value != "" && value == true ? "selected" : "") + '>' + true_text + '</option>';
+			values += '<option value="0"' + (value == false ? "selected" : "") + '>' + false_text + '</option>';
 			values += '</select>' + type_and_name;
 			document.getElementById('tdValue' + id).innerHTML = values;
 			conditions += '<option value="=">' + lang('equals') + '</option>';

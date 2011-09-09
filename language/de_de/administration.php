@@ -296,4 +296,6 @@ Nach Änderung des Formates komplette Seite aktualisieren.',
 	'user ws config option name displayed events amount' => 'Anzahl anzuzeigender Termine',
 	'user ws config option desc displayed events amount' => 'Die Anzahl der anzuzeigenden Termine pro Tag in der Monatsübersicht',
 	'user ws config option name show_file_revisions_search' => 'Dateirevisionen bei Durchsuchen anzeigen',
+	'config option name check_spam_in_subject' => 'Den E-Mail-Betreff auf den Text „**SPAM**“ überprüfen',
+	'config option desc check_spam_in_subject' => 'Wenn „**SPAM**“ im Betreff gefunden wird, wird die E-Mail in den Spamordner verschoben.',
 ); ?>

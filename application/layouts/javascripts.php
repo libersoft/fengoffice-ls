@@ -23,6 +23,7 @@ if (defined('DEBUG_JS') && DEBUG_JS) {
         'og/ContentPanelLayout.js',
         'og/ContentPanel.js',
         'og/layout.js',
+    	'og/EventPopUp.js',
     );
 }
 return array(
@@ -47,5 +48,6 @@ return array(
         'og/ContentPanelLayout.js',
         'og/ContentPanel.js',
         'og/layout.js',
+		'og/EventPopUp.js',
 );
 ?>

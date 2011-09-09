@@ -509,20 +509,29 @@ og.checkSubmitAddTask = function(genid) {
 	<div>
 		<?php $defaultNotifyValue = user_config_option('can notify from quick add'); ?>
 		<label><?php echo lang('assign to') ?>:</label> 
-		<table><tr><td>
-			<input type="hidden" id="<?php echo $genid ?>taskFormAssignedTo" name="task[assigned_to]"></input>
-			<div id="<?php echo $genid ?>assignto_div">
-				<div id="<?php echo $genid ?>assignto_container_div"></div>
-			</div>
-		</td><td style="padding-left:10px"><div  id="<?php echo $genid ?>taskFormSendNotificationDiv" style="display:none">
-			<?php echo checkbox_field('task[send_notification]', array_var($task_data, 'send_notification'), array('id' => $genid . 'taskFormSendNotification')) ?>
-			<label for="<?php echo $genid ?>taskFormSendNotification" class="checkbox"><?php echo lang('send task assigned to notification') ?></label>
-		</div>
-		<?php if (!$task->isNew()) { ?>
-			<?php echo checkbox_field('task[apply_assignee_subtasks]', array_var($task_data, 'apply_assignee_subtasks'), array('id' => $genid . 'taskFormApplyAssignee')) ?>
-			<label for="<?php echo $genid ?>taskFormApplyAssignee" class="checkbox"><?php echo lang('apply assignee to subtasks') ?></label>
-		<?php } ?>
-		</td></tr></table>
+		<table>
+			<tr>
+				<td>
+					<input type="hidden" id="<?php echo $genid ?>taskFormAssignedTo" name="task[assigned_to]"></input>
+					<div id="<?php echo $genid ?>assignto_div" class="assignto_div">
+						<div id="<?php echo $genid ?>assignto_container_div"></div>
+					</div>
+				</td>
+				<td style="padding-left:10px">
+					<div  id="<?php echo $genid ?>taskFormSendNotificationDiv" style="display:none">
+						<?php echo checkbox_field('task[send_notification]', array_var($task_data, 'send_notification'), array('id' => $genid . 'taskFormSendNotification')) ?>
+						<label for="<?php echo $genid ?>taskFormSendNotification" class="checkbox"><?php echo lang('send task assigned to notification') ?></label>
+					</div>
+					<?php if (!$task->isNew()) { ?>
+						<?php echo checkbox_field('task[apply_assignee_subtasks]', array_var($task_data, 'apply_assignee_subtasks'), array('id' => $genid . 'taskFormApplyAssignee')) ?>
+						<label for="<?php echo $genid ?>taskFormApplyAssignee" class="checkbox"><?php echo lang('apply assignee to subtasks') ?></label>
+					<?php } ?>
+					<a href="Javascript:;" class="ico-add" onclick="og.openLink(og.getUrl('user', 'add', {refresh_assignees: true}), {caller:'administration'});" style="padding: 2px 0px 0px 18px;">
+						<?php echo lang('add user');?>
+					</a>
+				</td>
+			</tr>
+		</table>
 		
 	</div>
 	
@@ -631,7 +640,8 @@ og.checkSubmitAddTask = function(genid) {
 			document.getElementById(genid + 'taskFormSendNotificationDiv').style.display = user > 0 ? 'block':'none';
 		}
 	}
-	
+
+	var companies;
 	og.drawUserLists = function(success, data) {
 		companies = data.companies;
 	
@@ -655,8 +665,9 @@ og.checkSubmitAddTask = function(genid) {
 		}
 	}
 	
+	var wsVal;
 	og.redrawUserLists = function(){
-		var wsVal = Ext.get('<?php echo $genid ?>wsSelValue').getValue();
+		wsVal = Ext.get('<?php echo $genid ?>wsSelValue').getValue();
 		
 		if (wsVal != prevWsValue) {
 			og.openLink(og.getUrl('task', 'allowed_users_to_assign', {ws_id:wsVal}), {callback:og.drawUserLists});

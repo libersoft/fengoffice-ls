@@ -1,8 +1,8 @@
 <?php
 	
-	function format_value_to_print($col, $value, $type, $obj_type, $textWrapper='', $dateformat='Y-m-d') {
+	function format_value_to_print($col, $value, $type, $obj_type, $textWrapper='', $dateformat='Y-m-d') {		
 		switch ($type) {
-			case DATA_TYPE_STRING:
+			case DATA_TYPE_STRING:				
 				if(preg_match(EMAIL_FORMAT, strip_tags($value))){
 					$formatted = $value;
 				}else{ 
@@ -26,8 +26,7 @@
 						break;
 					default: $formatted = clean($value);
 					}					
-				}
-				else{				
+				}else{		
 					$formatted = clean($value);
 				}
 				break;
@@ -47,7 +46,12 @@
 					else $formatted = format_date($dtVal, null, 0);
 				} else $formatted = '';
 				break;
-			default: $formatted = $value;
+			default:
+				if ($col == 'state'){					
+					$formatted = ($value > '0') ? lang('completed') : lang('open task status');					
+				}else{ 				
+					$formatted = $value;
+				}
 		}
 		if($formatted == ''){
 			$formatted = '--';
@@ -59,7 +63,7 @@
 	if ($description != '') echo clean($description) . '<br/>';
 	$conditionHtml = '';
 	
-	if (count($conditions) > 0) {
+	if (count($conditions) > 0) {		
 		foreach ($conditions as $condition) {
 			if($condition->getCustomPropertyId() > 0){
 				$cp = CustomProperties::getCustomProperty($condition->getCustomPropertyId());
@@ -94,8 +98,12 @@
 				$value = clean(Reports::getExternalColumnValue($condition->getFieldName(), $value));
 			}
 			
-			if ($value != '')
-				$conditionHtml .= '- ' . $name . ' ' . ($condition->getCondition() != '%' ? $condition->getCondition() : lang('ends with') ) . ' ' . format_value_to_print($condition->getFieldName(), $value, $coltype, '', '"', user_config_option('date_format')) . '<br/>';
+			if ($paramName == 'state' && $value != null){					
+					$state_value = ($value > '0') ? lang('completed') : lang('open task status');
+					$conditionHtml .= '- ' . lang('field ProjectTasks status') . ' = ' . $state_value . '<br/>';
+			}else if ($value != ''){
+					$conditionHtml .= '- ' . $name . ' ' . ($condition->getCondition() != '%' ? $condition->getCondition() : lang('ends with') ) . ' ' . format_value_to_print($condition->getFieldName(), $value, $coltype, '', '"', user_config_option('date_format')) . '<br/>';
+			}			
 		}
 	}
 	
